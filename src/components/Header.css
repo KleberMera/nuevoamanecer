@@ -1,0 +1,55 @@
+.header {
+  background-color: #000; /* Negro */
+  color: #fff; /* Blanco */
+  padding: 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+
+.buttons {
+  margin-top: 10px;
+}
+
+.login-button,
+.register-button {
+  background-color: #fff; /* Blanco */
+  color: #000; /* Negro */
+  padding: 10px 20px;
+  margin-right: 10px;
+  border: none;
+  border-radius: 5px;
+  align-self: flex-start; 
+  cursor: pointer;
+ 
+}
+
+.login-button:hover,
+.register-button:hover {
+  background-color: #ff8c00; /* Naranja al pasar el ratón */
+  color: #fff; /* Blanco */
+}
+
+
+/* Media Query para dispositivos con una pantalla más pequeña, como teléfonos móviles */
+@media only screen and (max-width: 600px) {
+  .header {
+    align-items: center; /* Alinea los elementos al centro en dispositivos pequeños */
+    text-align: center;
+  }
+
+  .buttons {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Alinea los botones al centro en dispositivos pequeños */
+  }
+
+  .login-button,
+  .register-button {
+    align-self: stretch; /* Hace que los botones ocupen todo el ancho disponible en dispositivos pequeños */
+  }
+}

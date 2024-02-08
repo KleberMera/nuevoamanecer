@@ -1,0 +1,15 @@
+.footer {
+  background-color: #000; /* Negro */
+  color: #fff; /* Blanco */
+  padding: 20px;
+  text-align: center;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+@media only screen and (max-width: 600px) {
+  .footer {
+    position: static; /* Cambia a posición estática en dispositivos más pequeños */
+  }
+}

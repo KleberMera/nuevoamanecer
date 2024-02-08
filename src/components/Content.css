@@ -1,0 +1,6 @@
+.content {
+  background-color: #f4f4f4; /* Fondo claro */
+  padding: 20px;
+  height: calc(100vh - 80px); /* Resta el alto del header (80px) al 100% del alto del viewport (100vh) */
+  overflow-y: auto; /* Agrega una barra de desplazamiento vertical si el contenido excede el alto disponible */
+}

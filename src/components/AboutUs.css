@@ -1,0 +1,16 @@
+.about-us {
+  padding: 20px;
+  background-color: #f4f4f4; /* Fondo claro para la sección Quiénes Somos */
+  border-radius: 5px;
+  margin-top: 20px; /* Agrega espacio entre el header y la sección Quiénes Somos */
+  flex: 1; /* Ocupa el resto del espacio disponible */
+  height: calc(100vh - 80px); /* Resta el alto del header (80px) al 100% del alto del viewport (100vh) */
+  overflow-y: auto; /* Agrega una barra de desplazamiento vertical si el contenido excede el alto disponible */
+  @media only screen and (max-width: 600px) {
+    margin-bottom: 50px; /* Ajusta el margen inferior en dispositivos más pequeños para evitar superposición con el footer */
+  }
+}
+
+.about-us h2 {
+  font-size: 1.5em; /* Aumenta el tamaño de la letra para el encabezado */
+}
