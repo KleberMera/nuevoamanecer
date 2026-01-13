@@ -61,6 +61,7 @@
             <!-- Botón de inicio de sesión -->
             <div class="flex justify-center pt-2 sm:pt-4">
                 <p-button type="submit" label="Iniciar Sesión" icon="pi pi-sign-in" [disabled]="form().invalid"
+                    (click)="onSubmit()"
                     [loading]="false" styleClass="px-8! sm:px-12!"></p-button>
             </div>
 

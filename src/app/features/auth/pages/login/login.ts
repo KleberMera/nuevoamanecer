@@ -1,5 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { Auth } from '../services/auth';
 import { FormValidation } from '../../../../shared/services/form-validation';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
@@ -50,7 +50,10 @@ private readonly _authService = inject(Auth);
   }
 
   onSubmit() {
+    console.log('Funcionando');
+    
     if (this.form().invalid) return;
+    this._router.navigate(['/home']);
     // this._authService.login(this.form().value).subscribe({
     //   next: (res) => {
     //     console.log(res);
