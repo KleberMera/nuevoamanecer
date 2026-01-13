@@ -3,10 +3,24 @@ import { Router } from '@angular/router';
 import { Auth } from '../services/auth';
 import { FormValidation } from '../../../../shared/services/form-validation';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { CardModule } from 'primeng/card';
+import { InputTextModule } from 'primeng/inputtext';
+import { PasswordModule } from 'primeng/password';
+import { ButtonModule } from 'primeng/button';
+import { CheckboxModule } from 'primeng/checkbox';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule],
+  imports: [
+    ReactiveFormsModule,
+    CardModule,
+    InputTextModule,
+    PasswordModule,
+    ButtonModule,
+    CheckboxModule,
+    FormsModule,
+  ],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
