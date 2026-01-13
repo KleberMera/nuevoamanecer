@@ -1,1 +1,149 @@
-<p>login works!</p>
+<div class="min-h-screen flex items-center justify-center p-4 bg-gradient-to-b from-smoke-950 to-smoke-950">
+  <div class="max-w-md w-full bg-smoke-900/50 rounded-xl shadow-2xl p-8 border border-smoke-800/50 backdrop-blur-sm">
+    <!-- Logo -->
+    <div class="flex justify-center ">
+      <img src="logo_main.svg" alt="Logo"
+        class="h-32 w-auto transform transition-transform duration-300 hover:scale-105" />
+    </div>
+
+    <!-- Título -->
+    <div class="text-center ">
+      <h1 class="text-5xl font-bold text-white mb-3 font-quicksand tracking-wide">
+        Nuevo
+        <span class="bg-gradient-to-r from-peel-400 to-peel-600 text-transparent bg-clip-text">
+          Amanecer
+        </span>
+      </h1>
+      <p class="text-smoke-400 text-lg font-quicksand">Inicia sesión en tu cuenta</p>
+    </div>
+
+    <!-- Formulario -->
+    <form class="space-y-7" [formGroup]="form()" (ngSubmit)="onSubmit()">
+      <!-- Campo de usuario -->
+      <div>
+        <label for="username" class="block text-sm font-medium text-smoke-300 mb-1.5">
+          Usuario
+        </label>
+        <div class="relative group">
+          <div class="relative">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="text-smoke-400 group-hover:text-peel-500 transition-colors duration-200">
+                <circle cx="12" cy="8" r="5" />
+                <path d="M20 21a8 8 0 1 0-16 0" />
+              </svg>
+            </div>
+            <input type="text" id="username" formControlName="username"
+              class="w-full pl-10 pr-4 py-3 bg-smoke-800/50 border border-smoke-700/50 text-white rounded-lg focus:ring-2 focus:ring-peel-500 focus:border-transparent outline-none transition-all duration-200 placeholder-smoke-500 hover:border-peel-500"
+              placeholder="Ingresa tu usuario" />
+          </div>
+          @if (isFieldInvalid('username')) {
+          <span class="mt-1 text-sm text-red-500">
+            {{ getErrorMessage('username') }}
+          </span>
+          }
+        </div>
+      </div>
+
+      <!-- Campo de contraseña -->
+      <div>
+        <label for="password" class="block text-sm font-medium text-smoke-300 mb-1.5">
+          Contraseña
+        </label>
+        <div class="relative group">
+          <div class="relative">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="text-smoke-400 group-hover:text-peel-500 transition-colors duration-200">
+                <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
+                <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+              </svg>
+            </div>
+            <input [type]="showPassword() ? 'text' : 'password'" id="password" formControlName="password"
+              class="w-full pl-10 pr-12 py-3 bg-smoke-800/50 border border-smoke-700/50 text-white rounded-lg focus:ring-2 focus:ring-peel-500 focus:border-transparent outline-none transition-all duration-200 placeholder-smoke-500 hover:border-peel-500"
+              placeholder="••••••••" />
+
+            <button type="button"
+              class="absolute inset-y-0 right-0 pr-3 flex items-center transition-opacity duration-200 opacity-70 hover:opacity-100"
+              (click)="showPassword.set(!showPassword())">
+              @if (showPassword()) {
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="text-smoke-400 hover:text-peel-500 transition-colors duration-200">
+                <path d="M2 2l20 20" />
+                <path d="M6.71 6.71a3.988 3.988 0 0 0-1.94 2.61" />
+                <path d="M2 12s3-7 10-7c1.96 0 3.62.45 5 1.17" />
+                <path d="M14.31 8.31a3.988 3.988 0 0 1 2.61-1.94" />
+                <path d="M19.29 17.29a3.988 3.988 0 0 1-2.61 1.94" />
+                <path d="M22 12s-3 7-10 7c-1.96 0-3.62-.45-5-1.17" />
+                <path d="M9.69 15.69a3.988 3.988 0 0 1-2.61 1.94" />
+              </svg>
+              } @else {
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="text-smoke-400 hover:text-peel-500 transition-colors duration-200">
+                <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
+                <circle cx="12" cy="12" r="3" />
+              </svg>
+              }
+            </button>
+          </div>
+          @if (isFieldInvalid('password')) {
+          <span class="mt-1 text-sm  text-red-500">
+            {{ getErrorMessage('password') }}
+          </span>
+          }
+        </div>
+      </div>
+
+      <!-- Opciones adicionales -->
+      <div class="flex items-center justify-between">
+        <div class="flex items-center">
+          <input type="checkbox" id="remember"
+            class="w-4 h-4 text-peel-600 bg-smoke-800/50 border-smoke-700/50 rounded focus:ring-offset-smoke-900 focus:ring-peel-500 transition-colors duration-200" />
+          <label for="remember" class="ml-2 text-sm text-smoke-300 hover:text-smoke-200 transition-colors duration-200">
+            Recordarme
+          </label>
+        </div>
+        <a href="#"
+          class="text-sm text-peel-500 hover:text-peel-400 inline-flex items-center transition-all duration-200 hover:translate-x-0.5">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1">
+            <path
+              d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4" />
+          </svg>
+          ¿Olvidaste tu contraseña?
+        </a>
+      </div>
+
+      <!-- Botón de inicio de sesión -->
+      <button type="submit" [disabled]="form().invalid"
+        class="w-full bg-peel-600 text-white py-3 px-4 rounded-lg hover:bg-peel-700 focus:ring-4 focus:ring-peel-800 transition-all duration-200 inline-flex items-center justify-center group hover:translate-y-[-2px] active:translate-y-0">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+          class="mr-2 transform transition-transform duration-200 group-hover:translate-x-1">
+          <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
+          <polyline points="10 17 15 12 10 7" />
+          <line x1="15" x2="3" y1="12" y2="12" />
+        </svg>
+        Iniciar Sesión
+      </button>
+
+      <!-- Enlace de registro -->
+      <div class="text-center text-sm text-smoke-400">
+        ¿No tienes una cuenta?
+        <a href="#"
+          class="text-peel-500 hover:text-peel-400 font-medium ml-1 inline-flex items-center transition-all duration-200 hover:translate-x-0.5">
+          Regístrate aquí
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-1">
+            <path d="M5 12h14" />
+            <path d="m12 5 7 7-7 7" />
+          </svg>
+        </a>
+      </div>
+    </form>
+  </div>
+</div>
