@@ -6,6 +6,31 @@
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+     <script>
+            (function () {
+                const APP_CONFIG_KEY = 'appConfigState';
+                const storedConfig = localStorage.getItem(APP_CONFIG_KEY);
+
+                if (storedConfig) {
+                    try {
+                        const parsedConfig = JSON.parse(storedConfig);
+                        if (parsedConfig.darkTheme) {
+                            document.documentElement.classList.add('p-dark');
+                        } else {
+                            document.documentElement.classList.remove('p-dark');
+                        }
+                    } catch (error) {
+                        console.warn('Error parsing stored config, applying dark theme by default');
+                        document.documentElement.classList.add('p-dark');
+                    }
+                } else {
+                    // Si no hay configuración guardada, aplicar modo oscuro por defecto
+                    document.documentElement.classList.add('p-dark');
+                    console.log('No stored config found, applying dark theme by default');
+                }
+            })();
+        </script>
+  
 </head>
 <body>
   <app-root></app-root>
