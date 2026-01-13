@@ -1,4 +1,4 @@
-<div class="min-h-screen flex items-center justify-center p-4">
+<div class="min-h-screen flex items-center justify-center">
   <p-card class="w-full max-w-md">
     <ng-template pTemplate="header">
       <div class="flex justify-center py-8">
@@ -18,71 +18,73 @@
     <!-- Formulario -->
     <form class="space-y-6" [formGroup]="form()" (ngSubmit)="onSubmit()">
       <!-- Campo de usuario -->
-      <div class="field">
-        <label for="username" class="block text-sm font-medium mb-2">Usuario</label>
-        <span class="p-input-icon-left w-full">
-          <i class="pi pi-user"></i>
+      <div class="space-y-2">
+        <label for="username" class="block text-base font-semibold text-gray-100">Usuario</label>
+        <p-iconfield class="w-full">
+          <p-inputicon class="pi pi-user text-gray-400"></p-inputicon>
           <input
             pInputText
             type="text"
             id="username"
             formControlName="username"
             placeholder="Ingresa tu usuario"
-            class="w-full"
+            class="w-full h-11! text-base!"
           />
-        </span>
+        </p-iconfield>
         @if (isFieldInvalid('username')) {
-        <small class="p-error block mt-2">
+        <small class="text-red-400 block text-sm">
           {{ getErrorMessage('username') }}
         </small>
         }
       </div>
 
       <!-- Campo de contraseña -->
-      <div class="field">
-        <label for="password" class="block text-sm font-medium mb-2">Contraseña</label>
-        <p-password
-          id="password"
-          formControlName="password"
-          placeholder="••••••••"
-          [toggleMask]="true"
-          class="w-full"
-        ></p-password>
+      <div class="space-y-2">
+        <label for="password" class="block text-base font-semibold text-gray-100">Contraseña</label>
+        <p-iconfield class="w-full flex items-center">
+          <p-inputicon class="pi pi-lock text-gray-400"></p-inputicon>
+          <p-password
+            id="password"
+            formControlName="password"
+            placeholder="••••••••"
+            [toggleMask]="true"
+            styleClass="w-full"
+            [inputStyleClass]="'w-full h-11! text-base! py-2.5!'"
+          ></p-password>
+        </p-iconfield>
         @if (isFieldInvalid('password')) {
-        <small class="p-error block mt-2">
+        <small class="text-red-400 block text-sm">
           {{ getErrorMessage('password') }}
         </small>
         }
       </div>
 
       <!-- Opciones adicionales -->
-      <div class="flex items-center justify-between">
-        <div class="flex items-center">
-          <p-checkbox id="remember" name="remember"></p-checkbox>
-          <label for="remember" class="ml-2 text-sm">Recordarme</label>
-        </div>
-        <a href="#" class="text-sm text-primary hover:text-primary-600 inline-flex items-center transition-all">
-          <i class="pi pi-redo text-xs mr-2"></i>
+      <div class="flex items-center justify-end pt-2">
+        <a href="#" class="text-sm text-primary hover:text-primary-600 inline-flex items-center gap-1 transition-all">
+          <i class="pi pi-key text-base"></i>
           ¿Olvidaste tu contraseña?
         </a>
       </div>
 
       <!-- Botón de inicio de sesión -->
-      <p-button
-        type="submit"
-        label="Iniciar Sesión"
-        icon="pi pi-sign-in"
-        [disabled]="form().invalid"
-        class="w-full"
-        [loading]="false"
-      ></p-button>
+      <div class="flex justify-center pt-4">
+        <p-button
+          type="submit"
+          label="Iniciar Sesión"
+          icon="pi pi-sign-in"
+          [disabled]="form().invalid"
+          [loading]="false"
+          styleClass="!px-12"
+        ></p-button>
+      </div>
 
       <!-- Enlace de registro -->
       <div class="text-center text-sm text-surface-500 pt-4">
         ¿No tienes una cuenta?
-        <a href="#" class="text-primary hover:text-primary-600 font-medium inline-flex items-center transition-all">
+        <a href="#" class="text-primary hover:text-primary-600 font-medium inline-flex items-center gap-1 transition-all">
           Regístrate aquí
-          <i class="pi pi-arrow-right text-xs ml-2"></i>
+          <i class="pi pi-arrow-right text-xs"></i>
         </a>
       </div>
     </form>

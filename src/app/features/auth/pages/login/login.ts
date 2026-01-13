@@ -9,6 +9,8 @@ import { PasswordModule } from 'primeng/password';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { FormsModule } from '@angular/forms';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
 
 @Component({
   selector: 'app-login',
@@ -20,6 +22,8 @@ import { FormsModule } from '@angular/forms';
     ButtonModule,
     CheckboxModule,
     FormsModule,
+    IconFieldModule,
+    InputIconModule,
   ],
   templateUrl: './login.html',
   styleUrl: './login.css',
