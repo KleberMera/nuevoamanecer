@@ -1,92 +1,78 @@
-<div class="min-h-screen flex items-center justify-center">
-  <p-card class="w-full max-w-md">
-    <ng-template pTemplate="header">
-      <div class="flex justify-center py-8">
-        <img src="logo_main.svg" alt="Logo" class="h-32 w-auto transform transition-transform duration-300 hover:scale-105" />
-      </div>
-    </ng-template>
+<div class="min-h-screen flex items-center justify-center p-4">
+    <p-card class="w-full max-w-md">
+        <ng-template pTemplate="header">
+            <div class="flex justify-center py-1 sm:py-2">
+                <img src="logo_main.svg" alt="Logo"
+                    class="h-24 sm:h-32 w-auto transform transition-transform duration-300 hover:scale-105" />
+            </div>
+        </ng-template>
 
-    <!-- Título -->
-    <div class="text-center mb-8">
-      <h1 class="text-5xl font-bold mb-3">
-        Nuevo
-        <span class="text-primary">Amanecer</span>
-      </h1>
-      <p class="text-surface-500">Inicia sesión en tu cuenta</p>
-    </div>
-
-    <!-- Formulario -->
-    <form class="space-y-6" [formGroup]="form()" (ngSubmit)="onSubmit()">
-      <!-- Campo de usuario -->
-      <div class="space-y-2">
-        <label for="username" class="block text-base font-semibold text-gray-100">Usuario</label>
-        <p-iconfield class="w-full">
-          <p-inputicon class="pi pi-user text-gray-400"></p-inputicon>
-          <input
-            pInputText
-            type="text"
-            id="username"
-            formControlName="username"
-            placeholder="Ingresa tu usuario"
-            class="w-full h-11! text-base!"
-          />
-        </p-iconfield>
-        @if (isFieldInvalid('username')) {
-        <small class="text-red-400 block text-sm">
-          {{ getErrorMessage('username') }}
-        </small>
-        }
+        <!-- Título -->
+        <div class="text-center mb-2 sm:mb-3">
+            <h1 class="text-3xl sm:text-5xl font-bold mb-2 sm:mb-3 text-white tracking-wide">
+                Nuevo
+                <span class="bg-linear-to-r from-amber-400 via-amber-500 to-orange-600 text-transparent bg-clip-text font-extrabold">
+                    Amanecer
+                </span>
+            </h1>
       </div>
 
-      <!-- Campo de contraseña -->
-      <div class="space-y-2">
-        <label for="password" class="block text-base font-semibold text-gray-100">Contraseña</label>
-        <p-iconfield class="w-full flex items-center">
-          <p-inputicon class="pi pi-lock text-gray-400"></p-inputicon>
-          <p-password
-            id="password"
-            formControlName="password"
-            placeholder="••••••••"
-            [toggleMask]="true"
-            styleClass="w-full"
-            [inputStyleClass]="'w-full h-11! text-base! py-2.5!'"
-          ></p-password>
-        </p-iconfield>
-        @if (isFieldInvalid('password')) {
-        <small class="text-red-400 block text-sm">
-          {{ getErrorMessage('password') }}
-        </small>
-        }
-      </div>
+        <!-- Formulario -->
+        <form class="space-y-4 sm:space-y-6" [formGroup]="form()" (ngSubmit)="onSubmit()">
+            <!-- Campo de usuario -->
+            <div class="space-y-2">
+                <label for="username" class="block text-base font-semibold text-gray-100">Usuario</label>
+                <p-iconfield class="w-full">
+                    <p-inputicon class="pi pi-user text-gray-400"></p-inputicon>
+                    <input pInputText type="text" id="username" formControlName="username"
+                        placeholder="Ingresa tu usuario" class="w-full h-11! text-base!" />
+                </p-iconfield>
+                @if (isFieldInvalid('username')) {
+                <small class="text-red-400 block text-sm">
+                    {{ getErrorMessage('username') }}
+                </small>
+                }
+            </div>
 
-      <!-- Opciones adicionales -->
-      <div class="flex items-center justify-end pt-2">
-        <a href="#" class="text-sm text-primary hover:text-primary-600 inline-flex items-center gap-1 transition-all">
-          <i class="pi pi-key text-base"></i>
-          ¿Olvidaste tu contraseña?
-        </a>
-      </div>
+            <!-- Campo de contraseña -->
+            <div class="space-y-2">
+                <label for="password" class="block text-base font-semibold text-gray-100">Contraseña</label>
+                <p-iconfield class="w-full flex items-center">
+                    <p-inputicon class="pi pi-lock text-gray-400"></p-inputicon>
+                    <p-password id="password" formControlName="password" placeholder="••••••••" [toggleMask]="true"
+                        styleClass="w-full" [inputStyleClass]="'w-full h-11! text-base! py-2.5!'"></p-password>
+                </p-iconfield>
+                @if (isFieldInvalid('password')) {
+                <small class="text-red-400 block text-sm">
+                    {{ getErrorMessage('password') }}
+                </small>
+                }
+            </div>
 
-      <!-- Botón de inicio de sesión -->
-      <div class="flex justify-center pt-4">
-        <p-button
-          type="submit"
-          label="Iniciar Sesión"
-          icon="pi pi-sign-in"
-          [disabled]="form().invalid"
-          [loading]="false"
-          styleClass="!px-12"
-        ></p-button>
-      </div>
+            <!-- Opciones adicionales -->
+            <div class="flex items-center justify-end pt-1">
+                <a href="#"
+                    class="text-xs sm:text-sm text-primary hover:text-primary-600 inline-flex items-center gap-1 transition-all">
+                    <i class="pi pi-key text-sm sm:text-base"></i>
+                    ¿Olvidaste tu contraseña?
+                </a>
+            </div>
 
-      <!-- Enlace de registro -->
-      <div class="text-center text-sm text-surface-500 pt-4">
-        ¿No tienes una cuenta?
-        <a href="#" class="text-primary hover:text-primary-600 font-medium inline-flex items-center gap-1 transition-all">
-          Regístrate aquí
-          <i class="pi pi-arrow-right text-xs"></i>
-        </a>
-      </div>
-    </form>
-  </p-card>
+            <!-- Botón de inicio de sesión -->
+            <div class="flex justify-center pt-2 sm:pt-4">
+                <p-button type="submit" label="Iniciar Sesión" icon="pi pi-sign-in" [disabled]="form().invalid"
+                    [loading]="false" styleClass="px-8! sm:px-12!"></p-button>
+            </div>
+
+            <!-- Enlace de registro -->
+            <div class="text-center text-xs sm:text-sm text-surface-500 pt-2 sm:pt-4">
+                ¿No tienes una cuenta?
+                <a href="#"
+                    class="text-primary hover:text-primary-600 font-medium inline-flex items-center gap-1 transition-all">
+                    Regístrate aquí
+                    <i class="pi pi-arrow-right text-xs"></i>
+                </a>
+            </div>
+        </form>
+    </p-card>
 </div>
