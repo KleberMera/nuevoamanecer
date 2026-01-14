@@ -34,7 +34,7 @@ export class SidebarItem {
           id: 21,
           label: 'Lista de Usuarios',
           icon: 'pi pi-list',
-          route: PAGES_ROUTES.DASHBOARD.USUARIOS.LISTA,
+          route: `${PAGES_ROUTES.DASHBOARD.USUARIOS.DEFAULT}/${PAGES_ROUTES.DASHBOARD.USUARIOS.LISTA}`,
         },
         // {
         //   id: 22,
@@ -73,11 +73,11 @@ export class SidebarItem {
 
   protected isItemActive(item: MenuItem): boolean {
     if (!item.route) return false;
-    const currentRoute = this.router.url.replace('/', '');
+    const currentRoute = this.router.url.substring(1); // Remove leading /
     if (currentRoute === item.route) return true;
     return (
       item.subitems?.some((subitem) => {
-        const subRoute = this.router.url.replace('/', '');
+        const subRoute = this.router.url.substring(1); // Remove leading /
         return subRoute === subitem.route;
       }) ?? false
     );
