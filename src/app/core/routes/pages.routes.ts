@@ -1,3 +1,4 @@
+
 export const PAGES_ROUTES = {
   AUTH: {
     DEFAULT: 'auth',
@@ -14,11 +15,11 @@ export const PAGES_ROUTES = {
       //GRUPOS: 'grupos',
     //  PERMISOS: 'permisos',
     },
-    // CONFIGURACION: {
-    //   DEFAULT: 'configuracion',
-    //   GENERAL: 'configuracion',
-    //   SEGURIDAD: 'seguridad',
-    // },
+    CONFIGURACION: {
+      DEFAULT: 'configuracion',
+      GENERAL: 'configuracion',
+      SEGURIDAD: 'seguridad',
+    },
     // TABLAS: {
     //   DEFAULT: 'tablas',
     //   BUSCAR_TABLA: 'buscar-tablas',
