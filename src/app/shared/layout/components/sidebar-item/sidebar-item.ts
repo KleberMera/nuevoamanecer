@@ -36,18 +36,18 @@ export class SidebarItem {
           icon: 'pi pi-list',
           route: PAGES_ROUTES.DASHBOARD.USUARIOS.LISTA,
         },
-        {
-          id: 22,
-          label: 'Grupos',
-          icon: 'pi pi-sitemap',
-          route: PAGES_ROUTES.DASHBOARD.USUARIOS.GRUPOS,
-        },
-        {
-          id: 23,
-          label: 'Permisos',
-          icon: 'pi pi-shield',
-          route: PAGES_ROUTES.DASHBOARD.USUARIOS.PERMISOS,
-        },
+        // {
+        //   id: 22,
+        //   label: 'Grupos',
+        //   icon: 'pi pi-sitemap',
+        //   route: PAGES_ROUTES.DASHBOARD.USUARIOS.GRUPOS,
+        // },
+        // {
+        //   id: 23,
+        //   label: 'Permisos',
+        //   icon: 'pi pi-shield',
+        //   route: PAGES_ROUTES.DASHBOARD.USUARIOS.PERMISOS,
+        // },
       ],
     },
     {
@@ -55,29 +55,29 @@ export class SidebarItem {
       label: 'Configuración',
       icon: 'pi pi-cog',
       subitems: [
-        {
-          id: 31,
-          label: 'General',
-          icon: 'pi pi-sliders-v',
-          route: PAGES_ROUTES.DASHBOARD.CONFIGURACION.GENERAL,
-        },
-        {
-          id: 32,
-          label: 'Seguridad',
-          icon: 'pi pi-lock',
-          route: PAGES_ROUTES.DASHBOARD.CONFIGURACION.SEGURIDAD,
-        },
+        // {
+        //   id: 31,
+        //   label: 'General',
+        //   icon: 'pi pi-sliders-v',
+        //   route: PAGES_ROUTES.DASHBOARD.CONFIGURACION.GENERAL,
+        // },
+        // {
+        //   id: 32,
+        //   label: 'Seguridad',
+        //   icon: 'pi pi-lock',
+        //   route: PAGES_ROUTES.DASHBOARD.CONFIGURACION.SEGURIDAD,
+        // },
       ],
     },
   ]);
 
   protected isItemActive(item: MenuItem): boolean {
     if (!item.route) return false;
-    const currentRoute = this.router.url.replace('/home/', '');
+    const currentRoute = this.router.url.replace('/', '');
     if (currentRoute === item.route) return true;
     return (
       item.subitems?.some((subitem) => {
-        const subRoute = this.router.url.replace('/home/', '');
+        const subRoute = this.router.url.replace('/', '');
         return subRoute === subitem.route;
       }) ?? false
     );
@@ -94,7 +94,7 @@ export class SidebarItem {
         this.sidebarService.close();
       }
       if (item.route) {
-        this.router.navigate(['home', item.route]);
+        this.router.navigate([item.route]);
       }
     }
   }
@@ -104,7 +104,7 @@ export class SidebarItem {
       this.sidebarService.close();
     }
     if (subitemRoute) {
-      this.router.navigate(['home', subitemRoute]);
+      this.router.navigate([subitemRoute]);
     }
   }
 }

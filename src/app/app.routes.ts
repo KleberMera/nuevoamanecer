@@ -28,7 +28,11 @@ export const routes: Routes = [
             path: PAGES_ROUTES.DASHBOARD.DASHBOARD,
             loadComponent: () => import('./features/dashboard/pages/home/home'),
           },
-
+          {
+            path: PAGES_ROUTES.DASHBOARD.DEFAULT,
+            loadChildren: () => import('./features/usuarios/usuarios.routes')
+          },
+                   
         ],
       },
     ],

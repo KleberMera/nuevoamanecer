@@ -11,23 +11,23 @@ export const PAGES_ROUTES = {
     USUARIOS: {
       DEFAULT: 'usuarios',
       LISTA: 'lista-usuarios',
-      GRUPOS: 'grupos',
-      PERMISOS: 'permisos',
+      //GRUPOS: 'grupos',
+    //  PERMISOS: 'permisos',
     },
-    CONFIGURACION: {
-      DEFAULT: 'configuracion',
-      GENERAL: 'configuracion',
-      SEGURIDAD: 'seguridad',
-    },
-    TABLAS: {
-      DEFAULT: 'tablas',
-      BUSCAR_TABLA: 'buscar-tablas',
-    },
-    REGISTRADORES:{
-      DEFAULT: 'registradores',
-      PANEL: 'panel',
-      TIPOS: 'tipos',
-    }
+    // CONFIGURACION: {
+    //   DEFAULT: 'configuracion',
+    //   GENERAL: 'configuracion',
+    //   SEGURIDAD: 'seguridad',
+    // },
+    // TABLAS: {
+    //   DEFAULT: 'tablas',
+    //   BUSCAR_TABLA: 'buscar-tablas',
+    // },
+    // REGISTRADORES:{
+    //   DEFAULT: 'registradores',
+    //   PANEL: 'panel',
+    //   TIPOS: 'tipos',
+    // }
 
   },
 };
