@@ -9,7 +9,7 @@
         [text]="true"
         [rounded]="true"
         severity="secondary"
-        styleClass="!text-primary-500! hover:!text-primary-400!"
+        class="text-primary-500! hover:text-primary-400!"
       ></p-button>
 
       <img src="logo_main.svg" alt="Logo" class="h-8 w-auto hover:opacity-80 transition-opacity" />
@@ -22,30 +22,21 @@
     </div>
 
     <!-- Menú derecho -->
-    <div class="flex items-center gap-2 sm:gap-3">
+    <div class="flex items-center justify-end gap-3 sm:gap-4">
       <!-- Botón de notificaciones -->
-      <p-button 
-        icon="pi pi-bell"
-        [text]="true"
-        [rounded]="true"
-        severity="secondary"
-        styleClass="!text-surface-400! hover:!text-primary-500!"
-        pBadge
-        [badge]="unreadNotifications() > 0 ? unreadNotifications().toString() : ''"
-        badgeSeverity="danger"
-      ></p-button>
+      <p-overlaybadge [value]="unreadNotifications()" severity="danger" class="flex items-center justify-center">
+        <i class="pi pi-bell" style="font-size: 1.5rem; color: var(--p-surface-400); cursor: pointer;"></i>
+      </p-overlaybadge>
 
       <!-- Separador -->
-      <p-divider layout="vertical" styleClass="!h-6"></p-divider>
+      <p-divider layout="vertical" class="h-8!"></p-divider>
 
       <!-- Perfil de usuario -->
       <div class="flex items-center gap-2 sm:gap-3">
         <p-avatar 
-          [label]="userName().charAt(0)"
+          [image]="userImage()"
           shape="circle"
           size="large"
-          severity="primary"
-          styleClass="!font-bold!"
         ></p-avatar>
         <div class="hidden md:block text-left">
           <p class="text-sm font-semibold text-white">{{ userName() }}</p>
