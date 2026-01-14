@@ -11,6 +11,7 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { FormsModule } from '@angular/forms';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
+import PAGES_ROUTES from '../../../../core/routes/pages.routes';
 
 @Component({
   selector: 'app-login',
@@ -51,9 +52,9 @@ private readonly _authService = inject(Auth);
 
   onSubmit() {
     console.log('Funcionando');
-    
-    if (this.form().invalid) return;
-    this._router.navigate(['/home']);
+      this._router.navigate([PAGES_ROUTES.DASHBOARD.DASHBOARD]);
+    ///if (this.form().invalid) return;
+   /// this._router.navigate(['/home']);
     // this._authService.login(this.form().value).subscribe({
     //   next: (res) => {
     //     console.log(res);

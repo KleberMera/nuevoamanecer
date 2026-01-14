@@ -4,10 +4,13 @@ import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeuix/themes/aura';
 import { routes } from './app.routes';
 import MyTheme from './core/types/apptheme';
+//import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes),
+       // provideAnimationsAsync(), Deprecado
     // providePrimeNG({
     //   theme: {
     //     preset: Aura,

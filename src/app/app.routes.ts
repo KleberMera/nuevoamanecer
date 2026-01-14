@@ -28,11 +28,18 @@ export const routes: Routes = [
             pathMatch: 'full',
             redirectTo: PAGES_ROUTES.DASHBOARD.DASHBOARD,
           },
-        //   {
-        //     path: PAGES_ROUTES.DASHBOARD.DASHBOARD,
-        //     loadComponent: () => import('./features/dashboard/pages/home/home'),
-        //   },
-          
+          {
+            path: PAGES_ROUTES.DASHBOARD.DASHBOARD,
+            loadComponent: () => import('./features/dashboard/pages/home/home'),
+          },
+          // {
+          //   path: PAGES_ROUTES.DASHBOARD.DEFAULT,
+          //   loadChildren: () => import('./features/tablas/tablas.routes')
+          // },
+          //           {
+          //   path: PAGES_ROUTES.DASHBOARD.DEFAULT,
+          //   loadChildren: () => import('./features/registradores/registradores.routes')
+          // },
         ],
       },
     ],

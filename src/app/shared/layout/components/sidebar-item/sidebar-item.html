@@ -1,0 +1,49 @@
+<nav class="p-3">
+    <ul class="space-y-1">
+        @for (item of menuItems(); track item.id) {
+        <li class="relative">
+            <!-- Item principal -->
+            <div class="relative" (click)="manejarClickItem(item)">
+                <a [routerLink]="item.route" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="border-l-2 border-primary-500" 
+                    class="flex items-center justify-between w-full px-3 py-2.5 rounded-lg transition-all duration-200 group text-surface-400"
+                    [class.!text-primary-500]="isItemActive(item)"
+                    [class.!bg-primary-500/20]="isItemActive(item)"
+                >
+                    <div class="flex items-center gap-3">
+                        <i [attr.class]="'min-w-[20px] text-primary-500 ' + item.icon"></i>
+                        <span class="text-sm font-medium">{{ item.label }}</span>
+                    </div>
+                    @if (item.subitems?.length) {
+                    <i class="pi pi-chevron-down transition-transform duration-200" [class.rotate-180]="expandedItems()[item.id]"></i>
+                    }
+                </a>
+            </div>
+
+            <!-- Subitems -->
+            @if (item.subitems?.length) {
+            <div [class.max-h-96]="expandedItems()[item.id]" [class.max-h-0]="!expandedItems()[item.id]" class="overflow-hidden transition-all duration-300 ease-out">
+                <ul class="mt-1 ml-6 space-y-1 border-l border-surface-500/40">
+                    @for (subitem of item.subitems; track subitem.id) {
+                    <li>
+                        <a [routerLink]="subitem.route" routerLinkActive=""
+                            (click)="handleSubItemClick()"
+                            class="flex items-center gap-2 px-3 py-2 text-xs rounded-lg transition-all duration-200 relative text-surface-400"
+                            [class.!text-primary-500]="router.url.includes(subitem.route)"
+                            [class.!bg-primary-500]="router.url.includes(subitem.route)"
+                        >
+                            @if (subitem.icon) {
+                            <i [attr.class]="'w-4 h-4 text-primary-500 ' + subitem.icon"></i>
+                            } @else {
+                            <span class="w-2 h-2 rounded-full bg-primary-500/60"></span>
+                            }
+                            <span>{{ subitem.label }}</span>
+                        </a>
+                    </li>
+                    }
+                </ul>
+            </div>
+            }
+        </li>
+        }
+    </ul>
+</nav>
