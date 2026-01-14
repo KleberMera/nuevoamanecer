@@ -7,7 +7,7 @@
                 <a [routerLink]="item.route" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="border-l-2 border-primary-500" 
                     class="flex items-center justify-between w-full px-3 py-2.5 rounded-lg transition-all duration-200 group text-surface-400"
                     [class.!text-primary-500]="isItemActive(item)"
-                    [class.!bg-primary-500/20]="isItemActive(item)"
+                    [class.!bg-primary-500]="isItemActive(item)"
                 >
                     <div class="flex items-center gap-3">
                         <i [attr.class]="'min-w-[20px] text-primary-500 ' + item.icon"></i>
@@ -26,7 +26,7 @@
                     @for (subitem of item.subitems; track subitem.id) {
                     <li>
                         <a [routerLink]="subitem.route" routerLinkActive=""
-                            (click)="handleSubItemClick()"
+                            (click)="handleSubItemClick(subitem.route)"
                             class="flex items-center gap-2 px-3 py-2 text-xs rounded-lg transition-all duration-200 relative text-surface-400"
                             [class.!text-primary-500]="router.url.includes(subitem.route)"
                             [class.!bg-primary-500]="router.url.includes(subitem.route)"

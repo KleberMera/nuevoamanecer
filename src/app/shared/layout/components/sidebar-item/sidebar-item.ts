@@ -3,6 +3,7 @@ import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { SiderbarService } from '../../../services/siderbar-service';
 import { ViewportService } from '../../../services/viewport-service';
 import { MenuItem } from '../../../../core/models/menu';
+import PAGES_ROUTES from '../../../../core/routes/pages.routes';
 
 @Component({
   selector: 'app-sidebar-item',
@@ -22,7 +23,7 @@ export class SidebarItem {
       id: 1,
       label: 'Dashboard',
       icon: 'pi pi-chart-bar',
-      route: 'dashboard',
+      route: PAGES_ROUTES.DASHBOARD.DASHBOARD,
     },
     {
       id: 2,
@@ -33,19 +34,19 @@ export class SidebarItem {
           id: 21,
           label: 'Lista de Usuarios',
           icon: 'pi pi-list',
-          route: 'lista-usuarios',
+          route: PAGES_ROUTES.DASHBOARD.USUARIOS.LISTA,
         },
         {
           id: 22,
           label: 'Grupos',
           icon: 'pi pi-sitemap',
-          route: 'grupos',
+          route: PAGES_ROUTES.DASHBOARD.USUARIOS.GRUPOS,
         },
         {
           id: 23,
           label: 'Permisos',
           icon: 'pi pi-shield',
-          route: 'permisos',
+          route: PAGES_ROUTES.DASHBOARD.USUARIOS.PERMISOS,
         },
       ],
     },
@@ -58,24 +59,27 @@ export class SidebarItem {
           id: 31,
           label: 'General',
           icon: 'pi pi-sliders-v',
-          route: 'configuracion',
+          route: PAGES_ROUTES.DASHBOARD.CONFIGURACION.GENERAL,
         },
         {
           id: 32,
           label: 'Seguridad',
           icon: 'pi pi-lock',
-          route: 'seguridad',
+          route: PAGES_ROUTES.DASHBOARD.CONFIGURACION.SEGURIDAD,
         },
       ],
     },
   ]);
 
   protected isItemActive(item: MenuItem): boolean {
-    if (item.route && this.router.url.startsWith(item.route)) return true;
+    if (!item.route) return false;
+    const currentRoute = this.router.url.replace('/home/', '');
+    if (currentRoute === item.route) return true;
     return (
-      item.subitems?.some((subitem) =>
-        this.router.url.startsWith(subitem.route)
-      ) ?? false
+      item.subitems?.some((subitem) => {
+        const subRoute = this.router.url.replace('/home/', '');
+        return subRoute === subitem.route;
+      }) ?? false
     );
   }
 
@@ -90,16 +94,17 @@ export class SidebarItem {
         this.sidebarService.close();
       }
       if (item.route) {
-        const rutas = `home/${item.route}`;
-
-        this.router.navigate([rutas]);
+        this.router.navigate(['home', item.route]);
       }
     }
   }
 
-  protected handleSubItemClick(): void {
+  protected handleSubItemClick(subitemRoute?: string): void {
     if (!this.viewportService.isDesktop()) {
       this.sidebarService.close();
+    }
+    if (subitemRoute) {
+      this.router.navigate(['home', subitemRoute]);
     }
   }
 }

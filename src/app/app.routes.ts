@@ -15,10 +15,6 @@ export const routes: Routes = [
         path: PAGES_ROUTES.AUTH.DEFAULT,
         loadChildren: () => import('./features/auth/auth.routes'),
       },
-      // {
-      //   path: PAGES_ROUTES.DASHBOARD.DASHBOARD,
-      //   loadComponent: () => import('./features/dashboard/home/home').then(m => m.Home),
-      // },
       {
         path: PAGES_ROUTES.DASHBOARD.DEFAULT,
         component: Layout,
@@ -32,14 +28,7 @@ export const routes: Routes = [
             path: PAGES_ROUTES.DASHBOARD.DASHBOARD,
             loadComponent: () => import('./features/dashboard/pages/home/home'),
           },
-          // {
-          //   path: PAGES_ROUTES.DASHBOARD.DEFAULT,
-          //   loadChildren: () => import('./features/tablas/tablas.routes')
-          // },
-          //           {
-          //   path: PAGES_ROUTES.DASHBOARD.DEFAULT,
-          //   loadChildren: () => import('./features/registradores/registradores.routes')
-          // },
+
         ],
       },
     ],
