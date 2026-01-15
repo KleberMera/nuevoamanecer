@@ -1,6 +1,6 @@
-<nav class="fixed bottom-0 left-0 right-0 z-40 bg-surface-950/80 backdrop-blur-md border-t border-surface-500/40 md:hidden px-4 pb-safe">
-  <div class="max-w-lg mx-auto">
-    <div class="grid grid-cols-5 gap-2 p-3 items-center">
+<nav class="fixed bottom-0 left-0 right-0 z-40 bg-surface-950/80 backdrop-blur-md md:hidden px-0 pb-safe pt-3 border-t border-surface-500/40">
+  <div class="w-full">
+    <div class="grid grid-cols-5 gap-0 px-3 pb-3 items-end">
       <!-- Inicio Tab -->
       <button 
         [routerLink]="PAGES_ROUTES.DASHBOARD.DASHBOARD"
@@ -33,9 +33,9 @@
       <!-- Center Menu Button with Logo -->
       <button 
         type="button"
-        class="flex flex-col items-center justify-center text-surface-400 transition-colors duration-200 relative group">
+        class="flex flex-col items-center justify-center text-surface-400 transition-colors duration-200 relative group pt-1">
         <div class="relative flex flex-col items-center">
-          <div class="p-2 rounded-lg transition-all duration-200 group-hover:bg-primary-500/10">
+          <div class="p-2 rounded-full transition-all duration-200 group-hover:bg-primary-500/10 -mt-3">
             <img src="logo_main.svg" alt="Menu" class="w-6 h-6 object-contain">
           </div>
           <span class="text-xs font-medium mt-1">Menu</span>
