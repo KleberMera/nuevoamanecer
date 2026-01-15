@@ -1,0 +1,75 @@
+<nav class="fixed bottom-0 left-0 right-0 z-40 bg-surface-950/80 backdrop-blur-md border-t border-surface-500/40 md:hidden px-4 pb-safe">
+  <div class="max-w-lg mx-auto">
+    <div class="grid grid-cols-5 gap-2 p-3 items-center">
+      <!-- Inicio Tab -->
+      <button 
+        [routerLink]="PAGES_ROUTES.DASHBOARD.DASHBOARD"
+        routerLinkActive="text-primary-500!"
+        [routerLinkActiveOptions]="{exact: true}"
+        class="flex flex-col items-center justify-center text-surface-400 transition-colors duration-200 relative group">
+        <div class="relative flex flex-col items-center">
+          <div class="p-2 rounded-lg transition-all duration-200 group-hover:bg-primary-500/10">
+            <i class="pi pi-home text-xl transition-transform duration-200 group-hover:scale-110"></i>
+          </div>
+          <span class="text-xs font-medium mt-1">Inicio</span>
+          <div class="absolute -top-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-primary-500 opacity-0 transition-all duration-200 scale-0 group-hover:opacity-100 group-hover:scale-100"></div>
+        </div>
+      </button>
+
+      <!-- Usuarios Tab -->
+      <button 
+        [routerLink]="['usuarios/lista-usuarios']"
+        routerLinkActive="text-primary-500!"
+        class="flex flex-col items-center justify-center text-surface-400 transition-colors duration-200 relative group">
+        <div class="relative flex flex-col items-center">
+          <div class="p-2 rounded-lg transition-all duration-200 group-hover:bg-primary-500/10">
+            <i class="pi pi-users text-xl transition-transform duration-200 group-hover:scale-110"></i>
+          </div>
+          <span class="text-xs font-medium mt-1">Usuarios</span>
+          <div class="absolute -top-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-primary-500 opacity-0 transition-all duration-200 scale-0 group-hover:opacity-100 group-hover:scale-100"></div>
+        </div>
+      </button>
+
+      <!-- Center Menu Button with Logo -->
+      <button 
+        type="button"
+        class="flex flex-col items-center justify-center text-surface-400 transition-colors duration-200 relative group">
+        <div class="relative flex flex-col items-center">
+          <div class="p-2 rounded-lg transition-all duration-200 group-hover:bg-primary-500/10">
+            <img src="logo_main.svg" alt="Menu" class="w-6 h-6 object-contain">
+          </div>
+          <span class="text-xs font-medium mt-1">Menu</span>
+          <div class="absolute -top-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-primary-500 opacity-0 transition-all duration-200 scale-0 group-hover:opacity-100 group-hover:scale-100"></div>
+        </div>
+      </button>
+
+      <!-- Reportes Tab -->
+      <button 
+        routerLink="reportes"
+        routerLinkActive="text-primary-500!"
+        class="flex flex-col items-center justify-center text-surface-400 transition-colors duration-200 relative group">
+        <div class="relative flex flex-col items-center">
+          <div class="p-2 rounded-lg transition-all duration-200 group-hover:bg-primary-500/10">
+            <i class="pi pi-chart-bar text-xl transition-transform duration-200 group-hover:scale-110"></i>
+          </div>
+          <span class="text-xs font-medium mt-1">Reportes</span>
+          <div class="absolute -top-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-primary-500 opacity-0 transition-all duration-200 scale-0 group-hover:opacity-100 group-hover:scale-100"></div>
+        </div>
+      </button>
+
+      <!-- Configuración Tab -->
+      <button 
+        routerLink="configuracion"
+        routerLinkActive="text-primary-500!"
+        class="flex flex-col items-center justify-center text-surface-400 transition-colors duration-200 relative group">
+        <div class="relative flex flex-col items-center">
+          <div class="p-2 rounded-lg transition-all duration-200 group-hover:bg-primary-500/10">
+            <i class="pi pi-cog text-xl transition-transform duration-200 group-hover:scale-110"></i>
+          </div>
+          <span class="text-xs font-medium mt-1">Config</span>
+          <div class="absolute -top-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-primary-500 opacity-0 transition-all duration-200 scale-0 group-hover:opacity-100 group-hover:scale-100"></div>
+        </div>
+      </button>
+    </div>
+  </div>
+</nav>
