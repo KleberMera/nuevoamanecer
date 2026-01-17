@@ -39,8 +39,8 @@
                 <label for="password" class="block text-base font-semibold text-gray-100">Contraseña</label>
                 <p-iconfield class="w-full flex items-center">
                     <p-inputicon class="pi pi-lock text-gray-400"></p-inputicon>
-                    <p-password id="password" formControlName="password" placeholder="••••••••" [toggleMask]="true"
-                        styleClass="w-full" [inputStyleClass]="'w-full h-11! text-base! py-2.5!'"></p-password>
+                    <p-password id="password" formControlName="password" placeholder="••••••••" [toggleMask]="true" [feedback]="false"
+                    class="w-full" [inputStyleClass]="'w-full h-11! text-base! py-2.5!'"></p-password>
                 </p-iconfield>
                 @if (isFieldInvalid('password')) {
                 <small class="text-red-400 block text-sm">
@@ -61,7 +61,7 @@
             <!-- Botón de inicio de sesión -->
             <div class="flex justify-center pt-2 sm:pt-4">
                 <p-button type="submit" label="Iniciar Sesión" icon="pi pi-sign-in" [disabled]="form().invalid"
-                    [loading]="false" styleClass="px-8! sm:px-12!"></p-button>
+                    [loading]="false" class="px-8! sm:px-12!"></p-button>
             </div>
 
             <!-- Enlace de registro -->
