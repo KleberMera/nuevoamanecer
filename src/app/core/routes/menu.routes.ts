@@ -3,7 +3,7 @@ import PAGES_ROUTES from './pages.routes';
 
 // Helper functions para construir rutas automáticamente
 const buildRoute = (parent: string, child: string): string => `${parent}/${child}`;
-const buildUsuariosRoute = (child: string): string => buildRoute(PAGES_ROUTES.DASHBOARD.USUARIOS.DEFAULT, child);
+const buildUsuariosRoute = (child: string): string => buildRoute(PAGES_ROUTES.USUARIOS.DEFAULT, child);
 const buildConfiguracionRoute = (child: string): string => buildRoute(PAGES_ROUTES.DASHBOARD.CONFIGURACION.DEFAULT, child);
 
 export const MENU_ITEMS: MenuItem[] = [
@@ -22,7 +22,7 @@ export const MENU_ITEMS: MenuItem[] = [
         id: 21,
         label: 'Lista de Usuarios',
         icon: 'pi pi-list',
-        route: buildUsuariosRoute(PAGES_ROUTES.DASHBOARD.USUARIOS.LISTA),
+        route: buildUsuariosRoute(PAGES_ROUTES.USUARIOS.LISTA),
       },
       // {
       //   id: 22,

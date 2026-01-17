@@ -9,12 +9,7 @@ export const PAGES_ROUTES = {
   DASHBOARD: {
     DEFAULT: '',
     DASHBOARD: 'dashboard',
-    USUARIOS: {
-      DEFAULT: 'usuarios',
-      LISTA: 'lista-usuarios',
-      //GRUPOS: 'grupos',
-    //  PERMISOS: 'permisos',
-    },
+   
     CONFIGURACION: {
       DEFAULT: 'configuracion',
       GENERAL: 'configuracion',
@@ -31,5 +26,11 @@ export const PAGES_ROUTES = {
     // }
 
   },
+   USUARIOS: {
+      DEFAULT: 'usuarios',
+      LISTA: 'lista-usuarios',
+      //GRUPOS: 'grupos',
+    //  PERMISOS: 'permisos',
+    },
 };
 export default PAGES_ROUTES;
