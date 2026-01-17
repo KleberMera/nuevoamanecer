@@ -21,15 +21,15 @@
         <form class="space-y-4 sm:space-y-6" [formGroup]="form()" (ngSubmit)="onSubmit()">
             <!-- Campo de usuario -->
             <div class="space-y-2">
-                <label for="username" class="block text-base font-semibold text-gray-100">Usuario</label>
+                <label for="nombreUsuario" class="block text-base font-semibold text-gray-100">Usuario</label>
                 <p-iconfield class="w-full">
                     <p-inputicon class="pi pi-user text-gray-400"></p-inputicon>
-                    <input pInputText type="text" id="username" formControlName="username"
+                    <input pInputText type="text" id="nombreUsuario" formControlName="nombreUsuario"
                         placeholder="Ingresa tu usuario" class="w-full h-11! text-base!" />
                 </p-iconfield>
-                @if (isFieldInvalid('username')) {
+                @if (isFieldInvalid('nombreUsuario')) {
                 <small class="text-red-400 block text-sm">
-                    {{ getErrorMessage('username') }}
+                    {{ getErrorMessage('nombreUsuario') }}
                 </small>
                 }
             </div>
