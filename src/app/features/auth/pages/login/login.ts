@@ -12,6 +12,7 @@ import { FormsModule } from '@angular/forms';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import PAGES_ROUTES from '../../../../core/routes/pages.routes';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -30,16 +31,14 @@ import PAGES_ROUTES from '../../../../core/routes/pages.routes';
   styleUrl: './login.css',
 })
 export default class Login {
-private readonly _authService = inject(Auth);
+  private readonly _authService = inject(Auth);
   private readonly _router = inject(Router);
   private readonly _validator = inject(FormValidation);
   form = this._authService.formlogin();
   showPassword = signal<boolean>(false);
 
   getErrorMessage(fielName: string): string {
-    const validation = this._validator.getErrorMessage(
-      this.form().get(fielName) as FormControl
-    );
+    const validation = this._validator.getErrorMessage(this.form().get(fielName) as FormControl);
 
     return validation;
   }
@@ -52,19 +51,19 @@ private readonly _authService = inject(Auth);
 
   onSubmit() {
     console.log('Funcionando');
-      this._router.navigate([PAGES_ROUTES.DASHBOARD.DASHBOARD]);
-    ///if (this.form().invalid) return;
-   /// this._router.navigate(['/home']);
-    // this._authService.login(this.form().value).subscribe({
-    //   next: (res) => {
-    //     console.log(res);
-    //     this._router.navigate(['/home']);
-    //     toast.success(res.message);
-    //   },
-    //   error: (err: HttpErrorResponse) => {
-    //     console.log(err);
-    //     toast.error(err.error.message);
-    //   },
-    // });
+
+    if (this.form().invalid) return;
+    // this._router.navigate(['/home']);
+    this._authService.login(this.form().value).subscribe({
+      next: (res) => {
+        console.log(res);
+        this._router.navigate([PAGES_ROUTES.DASHBOARD.DASHBOARD]);
+        //toast.success(res.message);
+      },
+      error: (err: HttpErrorResponse) => {
+        console.log(err);
+        // toast.error(err.error.message);
+      },
+    });
   }
 }
