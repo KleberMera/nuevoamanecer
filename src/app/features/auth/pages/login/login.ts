@@ -44,14 +44,11 @@ export default class Login {
   }
 
   isFieldInvalid(field: string): boolean {
-    //return this.form().get(field)?.invalid;
     const invalid = this._validator.isFielInvalid(this.form(), field);
     return invalid;
   }
 
   onSubmit() {
-    console.log('Funcionando');
-
     if (this.form().invalid) return;
     // this._router.navigate(['/home']);
     this._authService.login(this.form().value).subscribe({
