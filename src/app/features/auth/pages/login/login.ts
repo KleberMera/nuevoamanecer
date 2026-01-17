@@ -13,6 +13,7 @@ import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import PAGES_ROUTES from '../../../../core/routes/pages.routes';
 import { HttpErrorResponse } from '@angular/common/http';
+import { toast } from 'ngx-sonner';
 
 @Component({
   selector: 'app-login',
@@ -55,11 +56,11 @@ export default class Login {
       next: (res) => {
         console.log(res);
         this._router.navigate([PAGES_ROUTES.DASHBOARD.DASHBOARD]);
-        //toast.success(res.message);
+        toast.success(res.message);
       },
       error: (err: HttpErrorResponse) => {
         console.log(err);
-        // toast.error(err.error.message);
+        toast.error(err.error.message);
       },
     });
   }
