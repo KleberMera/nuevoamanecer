@@ -14,6 +14,7 @@ import { InputIconModule } from 'primeng/inputicon';
 import PAGES_ROUTES from '../../../../core/routes/pages.routes';
 import { HttpErrorResponse } from '@angular/common/http';
 import { toast } from 'ngx-sonner';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -49,18 +50,33 @@ export default class Login {
     return invalid;
   }
 
+  // onSubmit() {
+  //   if (this.form().invalid) return;
+  //   this._authService.login(this.form().value).subscribe({
+  //     next: (res) => {
+  //       console.log(res);
+  //       this._router.navigate([PAGES_ROUTES.DASHBOARD.DASHBOARD]);
+  //       toast.success(res.message);
+  //     },
+  //     error: (err: HttpErrorResponse) => {
+  //       console.log(err);
+  //       toast.error(err.error.message);
+  //     },
+  //   });
+  // }
+
   onSubmit() {
     if (this.form().invalid) return;
-    // this._router.navigate(['/home']);
-    this._authService.login(this.form().value).subscribe({
-      next: (res) => {
-        console.log(res);
+    const loginPromise = firstValueFrom(this._authService.login(this.form().value));
+    toast.promise(loginPromise, {
+      loading: 'Iniciando sesión...',
+      success: (res) => {
         this._router.navigate([PAGES_ROUTES.DASHBOARD.DASHBOARD]);
-        toast.success(res.message);
+        return res.message;
       },
-      error: (err: HttpErrorResponse) => {
-        console.log(err);
-        toast.error(err.error.message);
+      error: (err: unknown) => {
+        const httpError = err as HttpErrorResponse;
+        return httpError.error.message;
       },
     });
   }
