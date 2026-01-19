@@ -1,4 +1,5 @@
 import { Injectable, signal } from '@angular/core';
+import { Usuario } from '../../core/models/usuario';
 
 @Injectable({
   providedIn: 'root',
@@ -22,8 +23,10 @@ export class Storage {
     this._storage.removeItem(key);
   }
 
-  getUserId() {
-    // const dataUser: User | null = this.get<User>(this._userId());
-    // return dataUser?.id as number;
+  getUsuarioId() {
+    const dataUser: Usuario | null = this.get<Usuario>(this._userId());
+    return dataUser?.id as number;
   }
+
+  
 }

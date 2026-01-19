@@ -6,6 +6,7 @@ import { Storage } from '../../../../shared/services/storage';
 
 import { apiResponse } from '../../../../core/models/apiResponse';
 import API_ROUTES from '../../../../core/routes/api.routes';
+import { Usuario } from '../../../../core/models/usuario';
 
 @Injectable({
   providedIn: 'root',

@@ -1,4 +1,6 @@
-interface Usuario {
+import { Rol } from "./rol";
+
+export interface Usuario {
   id: number;
   nombre1: string;
   nombre2?: string | null;
@@ -11,4 +13,5 @@ interface Usuario {
   cedula?: string | null;
   rolId: number;
   estado?: string | null;
+  rol? : Rol;
 }

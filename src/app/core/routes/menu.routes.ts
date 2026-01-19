@@ -58,7 +58,7 @@ export const MENU_ITEMS: MenuItem[] = [
       },
       {
         id: 33,
-        label: 'Historial por Usuario',
+        label: 'Historial',
         icon: 'pi pi-user',
         route: buildAccionRoute(PAGES_ROUTES.ACCION.HISTORIAL_USUARIO),
       }
