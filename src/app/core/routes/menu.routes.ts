@@ -24,18 +24,6 @@ export const MENU_ITEMS: MenuItem[] = [
         icon: 'pi pi-list',
         route: buildUsuariosRoute(PAGES_ROUTES.USUARIOS.LISTA),
       },
-      // {
-      //   id: 22,
-      //   label: 'Grupos',
-      //   icon: 'pi pi-sitemap',
-      //   route: buildUsuariosRoute(PAGES_ROUTES.DASHBOARD.USUARIOS.GRUPOS),
-      // },
-      // {
-      //   id: 23,
-      //   label: 'Permisos',
-      //   icon: 'pi pi-shield',
-      //   route: buildUsuariosRoute(PAGES_ROUTES.DASHBOARD.USUARIOS.PERMISOS),
-      // },
     ],
   },
   {
@@ -48,7 +36,6 @@ export const MENU_ITEMS: MenuItem[] = [
         label: 'Registro de Acciones',
         icon: 'pi pi-plus-circle',
         route:  buildAccionRoute(PAGES_ROUTES.ACCION.REGISTRO),
-      
       },
       {
         id: 32,
@@ -62,8 +49,35 @@ export const MENU_ITEMS: MenuItem[] = [
         icon: 'pi pi-user',
         route: buildAccionRoute(PAGES_ROUTES.ACCION.HISTORIAL_USUARIO),
       }
-
     ],
+  },
+];
+
+// Items para la barra de tabs (mobile)
+export const TAB_ITEMS: MenuItem[] = [
+  {
+    id: 1,
+    label: 'Dashboard',
+    icon: 'pi pi-chart-bar',
+    route: PAGES_ROUTES.DASHBOARD.DASHBOARD,
+  },
+  {
+    id: 33,
+    label: 'Historial',
+    icon: 'pi pi-user',
+    route: buildAccionRoute(PAGES_ROUTES.ACCION.HISTORIAL_USUARIO),
+  },
+  {
+    id: 21,
+    label: 'Usuarios',
+    icon: 'pi pi-list',
+    route: buildUsuariosRoute(PAGES_ROUTES.USUARIOS.LISTA),
+  },
+  {
+    id: 31,
+    label: 'Registro',
+    icon: 'pi pi-plus-circle',
+    route: buildAccionRoute(PAGES_ROUTES.ACCION.REGISTRO),
   },
 ];
 

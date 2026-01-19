@@ -1,34 +1,22 @@
 <nav class="fixed bottom-0 left-0 right-0 z-40 bg-surface-950/80 backdrop-blur-md md:hidden px-0 pb-safe pt-3 border-t border-surface-500/40">
   <div class="w-full">
-    <div class="grid grid-cols-5 gap-0 px-3 pb-3 items-end">
-      <!-- Inicio Tab -->
+    <div class="grid gap-0 px-3 pb-3 items-end" [style.gridTemplateColumns]="'repeat(5, minmax(0, 1fr))'">
+      <!-- Primeros 2 tabs -->
+      @for (item of tabItems().slice(0, 2); track item.id) {
       <button 
-        [routerLink]="PAGES_ROUTES.DASHBOARD.DASHBOARD"
+        [routerLink]="item.route"
         routerLinkActive="text-primary-500!"
         [routerLinkActiveOptions]="{exact: true}"
         class="flex flex-col items-center justify-center text-surface-400 transition-colors duration-200 relative group">
         <div class="relative flex flex-col items-center">
           <div class="p-2 rounded-lg transition-all duration-200 group-hover:bg-primary-500/10">
-            <i class="pi pi-home text-xl transition-transform duration-200 group-hover:scale-110"></i>
+            <i [attr.class]="'text-xl transition-transform duration-200 group-hover:scale-110 ' + item.icon"></i>
           </div>
-          <span class="text-xs font-medium mt-1">Inicio</span>
+          <span class="text-xs font-medium mt-1">{{ item.label }}</span>
           <div class="absolute -top-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-primary-500 opacity-0 transition-all duration-200 scale-0 group-hover:opacity-100 group-hover:scale-100"></div>
         </div>
       </button>
-
-      <!-- Usuarios Tab -->
-      <button 
-        [routerLink]="['usuarios/lista-usuarios']"
-        routerLinkActive="text-primary-500!"
-        class="flex flex-col items-center justify-center text-surface-400 transition-colors duration-200 relative group">
-        <div class="relative flex flex-col items-center">
-          <div class="p-2 rounded-lg transition-all duration-200 group-hover:bg-primary-500/10">
-            <i class="pi pi-users text-xl transition-transform duration-200 group-hover:scale-110"></i>
-          </div>
-          <span class="text-xs font-medium mt-1">Usuarios</span>
-          <div class="absolute -top-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-primary-500 opacity-0 transition-all duration-200 scale-0 group-hover:opacity-100 group-hover:scale-100"></div>
-        </div>
-      </button>
+      }
 
       <!-- Center Menu Button with Logo -->
       <button 
@@ -43,33 +31,22 @@
         </div>
       </button>
 
-      <!-- Reportes Tab -->
+      <!-- Últimos 2 tabs -->
+      @for (item of tabItems().slice(2); track item.id) {
       <button 
-        routerLink="reportes"
+        [routerLink]="item.route"
         routerLinkActive="text-primary-500!"
+        [routerLinkActiveOptions]="{exact: true}"
         class="flex flex-col items-center justify-center text-surface-400 transition-colors duration-200 relative group">
         <div class="relative flex flex-col items-center">
           <div class="p-2 rounded-lg transition-all duration-200 group-hover:bg-primary-500/10">
-            <i class="pi pi-chart-bar text-xl transition-transform duration-200 group-hover:scale-110"></i>
+            <i [attr.class]="'text-xl transition-transform duration-200 group-hover:scale-110 ' + item.icon"></i>
           </div>
-          <span class="text-xs font-medium mt-1">Reportes</span>
+          <span class="text-xs font-medium mt-1">{{ item.label }}</span>
           <div class="absolute -top-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-primary-500 opacity-0 transition-all duration-200 scale-0 group-hover:opacity-100 group-hover:scale-100"></div>
         </div>
       </button>
-
-      <!-- Configuración Tab -->
-      <button 
-        routerLink="configuracion"
-        routerLinkActive="text-primary-500!"
-        class="flex flex-col items-center justify-center text-surface-400 transition-colors duration-200 relative group">
-        <div class="relative flex flex-col items-center">
-          <div class="p-2 rounded-lg transition-all duration-200 group-hover:bg-primary-500/10">
-            <i class="pi pi-cog text-xl transition-transform duration-200 group-hover:scale-110"></i>
-          </div>
-          <span class="text-xs font-medium mt-1">Config</span>
-          <div class="absolute -top-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-primary-500 opacity-0 transition-all duration-200 scale-0 group-hover:opacity-100 group-hover:scale-100"></div>
-        </div>
-      </button>
+      }
     </div>
   </div>
 </nav>
