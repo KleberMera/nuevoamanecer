@@ -3,7 +3,6 @@ import { inject, Injectable, signal } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable, tap } from 'rxjs';
 import { Storage } from '../../../../shared/services/storage';
-
 import { apiResponse } from '../../../../core/models/apiResponse';
 import API_ROUTES from '../../../../core/routes/api.routes';
 import { Usuario } from '../../../../core/models/usuario';
@@ -38,6 +37,4 @@ export class Auth {
       }),
     );
   }
-
-  
 }

@@ -6,6 +6,7 @@ import { AvatarModule } from 'primeng/avatar';
 import { DividerModule } from 'primeng/divider';
 import { BadgeModule } from 'primeng/badge';
 import { OverlayBadgeModule } from 'primeng/overlaybadge';
+import { Storage } from '../../../services/storage';
 
 @Component({
   selector: 'app-header',
@@ -15,8 +16,9 @@ import { OverlayBadgeModule } from 'primeng/overlaybadge';
 })
 export class Header {
   public readonly _sidebarService = inject(SiderbarService);
+  public readonly _storage = inject(Storage);
   unreadNotifications = signal<number>(2);
-  userName = signal<string>('Usuario Admin');
-  userRole = signal<string>('Administrador');
-  userImage = signal<string>('https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png');
+  userName = signal<string>(this._storage.getNombreUsuario() || 'Usuario');
+  userRole = signal<string>(this._storage.getNombreRol() || 'Rol');
+  userLabelAvatar = signal<string>(this._storage.getLabelAvatar() || 'U');
 }
