@@ -1,9 +1,28 @@
 import { environment } from '../../../environments/environment.development';
 
-export const API_ROUTES = {
-  AUTH: {
-    LOGIN: `${environment.apiUrl}/autenticacion/login`,
-    REGISTER: `${environment.apiUrl}/autenticacion/register`,
-  },
+const apiUrl = environment.apiUrl;
+const route = (path: string) => `${apiUrl}${path}`;
+
+// Helper para crear rutas sin repetir el base path
+const createRoutes = <T extends Record<string, string>>(basePath: string, endpoints: T): Record<keyof T, string> => {
+  const routes = {} as Record<keyof T, string>;
+  Object.entries(endpoints).forEach(([key, endpoint]) => {
+    routes[key as keyof T] = route(`/${basePath}/${endpoint}`);
+  });
+  return routes;
 };
+
+export const API_ROUTES = {
+  AUTH: createRoutes('autenticacion', {
+    LOGIN: 'login',
+    REGISTER: 'register',
+  }),
+  USUARIO: createRoutes('usuario', {
+    LISTAR_USUARIOS: 'estado',
+  }),
+  ACCION: createRoutes('accion', {
+    CREAR_ACCION: '',
+  }),
+};
+
 export default API_ROUTES;
