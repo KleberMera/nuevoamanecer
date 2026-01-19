@@ -4,7 +4,7 @@ import PAGES_ROUTES from './pages.routes';
 // Helper functions para construir rutas automáticamente
 const buildRoute = (parent: string, child: string): string => `${parent}/${child}`;
 const buildUsuariosRoute = (child: string): string => buildRoute(PAGES_ROUTES.USUARIOS.DEFAULT, child);
-const buildConfiguracionRoute = (child: string): string => buildRoute(PAGES_ROUTES.DASHBOARD.CONFIGURACION.DEFAULT, child);
+const buildAccionRoute = (child: string): string => buildRoute(PAGES_ROUTES.ACCION.DEFAULT, child);
 
 export const MENU_ITEMS: MenuItem[] = [
   {
@@ -40,21 +40,29 @@ export const MENU_ITEMS: MenuItem[] = [
   },
   {
     id: 3,
-    label: 'Configuración',
-    icon: 'pi pi-cog',
+    label: 'Acciones',
+    icon: 'pi pi-bolt',
     subitems: [
-      // {
-      //   id: 31,
-      //   label: 'General',
-      //   icon: 'pi pi-sliders-v',
-      //   route: PAGES_ROUTES.DASHBOARD.CONFIGURACION.GENERAL,
-      // },
-      // {
-      //   id: 32,
-      //   label: 'Seguridad',
-      //   icon: 'pi pi-lock',
-      //   route: PAGES_ROUTES.DASHBOARD.CONFIGURACION.SEGURIDAD,
-      // },
+      {
+        id: 31,
+        label: 'Registro de Acciones',
+        icon: 'pi pi-plus-circle',
+        route:  buildAccionRoute(PAGES_ROUTES.ACCION.REGISTRO),
+      
+      },
+      {
+        id: 32,
+        label: 'Historial de Acciones',
+        icon: 'pi pi-history',
+        route: buildAccionRoute(PAGES_ROUTES.ACCION.HISTORIAL),
+      },
+      {
+        id: 33,
+        label: 'Historial por Usuario',
+        icon: 'pi pi-user',
+        route: buildAccionRoute(PAGES_ROUTES.ACCION.HISTORIAL_USUARIO),
+      }
+
     ],
   },
 ];

@@ -1,4 +1,3 @@
-
 export const PAGES_ROUTES = {
   AUTH: {
     DEFAULT: 'auth',
@@ -9,12 +8,12 @@ export const PAGES_ROUTES = {
   DASHBOARD: {
     DEFAULT: '',
     DASHBOARD: 'dashboard',
-   
-    CONFIGURACION: {
-      DEFAULT: 'configuracion',
-      GENERAL: 'configuracion',
-      SEGURIDAD: 'seguridad',
-    },
+
+    // CONFIGURACION: {
+    //   DEFAULT: 'configuracion',
+    //   GENERAL: 'configuracion',
+    //   SEGURIDAD: 'seguridad',
+    // },
     // TABLAS: {
     //   DEFAULT: 'tablas',
     //   BUSCAR_TABLA: 'buscar-tablas',
@@ -24,13 +23,18 @@ export const PAGES_ROUTES = {
     //   PANEL: 'panel',
     //   TIPOS: 'tipos',
     // }
-
   },
-   USUARIOS: {
-      DEFAULT: 'usuarios',
-      LISTA: 'lista-usuarios',
-      //GRUPOS: 'grupos',
+  USUARIOS: {
+    DEFAULT: 'usuarios',
+    LISTA: 'lista-usuarios',
+    //GRUPOS: 'grupos',
     //  PERMISOS: 'permisos',
-    },
+  },
+  ACCION: {
+    DEFAULT: 'acciones',
+    REGISTRO: 'registro',
+    HISTORIAL: 'historial',
+    HISTORIAL_USUARIO: 'usuario',
+  }
 };
 export default PAGES_ROUTES;
