@@ -18,7 +18,8 @@ export class Header {
   public readonly _sidebarService = inject(SiderbarService);
   public readonly _storage = inject(Storage);
   unreadNotifications = signal<number>(2);
-  userName = signal<string>(this._storage.getNombreUsuario() || 'Usuario');
+  userNameProfile = signal<string>(this._storage.getNombreUsuario() || 'Usuario');
   userRole = signal<string>(this._storage.getNombreRol() || 'Rol');
+  userName = signal<string>(this._storage.getNombre() || 'Usuario');
   userLabelAvatar = signal<string>(this._storage.getLabelAvatar() || 'U');
 }

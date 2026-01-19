@@ -40,6 +40,12 @@ export class Storage {
     return `${dataUser.nombre1} ${dataUser.apellido1}`;
   }
 
+  getNombre(): string | null {
+    //Toma el nombre1 del usuario
+    const dataUser: Usuario | null = this.get<Usuario>(this._userId());
+    return dataUser?.nombre1 as string;
+  }
+
   getLabelAvatar(): string | null {
     //Tomar la primera letra del nombre1 y apellido1 del usuario
     const dataUser: Usuario | null = this.get<Usuario>(this._userId());
