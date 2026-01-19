@@ -1,1 +1,7 @@
+.input-uppercase {
+  text-transform: uppercase;
+}
 
+.input-uppercase::placeholder {
+  text-transform: none;
+}

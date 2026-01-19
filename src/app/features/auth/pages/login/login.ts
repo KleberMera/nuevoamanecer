@@ -67,7 +67,9 @@ export default class Login {
 
   onSubmit() {
     if (this.form().invalid) return;
-    const loginPromise = firstValueFrom(this._authService.login(this.form().value));
+    const formValue = this.form().value;
+    formValue.nombreUsuario = formValue.nombreUsuario.toLowerCase();
+    const loginPromise = firstValueFrom(this._authService.login(formValue));
     toast.promise(loginPromise, {
       loading: 'Iniciando sesión...',
       success: (res) => {
