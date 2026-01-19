@@ -9,8 +9,8 @@ const buildAccionRoute = (child: string): string => buildRoute(PAGES_ROUTES.ACCI
 export const MENU_ITEMS: MenuItem[] = [
   {
     id: 1,
-    label: 'Dashboard',
-    icon: 'pi pi-chart-bar',
+    label: 'Inicio',
+    icon: 'pi pi-home',
     route: PAGES_ROUTES.DASHBOARD.DASHBOARD,
   },
   {
@@ -46,7 +46,7 @@ export const MENU_ITEMS: MenuItem[] = [
       {
         id: 33,
         label: 'Historial',
-        icon: 'pi pi-user',
+        icon: 'pi pi-clock',
         route: buildAccionRoute(PAGES_ROUTES.ACCION.HISTORIAL_USUARIO),
       }
     ],
@@ -57,14 +57,14 @@ export const MENU_ITEMS: MenuItem[] = [
 export const TAB_ITEMS: MenuItem[] = [
   {
     id: 1,
-    label: 'Dashboard',
-    icon: 'pi pi-chart-bar',
+    label: 'Inicio',
+    icon: 'pi pi-home',
     route: PAGES_ROUTES.DASHBOARD.DASHBOARD,
   },
   {
     id: 33,
     label: 'Historial',
-    icon: 'pi pi-user',
+    icon: 'pi pi-clock',
     route: buildAccionRoute(PAGES_ROUTES.ACCION.HISTORIAL_USUARIO),
   },
   {
