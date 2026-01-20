@@ -57,7 +57,7 @@ export class Storage {
 
    getStatus() {
     const dataUser: Usuario | null = this.get(this._userId());
-    return dataUser!.estado as string;
+    return dataUser?.estado as string | null;
   }
 
     getToken() {

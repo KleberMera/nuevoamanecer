@@ -25,15 +25,19 @@ export const authInterceptor: HttpInterceptorFn = (
     );
   }
 
-  const token = authState.getSession();
+  try {
+    const token = authState.getSession();
 
-  // Si existe token, añadirlo a la petición
-  if (token) {
-    request = request.clone({
-      setHeaders: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    // Si existe token válido, añadirlo a la petición
+    if (token) {
+      request = request.clone({
+        setHeaders: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+    }
+  } catch (error) {
+    console.error('Error al obtener sesión:', error);
   }
 
   return next(request).pipe(
