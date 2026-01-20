@@ -56,16 +56,15 @@
           <label for="periodo" class="block text-base font-semibold text-gray-100">
             Período
           </label>
-          <p-iconfield class="w-full">
-            <p-inputicon class="pi pi-calendar text-gray-400"></p-inputicon>
-            <input 
-              pInputText 
-              type="text" 
-              id="periodo"
-              formControlName="periodo"
-              placeholder="202601"
-              class="w-full h-11! text-base!" />
-          </p-iconfield>
+          <p-select
+            id="periodo"
+            formControlName="periodo"
+            [options]="periodosList()"
+            optionLabel="label"
+            optionValue="value"
+            placeholder="Selecciona un período"
+            class="w-full h-11!">
+          </p-select>
           @if (isFieldInvalid('periodo')) {
             <small class="text-red-400 block text-sm">
               El período es requerido
@@ -135,7 +134,7 @@
           dateFormat="dd/mm/yy"
           placeholder="Selecciona una fecha"
           [showIcon]="true"
-          class="w-full">
+          class="w-full h-11!">
         </p-datepicker>
         @if (isFieldInvalid('fecha')) {
           <small class="text-red-400 block text-sm">
@@ -152,7 +151,7 @@
           icon="pi pi-save"
           [disabled]="form.invalid || isLoading()"
           [loading]="isLoading()"
-          class="px-8! sm:px-12! w-full sm:w-auto">
+          class="px-6 sm:px-10 flex-1 sm:flex-auto">
         </p-button>
         <p-button
           type="button"
@@ -161,7 +160,7 @@
           severity="secondary"
           (onClick)="onReset()"
           [disabled]="isLoading()"
-          class="px-8! sm:px-12! w-full sm:w-auto">
+          class="px-6 sm:px-10 flex-1 sm:flex-auto">
         </p-button>
       </div>
     </form>

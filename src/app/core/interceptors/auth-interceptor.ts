@@ -10,16 +10,31 @@ export const authInterceptor: HttpInterceptorFn = (
   next: HttpHandlerFn
 ) => {
   const authState = inject(AuthStateService);
-
   const router = inject(Router);
+
+  // No añadir token a peticiones de login o registro
+  if (request.url.includes('/autenticacion/')) {
+    return next(request).pipe(
+      catchError((error) => {
+        if (error instanceof HttpErrorResponse && error.status === 401) {
+          authState.signOut();
+          router.navigateByUrl('/auth');
+        }
+        return throwError(() => error);
+      })
+    );
+  }
 
   const token = authState.getSession();
 
-  request = request.clone({
-    setHeaders: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  // Si existe token, añadirlo a la petición
+  if (token) {
+    request = request.clone({
+      setHeaders: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }
 
   return next(request).pipe(
     catchError((error) => {

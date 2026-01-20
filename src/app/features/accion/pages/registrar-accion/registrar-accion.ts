@@ -1,4 +1,4 @@
-import { Component, inject, signal, computed } from '@angular/core';
+import { Component, inject, signal, computed, linkedSignal } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RegistroAccionService } from '../../services/registro-accion-service';
@@ -8,7 +8,6 @@ import { Usuario } from '../../../../core/models/usuario';
 import { accionInterface } from '../../../../core/models/accion';
 import { toast } from 'ngx-sonner';
 import { HttpErrorResponse, httpResource } from '@angular/common/http';
-import { effect } from '@angular/core';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
@@ -49,21 +48,34 @@ export default class RegistrarAccion {
 
   user = httpResource<apiResponse<Usuario[]>>(() => this.regAccion.getUsuarios(this.estado())); 
 
+  // Signal para el número
+  private numeroSignal = signal<number | null>(null);
+
+  // Signal vinculada para el valor (número * 10)
+  protected valorSignal = linkedSignal(() => {
+    const numero = this.numeroSignal();
+    return numero && numero > 0 ? numero * 10 : 0;
+  });
+
   // Lista de usuarios con fallback
   protected usuariosList = computed(() => {
     const data = this.user.value();
     return data?.data || [];
   });
 
-  // Mapeo de números a valores
-  private readonly numeroValorMap: { [key: number]: number } = {
-    1: 19,
-    2: 29,
-    3: 39,
-    4: 49,
-    5: 59,
-    // Agrega más valores según sea necesario
-  };
+  // Períodos disponibles (vigente: 202601 hacia adelante)
+  protected periodosList = computed(() => {
+    const periodos = [];
+    for (let i = 0; i < 24; i++) {
+      const month = ((i % 12) + 1).toString().padStart(2, '0');
+      const year = 2026 + Math.floor(i / 12);
+      periodos.push({
+        label: `${year}-${month}`,
+        value: `${year}${month}`
+      });
+    }
+    return periodos;
+  });
 
   constructor() {
     // Inicializar formulario
@@ -76,13 +88,18 @@ export default class RegistrarAccion {
       estado: ['A'],
     });
 
-    // Escuchar cambios en el campo número para calcular valor automáticamente
-    effect(() => {
-      const numero = this.form.get('numero')?.value;
-      if (numero && this.numeroValorMap[numero]) {
-        this.form.get('valor')?.setValue(this.numeroValorMap[numero], { emitEvent: false });
-      }
-    });
+    // Escuchar cambios del número y actualizar signal y el valor del formulario
+    const numeroControl = this.form.get('numero');
+    const valorControl = this.form.get('valor');
+    
+    if (numeroControl) {
+      numeroControl.valueChanges.subscribe((numero) => {
+        this.numeroSignal.set(numero);
+        if (valorControl) {
+          valorControl.setValue(this.valorSignal(), { emitEvent: false });
+        }
+      });
+    }
   }
 
   // Enviar formulario
