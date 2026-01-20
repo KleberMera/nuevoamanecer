@@ -124,23 +124,21 @@
       </div>
 
       <!-- Fila 3: Fecha, Guardar, Limpiar -->
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 auto-rows-max">
-        <!-- Fecha -->
-        <div class="space-y-2 flex flex-col">
+      <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 items-start">
+        <!-- Fecha - visible en todo -->
+        <div class="col-span-2 sm:col-span-1 space-y-2 order-first sm:order-0">
           <label for="fecha" class="block text-base font-semibold text-gray-100">
             Fecha
           </label>
-          <div class="flex-1">
-            <p-datepicker
-              id="fecha"
-              formControlName="fecha"
-              dateFormat="dd/mm/yy"
-              placeholder="Selecciona una fecha"
-              [showIcon]="true"
-              styleClass="w-full"
-              inputStyleClass="w-full h-11">
-            </p-datepicker>
-          </div>
+          <p-datepicker
+            id="fecha"
+            formControlName="fecha"
+            dateFormat="dd/mm/yy"
+            placeholder="Selecciona una fecha"
+            [showIcon]="true"
+            class="w-full"
+            inputStyleClass="w-full h-11">
+          </p-datepicker>
           @if (isFieldInvalid('fecha')) {
             <small class="text-red-400 block text-sm">
               La fecha es requerida
@@ -149,26 +147,20 @@
         </div>
 
         <!-- Guardar -->
-        <div class="flex flex-col justify-between sm:justify-end h-full">
-          <label class="text-base font-semibold text-gray-100 invisible sm:visible">
-            Acción
-          </label>
+        <div class="order-last sm:order-0">
           <p-button
             type="submit"
             label="Guardar"
             icon="pi pi-save"
             [disabled]="form.invalid || isLoading()"
             [loading]="isLoading()"
-            styleClass="w-full"
+            class="w-full"
             [style]="{'height': '44px'}">
           </p-button>
         </div>
 
         <!-- Limpiar -->
-        <div class="flex flex-col justify-between sm:justify-end h-full">
-          <label class="text-base font-semibold text-gray-100 invisible sm:visible">
-            Acción
-          </label>
+        <div class="order-last sm:order-0">
           <p-button
             type="button"
             label="Limpiar"
@@ -176,7 +168,7 @@
             severity="secondary"
             (onClick)="onReset()"
             [disabled]="isLoading()"
-            styleClass="w-full"
+            class="w-full"
             [style]="{'height': '44px'}">
           </p-button>
         </div>
