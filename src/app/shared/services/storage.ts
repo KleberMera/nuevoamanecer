@@ -7,7 +7,7 @@ import { Usuario } from '../../core/models/usuario';
 export class Storage {
   private readonly _storage = localStorage;
   private readonly _userId = signal<string>('user');
-
+  private readonly _token = signal<string>('access_token');
   get<T>(key: string): T | null {
     const value = this._storage.getItem(key);
     if (!value) return null;
@@ -53,5 +53,15 @@ export class Storage {
     const nombre1 = dataUser.nombre1 ? dataUser.nombre1.charAt(0).toUpperCase() : '';
     const apellido1 = dataUser.apellido1 ? dataUser.apellido1.charAt(0).toUpperCase() : '';
     return `${nombre1}${apellido1}`;
+  }
+
+   getStatus() {
+    const dataUser: Usuario | null = this.get(this._userId());
+    return dataUser!.estado as string;
+  }
+
+    getToken() {
+    const token = this._storage.getItem(this._token());
+    return token ? JSON.parse(token) : null;
   }
 }

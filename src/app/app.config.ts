@@ -6,6 +6,7 @@ import { routes } from './app.routes';
 import MyTheme from './core/types/apptheme';
 //import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
+import { authInterceptor } from './core/interceptors/auth-interceptor';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
@@ -18,6 +19,6 @@ export const appConfig: ApplicationConfig = {
     //   },
     // }),
     providePrimeNG({ theme: MyTheme, ripple: true }),
-    provideHttpClient(withFetch()),
+    provideHttpClient(withFetch(), withInterceptors([authInterceptor])),
   ],
 };
