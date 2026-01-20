@@ -123,45 +123,63 @@
         </div>
       </div>
 
-      <!-- Fecha -->
-      <div class="space-y-2">
-        <label for="fecha" class="block text-base font-semibold text-gray-100">
-          Fecha
-        </label>
-        <p-datepicker
-          id="fecha"
-          formControlName="fecha"
-          dateFormat="dd/mm/yy"
-          placeholder="Selecciona una fecha"
-          [showIcon]="true"
-          class="w-full h-11!">
-        </p-datepicker>
-        @if (isFieldInvalid('fecha')) {
-          <small class="text-red-400 block text-sm">
-            La fecha es requerida
-          </small>
-        }
-      </div>
+      <!-- Fila 3: Fecha, Guardar, Limpiar -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 auto-rows-max">
+        <!-- Fecha -->
+        <div class="space-y-2 flex flex-col">
+          <label for="fecha" class="block text-base font-semibold text-gray-100">
+            Fecha
+          </label>
+          <div class="flex-1">
+            <p-datepicker
+              id="fecha"
+              formControlName="fecha"
+              dateFormat="dd/mm/yy"
+              placeholder="Selecciona una fecha"
+              [showIcon]="true"
+              styleClass="w-full"
+              inputStyleClass="w-full h-11">
+            </p-datepicker>
+          </div>
+          @if (isFieldInvalid('fecha')) {
+            <small class="text-red-400 block text-sm">
+              La fecha es requerida
+            </small>
+          }
+        </div>
 
-      <!-- Botones -->
-      <div class="flex flex-col sm:flex-row gap-3 justify-center pt-2 sm:pt-4">
-        <p-button
-          type="submit"
-          label="Guardar"
-          icon="pi pi-save"
-          [disabled]="form.invalid || isLoading()"
-          [loading]="isLoading()"
-          class="px-6 sm:px-10 flex-1 sm:flex-auto">
-        </p-button>
-        <p-button
-          type="button"
-          label="Limpiar"
-          icon="pi pi-times"
-          severity="secondary"
-          (onClick)="onReset()"
-          [disabled]="isLoading()"
-          class="px-6 sm:px-10 flex-1 sm:flex-auto">
-        </p-button>
+        <!-- Guardar -->
+        <div class="flex flex-col justify-between sm:justify-end h-full">
+          <label class="text-base font-semibold text-gray-100 invisible sm:visible">
+            Acción
+          </label>
+          <p-button
+            type="submit"
+            label="Guardar"
+            icon="pi pi-save"
+            [disabled]="form.invalid || isLoading()"
+            [loading]="isLoading()"
+            styleClass="w-full"
+            [style]="{'height': '44px'}">
+          </p-button>
+        </div>
+
+        <!-- Limpiar -->
+        <div class="flex flex-col justify-between sm:justify-end h-full">
+          <label class="text-base font-semibold text-gray-100 invisible sm:visible">
+            Acción
+          </label>
+          <p-button
+            type="button"
+            label="Limpiar"
+            icon="pi pi-times"
+            severity="secondary"
+            (onClick)="onReset()"
+            [disabled]="isLoading()"
+            styleClass="w-full"
+            [style]="{'height': '44px'}">
+          </p-button>
+        </div>
       </div>
     </form>
   </p-card>
