@@ -1,5 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { Auth } from '../services/auth';
 import { FormValidation } from '@shared/services/form-validation';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
