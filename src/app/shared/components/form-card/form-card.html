@@ -1,0 +1,21 @@
+<div class="w-full flex justify-center px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8 pb-24 sm:pb-4 overflow-hidden">
+  <p-card class="w-full max-w-2xl sm:max-w-3xl lg:max-w-4xl rounded-lg!">
+    <ng-template pTemplate="header">
+      <div class="flex justify-center py-3">
+        <div class="text-center">
+          <h1 class="text-2xl sm:text-3xl font-bold mb-2 text-white tracking-wide">
+            {{ title() }}
+            @if (highlightedText()) {
+            <span
+              class="bg-linear-to-r from-amber-400 via-amber-500 to-orange-600 text-transparent bg-clip-text font-extrabold">
+              {{ highlightedText() }}
+            </span>
+            }
+          </h1>
+        </div>
+      </div>
+    </ng-template>
+
+    <ng-content></ng-content>
+  </p-card>
+</div>

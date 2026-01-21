@@ -1,21 +1,5 @@
-<div class="w-full flex justify-center px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8 pb-24 sm:pb-4 overflow-hidden">
-  <p-card class="w-full max-w-2xl sm:max-w-3xl lg:max-w-4xl">
-    <ng-template pTemplate="header">
-      <div class="flex justify-center py-4">
-        <div class="text-center">
-          <h1 class="text-3xl sm:text-4xl font-bold mb-2 text-white tracking-wide">
-            Registrar
-            <span
-              class="bg-linear-to-r from-amber-400 via-amber-500 to-orange-600 text-transparent bg-clip-text font-extrabold">
-              Acción
-            </span>
-          </h1>
-        </div>
-      </div>
-    </ng-template>
-
-    <!-- Formulario -->
-    <form class="space-y-4 sm:space-y-6" [formGroup]="form()" (ngSubmit)="onSubmit()">
+<app-form-card title="Registrar" highlightedText="Acción">
+  <form class="space-y-4 sm:space-y-6" [formGroup]="form()" (ngSubmit)="onSubmit()">
 
       <!-- Selector de Usuario y Período -->
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -35,10 +19,9 @@
             <span class="text-red-400 text-sm">No se pudo cargar la lista de usuarios</span>
           </div>
           } @else {
-          <p-select id="usuario" formControlName="usuarioId" [options]="usuariosList()"
-            optionValue="id" placeholder="Selecciona un usuario" [showClear]="true" [filter]="true" 
-            filterBy="nombre1,nombre2,apellido1,apellido2"
-            filterPlaceholder="Buscar usuario..." class="w-full h-11!">
+          <p-select id="usuario" formControlName="usuarioId" [options]="usuariosList()" optionValue="id"
+            placeholder="Selecciona un usuario" [showClear]="true" [filter]="true"
+            filterBy="nombre1,nombre2,apellido1,apellido2" filterPlaceholder="Buscar usuario..." class="w-full h-11!">
             <ng-template #selectedItem let-usuario>
               {{ usuario.nombre1 }} {{ usuario.nombre2 || '' }} {{ usuario.apellido1 }} {{ usuario.apellido2 || '' }}
             </ng-template>
@@ -138,5 +121,4 @@
         </p-button>
       </div>
     </form>
-  </p-card>
-</div>
+</app-form-card>
