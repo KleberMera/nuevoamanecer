@@ -66,7 +66,10 @@ export default class HistorialAccion {
   });
 
   // Períodos disponibles
-  protected periodosList = computed(() => this.periodoService.generarPeriodos());
+  protected periodosList = computed(() => [
+    { label: 'Todos', value: null },
+    ...this.periodoService.generarPeriodos()
+  ]);
 
   // Obtener nombre completo del usuario
   protected getNombreCompleto(accion: accionInterface): string {
@@ -88,9 +91,7 @@ export default class HistorialAccion {
   constructor() {
     // Escuchar cambios del período
     this.periodoControl.valueChanges.subscribe((value) => {
-      if (value) {
-        this.periodoSeleccionado.set(value);
-      }
+      this.periodoSeleccionado.set(value || '');
     });
 
     // Escuchar cambios de búsqueda de usuario

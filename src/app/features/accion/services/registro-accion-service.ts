@@ -23,7 +23,7 @@ export class RegistroAccionService {
         numero: new FormControl(data.numero, [Validators.required]),
         valor: new FormControl(data.valor, [Validators.required, Validators.min(1)]),
         fecha: new FormControl(data.fecha, [Validators.required]),
-        estado: new FormControl(data.estado),
+        estado: new FormControl(data.estado || 'A'),
       }),
     );
     return form;
@@ -52,7 +52,10 @@ export class RegistroAccionService {
 
   // Listar acciones por periodo
   listarAccionesPeriodo(periodo: string) {
-    const url = `${this.apiUrl.ACCION.LISTAR_ACCIONES_PERIODO}/?${periodo}`;
+    let url = this.apiUrl.ACCION.LISTAR_ACCIONES_PERIODO;
+    if (periodo) {
+      url += `?periodo=${periodo}`;
+    }
     return url
   }
 }
