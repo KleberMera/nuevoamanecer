@@ -1,10 +1,11 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import API_ROUTES from '../../../core/routes/api.routes';
 import { Observable } from 'rxjs';
 import { apiResponse } from '../../../core/models/apiResponse';
 import { Usuario } from '../../../core/models/usuario';
 import { accionInterface } from '../../../core/models/accion';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root',
@@ -12,6 +13,21 @@ import { accionInterface } from '../../../core/models/accion';
 export class RegistroAccionService {
   private readonly _http = inject(HttpClient);
   private readonly apiUrl = API_ROUTES;
+
+
+  formAccion(data: Partial<accionInterface> = {}) {
+    const form = signal<FormGroup>(
+      new FormGroup({
+        usuarioId: new FormControl(data.usuarioId, [Validators.required]), 
+        periodo: new FormControl(data.periodo, [Validators.required]),
+        numero: new FormControl(data.numero, [Validators.required]),
+        valor: new FormControl(data.valor, [Validators.required, Validators.min(1)]),
+        fecha: new FormControl(data.fecha, [Validators.required]),
+        estado: new FormControl(data.estado),
+      }),
+    );
+    return form;
+  }
 
   // Listar Usuarios por estado
   getUsuarios(estado: string) {

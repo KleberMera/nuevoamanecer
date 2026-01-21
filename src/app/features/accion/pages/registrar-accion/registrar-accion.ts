@@ -42,10 +42,10 @@ import { firstValueFrom } from 'rxjs';
 })
 export default class RegistrarAccion {
   private readonly regAccion = inject(RegistroAccionService);
-  private readonly fb = inject(FormBuilder);
+
   private readonly estado = signal<string>('A');
   protected isLoading = signal<boolean>(false);
-  protected form!: FormGroup;
+  protected form = this.regAccion.formAccion()
 
   user = httpResource<apiResponse<Usuario[]>>(() => this.regAccion.getUsuarios(this.estado())); 
 
@@ -79,19 +79,19 @@ export default class RegistrarAccion {
   });
 
   constructor() {
-    // Inicializar formulario
-    this.form = this.fb.group({
-      usuarioId: ['', [Validators.required]],
-      periodo: ['202601', [Validators.required]],
-      numero: ['', [Validators.required, Validators.min(1)]],
-      valor: ['', [Validators.required, Validators.min(0)]],
-      fecha: ['', [Validators.required]],
-      estado: ['A'],
+    // Establecer periodo actual por defecto
+    const now = new Date();
+    const currentMonth = (now.getMonth() + 1).toString().padStart(2, '0');
+    const currentYear = now.getFullYear();
+    const currentPeriodo = `${currentYear}${currentMonth}`;
+    
+    this.form().patchValue({
+      periodo: currentPeriodo
     });
 
     // Escuchar cambios del número y actualizar signal y el valor del formulario
-    const numeroControl = this.form.get('numero');
-    const valorControl = this.form.get('valor');
+    const numeroControl = this.form().get('numero');
+    const valorControl = this.form().get('valor');
     
     if (numeroControl) {
       numeroControl.valueChanges.subscribe((numero) => {
@@ -105,19 +105,19 @@ export default class RegistrarAccion {
 
   // Enviar formulario
   onSubmit(): void {
-    if (this.form.invalid) {
+    if (this.form().invalid) {
       toast.error('Por favor completa todos los campos correctamente');
       return;
     }
 
     this.isLoading.set(true);
-    const accionData: accionInterface = this.form.value;
+    const accionData: accionInterface = this.form().value;
     const createPromise = firstValueFrom(this.regAccion.crearAccion(accionData));
 
     toast.promise(createPromise, {
       loading: 'Registrando acción...',
       success: (res) => {
-        this.form.reset();
+        this.form().reset();
         this.isLoading.set(false);
         return res.message || 'Acción registrada exitosamente';
       },
@@ -131,12 +131,12 @@ export default class RegistrarAccion {
 
   // Resetear formulario
   onReset(): void {
-    this.form.reset();
+    this.form().reset();
   }
 
   // Validar si campo es inválido
   isFieldInvalid(fieldName: string): boolean {
-    const field = this.form.get(fieldName);
+    const field = this.form().get(fieldName);
     return !!(field && field.invalid && (field.dirty || field.touched));
   }
 }

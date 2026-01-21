@@ -15,7 +15,7 @@
     </ng-template>
 
     <!-- Formulario -->
-    <form class="space-y-4 sm:space-y-6" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <form class="space-y-4 sm:space-y-6" [formGroup]="form()" (ngSubmit)="onSubmit()">
 
       <!-- Selector de Usuario y Período -->
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -32,6 +32,7 @@
           } @else {
           <p-select id="usuario" formControlName="usuarioId" [options]="usuariosList()"
             optionValue="id" placeholder="Selecciona un usuario" [showClear]="true" [filter]="true" 
+            filterBy="nombre1,nombre2,apellido1,apellido2"
             filterPlaceholder="Buscar usuario..." class="w-full h-11!">
             <ng-template #selectedItem let-usuario>
               {{ usuario.nombre1 }} {{ usuario.nombre2 || '' }} {{ usuario.apellido1 }} {{ usuario.apellido2 || '' }}
@@ -127,7 +128,7 @@
         <p-button type="button" label="Limpiar" icon="pi pi-times" severity="secondary" (onClick)="onReset()"
           [disabled]="isLoading()" class="w-auto h-11">
         </p-button>
-        <p-button type="submit" label="Guardar" icon="pi pi-save" [disabled]="form.invalid || isLoading()"
+        <p-button type="submit" label="Guardar" icon="pi pi-save" [disabled]="form().invalid || isLoading()"
           [loading]="isLoading()" class="w-auto h-11">
         </p-button>
       </div>
