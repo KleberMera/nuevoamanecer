@@ -1,3 +1,5 @@
+import { Usuario } from "./usuario";
+
 export interface accionInterface {
   id?: number;
   usuarioId: number;
@@ -7,4 +9,5 @@ export interface accionInterface {
   acumulado?: number;
   fecha: Date;
   estado: string;
+  usuario?: Usuario;
 }

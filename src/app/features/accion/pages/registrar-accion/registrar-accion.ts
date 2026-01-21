@@ -7,6 +7,7 @@ import { Usuario } from '@core/models/usuario';
 import { accionInterface } from '@core/models/accion';
 import { toast } from 'ngx-sonner';
 import { HttpErrorResponse, httpResource } from '@angular/common/http';
+import { PeriodoService } from '@shared/services/periodo.service';
 import { FormCard } from '@shared/components/form-card/form-card';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
@@ -42,6 +43,7 @@ import { firstValueFrom } from 'rxjs';
 })
 export default class RegistrarAccion {
   private readonly regAccion = inject(RegistroAccionService);
+  private readonly periodoService = inject(PeriodoService);
 
   private readonly estado = signal<string>('A');
   protected isLoading = signal<boolean>(false);
@@ -65,25 +67,11 @@ export default class RegistrarAccion {
   });
 
   // Períodos disponibles (vigente: 202601 hacia adelante)
-  protected periodosList = computed(() => {
-    const periodos = [];
-    for (let i = 0; i < 24; i++) {
-      const month = ((i % 12) + 1).toString().padStart(2, '0');
-      const year = 2026 + Math.floor(i / 12);
-      periodos.push({
-        label: `${year}-${month}`,
-        value: `${year}${month}`
-      });
-    }
-    return periodos;
-  });
+  protected periodosList = computed(() => this.periodoService.generarPeriodos());
 
   constructor() {
     // Establecer periodo actual por defecto
-    const now = new Date();
-    const currentMonth = (now.getMonth() + 1).toString().padStart(2, '0');
-    const currentYear = now.getFullYear();
-    const currentPeriodo = `${currentYear}${currentMonth}`;
+    const currentPeriodo = this.periodoService.getPeriodoActual();
     
     this.form().patchValue({
       periodo: currentPeriodo

@@ -41,8 +41,18 @@ export class RegistroAccionService {
   }
 
   // Listar acciones del usuario
-  listarAccionesUsuario(usuarioId: number): Observable<apiResponse<accionInterface[]>> {
-    const url = `${this.apiUrl.ACCION.LISTAR_ACCIONES_USUARIO}/${usuarioId}`;
+  listarAccionesUsuario(usuarioId: number, periodo?: string): Observable<apiResponse<accionInterface[]>> {
+    let url = `${this.apiUrl.ACCION.LISTAR_ACCIONES_USUARIO}/${usuarioId}`;
+    if (periodo) {
+      url += `?periodo=${periodo}`;
+    }
     return this._http.get<apiResponse<accionInterface[]>>(url);
+  }
+
+
+  // Listar acciones por periodo
+  listarAccionesPeriodo(periodo: string) {
+    const url = `${this.apiUrl.ACCION.LISTAR_ACCIONES_PERIODO}/?${periodo}`;
+    return url
   }
 }
