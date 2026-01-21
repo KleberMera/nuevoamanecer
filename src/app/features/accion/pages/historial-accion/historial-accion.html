@@ -1,4 +1,4 @@
-<div class="space-y-4 sm:space-y-6">
+<div class="space-y-4 sm:space-y-6 ">
   <!-- Encabezado con título diseño registrar-accion -->
   <div>
     <h2 class="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-100">
@@ -56,16 +56,21 @@
       <p-table
         [value]="acciones()"
         [loading]="isLoading()"
-        [rows]="10"
+        [rows]="5"
         [paginator]="true"
         [globalFilterFields]="['usuario.nombre1', 'usuario.apellido1', 'numero', 'valor', 'estado']"
         class="p-datatable-striped text-xs sm:text-sm"
-        [tableStyle]="{'min-width': '50rem'}"
+        [scrollable]="true"
+        [rowsPerPageOptions]="[5, 10, 20]"
+        scrollHeight="flex"
         rowHover
+        showGridlines
       >
         <ng-template pTemplate="header">
-          <tr>
+         <tr>
             <th pSortableColumn="usuario.nombre1" style="width:25%">Usuario <p-sortIcon field="usuario.nombre1"></p-sortIcon></th>
+              <th pSortableColumn="periodo" style="width:15%">Periodo <p-sortIcon field="periodo"></p-sortIcon></th>
+            
             <th pSortableColumn="numero" style="width:15%">Cantidad <p-sortIcon field="numero"></p-sortIcon></th>
             <th pSortableColumn="valor" style="width:18%">Valor <p-sortIcon field="valor"></p-sortIcon></th>
             <th pSortableColumn="fecha" style="width:18%">Fecha <p-sortIcon field="fecha"></p-sortIcon></th>
@@ -78,6 +83,9 @@
           <tr>
             <td>
               <span class="text-gray-200 font-medium text-xs sm:text-sm">{{ getNombreCompleto(accion) }}</span>
+            </td>
+                <td>
+              <span class="text-gray-200 font-medium text-xs sm:text-sm">{{ accion.periodo }}</span>
             </td>
             <td>
               <span class="text-gray-200 text-xs sm:text-sm">{{ accion.numero }}</span>
@@ -110,7 +118,7 @@
         
         <ng-template pTemplate="emptymessage">
           <tr>
-            <td colspan="6" class="text-center py-6 sm:py-8">
+            <td colspan="7" class="text-center py-6 sm:py-8">
               <div class="flex flex-col items-center gap-2">
                 <i class="pi pi-inbox text-xl sm:text-2xl text-gray-400"></i>
                 <p class="text-gray-400 text-sm sm:text-base">No hay acciones registradas</p>
@@ -121,7 +129,7 @@
         
         <ng-template pTemplate="loadingbody">
           <tr>
-            <td colspan="6" class="text-center py-6 sm:py-8">
+            <td colspan="7" class="text-center py-6 sm:py-8">
               <p class="text-gray-400 text-sm sm:text-base">Cargando acciones...</p>
             </td>
           </tr>
