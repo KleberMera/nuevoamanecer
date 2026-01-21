@@ -1,6 +1,6 @@
 import { Component, inject, computed, signal } from '@angular/core';
 import { RegistroAccionService } from '../../services/registro-accion-service';
-import { CommonModule } from '@angular/common';
+import { CommonModule, CurrencyPipe, DatePipe } from '@angular/common';
 import { ReactiveFormsModule, FormControl } from '@angular/forms';
 import { apiResponse } from '@app/core/models/apiResponse';
 import { accionInterface } from '@app/core/models/accion';
@@ -17,7 +17,20 @@ import { InputTextModule } from 'primeng/inputtext';
 
 @Component({
   selector: 'app-historial-accion',
-  imports: [CommonModule, ReactiveFormsModule, TableModule, SelectModule, ButtonModule, TooltipModule, TagModule, IconFieldModule, InputIconModule, InputTextModule],
+  imports: [
+    ReactiveFormsModule,
+    TableModule,
+    SelectModule,
+    ButtonModule,
+    TooltipModule,
+    TagModule,
+    IconFieldModule,
+    InputIconModule,
+    InputTextModule,
+    CurrencyPipe,
+    DatePipe
+
+  ],
   templateUrl: './historial-accion.html',
   styleUrl: './historial-accion.css',
 })
@@ -38,20 +51,20 @@ export default class HistorialAccion {
   private usuarioBusca = signal<string>('');
 
   // Historial con httpResource
-  historial = httpResource<apiResponse<accionInterface[]>>(() => 
-    this.regAccion.listarAccionesPeriodo(this.periodoSeleccionado())
+  historial = httpResource<apiResponse<accionInterface[]>>(() =>
+    this.regAccion.listarAccionesPeriodo(this.periodoSeleccionado()),
   );
 
   // Acciones para mostrar en tabla
   protected acciones = computed(() => {
     const data = this.historial.value();
     const acciones = data?.data || [];
-    
+
     // Filtrar por búsqueda de usuario
     const busca = this.usuarioBusca().toLowerCase();
     if (!busca) return acciones;
-    
-    return acciones.filter(accion => {
+
+    return acciones.filter((accion) => {
       const nombreCompleto = this.getNombreCompleto(accion).toLowerCase();
       return nombreCompleto.includes(busca);
     });
@@ -68,7 +81,7 @@ export default class HistorialAccion {
   // Períodos disponibles
   protected periodosList = computed(() => [
     { label: 'Todos', value: null },
-    ...this.periodoService.generarPeriodos()
+    ...this.periodoService.generarPeriodos(),
   ]);
 
   // Obtener nombre completo del usuario
@@ -81,9 +94,9 @@ export default class HistorialAccion {
   // Convertir estado a texto legible
   protected getEstadoTexto(estado: string): string {
     const estadoMap: { [key: string]: string } = {
-      'A': 'ACTIVO',
-      'I': 'INACTIVO',
-      'D': 'DESCONTINUADO'
+      A: 'ACTIVO',
+      I: 'INACTIVO',
+      D: 'DESCONTINUADO',
     };
     return estadoMap[estado] || estado;
   }

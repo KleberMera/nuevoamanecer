@@ -83,7 +83,7 @@
               <span class="text-gray-200 text-xs sm:text-sm">{{ accion.numero }}</span>
             </td>
             <td>
-              <span class="text-gray-200 font-semibold text-xs sm:text-sm">USD {{ accion.valor | number: '1.2-2' }}</span>
+              <span class="text-gray-200 font-semibold text-xs sm:text-sm">{{ accion.valor | currency }}</span>
             </td>
             <td>
               <span class="text-gray-200 text-xs sm:text-sm">{{ accion.fecha | date: 'dd/MM/yyyy' }}</span>
