@@ -1,4 +1,4 @@
-import { environment } from '@environments/environment.development';
+import { environment } from '@environments/environment';
 
 const apiUrl = environment.apiUrl;
 const route = (path: string) => `${apiUrl}${path}`;
