@@ -124,9 +124,9 @@
       </div>
 
       <!-- Fila 3: Fecha, Guardar, Limpiar -->
-      <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 items-start">
+      <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
         <!-- Fecha - visible en todo -->
-        <div class="col-span-2 sm:col-span-1 space-y-2 order-first sm:order-0">
+        <div class="col-span-2 sm:col-span-1 space-y-2">
           <label for="fecha" class="block text-base font-semibold text-gray-100">
             Fecha
           </label>
@@ -136,8 +136,8 @@
             dateFormat="dd/mm/yy"
             placeholder="Selecciona una fecha"
             [showIcon]="true"
-            class="w-full"
-            inputStyleClass="w-full h-11">
+            class="w-full [&_.p-datepicker-input]:h-11"
+            inputStyleClass="h-11">
           </p-datepicker>
           @if (isFieldInvalid('fecha')) {
             <small class="text-red-400 block text-sm">
@@ -147,20 +147,25 @@
         </div>
 
         <!-- Guardar -->
-        <div class="order-last sm:order-0">
+        <div class="col-span-1 space-y-2">
+          <label class="block text-base font-semibold text-gray-100 invisible">
+            &nbsp;
+          </label>
           <p-button
             type="submit"
             label="Guardar"
             icon="pi pi-save"
             [disabled]="form.invalid || isLoading()"
             [loading]="isLoading()"
-            class="w-full"
-            [style]="{'height': '44px'}">
+            class="w-full h-11">
           </p-button>
         </div>
 
         <!-- Limpiar -->
-        <div class="order-last sm:order-0">
+        <div class="col-span-1 space-y-2">
+          <label class="block text-base font-semibold text-gray-100 invisible">
+            &nbsp;
+          </label>
           <p-button
             type="button"
             label="Limpiar"
@@ -168,8 +173,7 @@
             severity="secondary"
             (onClick)="onReset()"
             [disabled]="isLoading()"
-            class="w-full"
-            [style]="{'height': '44px'}">
+            class="w-full h-11">
           </p-button>
         </div>
       </div>
