@@ -1,7 +1,7 @@
 
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { computed, effect, inject, Injectable, PLATFORM_ID, signal } from '@angular/core';
-import { AppState } from '../../core/types/appstate';
+import { AppState } from '@core/types/appstate';
 
 @Injectable({
     providedIn: 'root'

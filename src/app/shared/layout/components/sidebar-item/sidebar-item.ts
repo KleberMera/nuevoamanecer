@@ -1,9 +1,9 @@
 import { Component, inject, signal, effect } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
-import { SiderbarService } from '../../../services/siderbar-service';
-import { ViewportService } from '../../../services/viewport-service';
-import { MenuItem } from '../../../../core/models/menu';
-import MENU_ITEMS from '../../../../core/routes/menu.routes';
+import { SiderbarService } from '@shared/services/siderbar-service';
+import { ViewportService } from '@shared/services/viewport-service';
+import { MenuItem } from '@core/models/menu';
+import MENU_ITEMS from '@core/routes/menu.routes';
 
 @Component({
   selector: 'app-sidebar-item',

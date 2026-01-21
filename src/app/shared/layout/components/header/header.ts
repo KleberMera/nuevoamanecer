@@ -1,5 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
-import { SiderbarService } from '../../../services/siderbar-service';
+import { SiderbarService } from '@shared/services/siderbar-service';
 import { ButtonModule } from 'primeng/button';
 import { MenuModule } from 'primeng/menu';
 import { AvatarModule } from 'primeng/avatar';

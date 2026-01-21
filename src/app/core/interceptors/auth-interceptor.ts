@@ -3,7 +3,7 @@ import { inject } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { catchError, throwError } from 'rxjs';
-import { AuthStateService } from '../../shared/services/auth-state-service';
+import { AuthStateService } from '@shared/services/auth-state-service';
 
 export const authInterceptor: HttpInterceptorFn = (
   request: HttpRequest<any>,

@@ -2,12 +2,12 @@ import { Component, inject, signal, computed, linkedSignal } from '@angular/core
 import { ReactiveFormsModule} from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RegistroAccionService } from '../../services/registro-accion-service';
-import { apiResponse } from '../../../../core/models/apiResponse';
-import { Usuario } from '../../../../core/models/usuario';
-import { accionInterface } from '../../../../core/models/accion';
+import { apiResponse } from '@core/models/apiResponse';
+import { Usuario } from '@core/models/usuario';
+import { accionInterface } from '@core/models/accion';
 import { toast } from 'ngx-sonner';
 import { HttpErrorResponse, httpResource } from '@angular/common/http';
-import { FormCard } from '../../../../shared/components/form-card/form-card';
+import { FormCard } from '@shared/components/form-card/form-card';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { SelectModule } from 'primeng/select';

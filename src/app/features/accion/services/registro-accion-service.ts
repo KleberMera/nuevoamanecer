@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
-import API_ROUTES from '../../../core/routes/api.routes';
+import API_ROUTES from '@core/routes/api.routes';
 import { Observable } from 'rxjs';
-import { apiResponse } from '../../../core/models/apiResponse';
-import { Usuario } from '../../../core/models/usuario';
-import { accionInterface } from '../../../core/models/accion';
+import { apiResponse } from '@core/models/apiResponse';
+import { Usuario } from '@core/models/usuario';
+import { accionInterface } from '@core/models/accion';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Injectable({

@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import PAGES_ROUTES from '../../core/routes/pages.routes';
+import PAGES_ROUTES from '@core/routes/pages.routes';
 
 export const accionesRoutes: Routes = [
   {

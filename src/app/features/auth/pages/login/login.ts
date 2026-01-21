@@ -1,7 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { Auth } from '../services/auth';
-import { FormValidation } from '../../../../shared/services/form-validation';
+import { FormValidation } from '@shared/services/form-validation';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
@@ -11,7 +11,7 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { FormsModule } from '@angular/forms';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
-import PAGES_ROUTES from '../../../../core/routes/pages.routes';
+import PAGES_ROUTES from '@core/routes/pages.routes';
 import { HttpErrorResponse } from '@angular/common/http';
 import { toast } from 'ngx-sonner';
 import { firstValueFrom } from 'rxjs';

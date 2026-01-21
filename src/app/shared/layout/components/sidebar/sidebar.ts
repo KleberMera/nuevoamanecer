@@ -1,6 +1,6 @@
 import { Component, computed, inject } from '@angular/core';
-import { SiderbarService } from '../../../services/siderbar-service';
-import { ViewportService } from '../../../services/viewport-service';
+import { SiderbarService } from '@shared/services/siderbar-service';
+import { ViewportService } from '@shared/services/viewport-service';
 import { SidebarItem } from "../sidebar-item/sidebar-item";
 
 @Component({
