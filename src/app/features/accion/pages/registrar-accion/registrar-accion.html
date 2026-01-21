@@ -29,6 +29,11 @@
           <p-progressSpinner [style]="{ width: '50px', height: '50px' }" strokeWidth="4" fill="var(--surface-ground)"
             animationDuration=".5s">
           </p-progressSpinner>
+          } @else if (user.error()) {
+          <div class="flex items-center gap-2 p-3 bg-red-500/10 border border-red-500/30 rounded-lg">
+            <i class="pi pi-exclamation-triangle text-red-400"></i>
+            <span class="text-red-400 text-sm">No se pudo cargar la lista de usuarios</span>
+          </div>
           } @else {
           <p-select id="usuario" formControlName="usuarioId" [options]="usuariosList()"
             optionValue="id" placeholder="Selecciona un usuario" [showClear]="true" [filter]="true" 
