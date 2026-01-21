@@ -37,10 +37,7 @@ export class RegistroAccionService {
 
   // Crear nueva acción
   crearAccion(accion: accionInterface): Observable<apiResponse<accionInterface>> {
-    return this._http.post<apiResponse<accionInterface>>(
-      this.apiUrl.ACCION.CREAR_ACCION,
-      accion
-    );
+    return this._http.post<apiResponse<accionInterface>>(this.apiUrl.ACCION.CREAR_ACCION, accion);
   }
 
   // Listar acciones del usuario
