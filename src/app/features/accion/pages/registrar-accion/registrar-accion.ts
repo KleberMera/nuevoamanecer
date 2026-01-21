@@ -18,6 +18,7 @@ import { FloatLabelModule } from 'primeng/floatlabel';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { ClassNamesModule } from 'primeng/classnames';
 import { firstValueFrom } from 'rxjs';
 
 @Component({
@@ -35,6 +36,7 @@ import { firstValueFrom } from 'rxjs';
     IconFieldModule,
     InputIconModule,
     ProgressSpinnerModule,
+    ClassNamesModule,
   ],
   templateUrl: './registrar-accion.html',
   styleUrl: './registrar-accion.css',

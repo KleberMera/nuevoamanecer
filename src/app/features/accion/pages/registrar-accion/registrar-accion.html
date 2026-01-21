@@ -5,7 +5,8 @@
         <div class="text-center">
           <h1 class="text-3xl sm:text-4xl font-bold mb-2 text-white tracking-wide">
             Registrar
-            <span class="bg-linear-to-r from-amber-400 via-amber-500 to-orange-600 text-transparent bg-clip-text font-extrabold">
+            <span
+              class="bg-linear-to-r from-amber-400 via-amber-500 to-orange-600 text-transparent bg-clip-text font-extrabold">
               Acción
             </span>
           </h1>
@@ -15,7 +16,7 @@
 
     <!-- Formulario -->
     <form class="space-y-4 sm:space-y-6" [formGroup]="form" (ngSubmit)="onSubmit()">
-      
+
       <!-- Selector de Usuario y Período -->
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <!-- Usuario -->
@@ -23,31 +24,21 @@
           <label for="usuario" class="block text-base font-semibold text-gray-100">
             Usuario
           </label>
-          
+
           @if (user.isLoading()) {
-            <p-progressSpinner 
-              [style]="{ width: '50px', height: '50px' }"
-              strokeWidth="4"
-              fill="var(--surface-ground)"
-              animationDuration=".5s">
-            </p-progressSpinner>
+          <p-progressSpinner [style]="{ width: '50px', height: '50px' }" strokeWidth="4" fill="var(--surface-ground)"
+            animationDuration=".5s">
+          </p-progressSpinner>
           } @else {
-            <p-select
-              id="usuario"
-              formControlName="usuarioId"
-              [options]="usuariosList()"
-              optionLabel="nombre1"
-              optionValue="id"
-              placeholder="Selecciona un usuario"
-              [showClear]="true"
-              class="w-full h-11!">
-            </p-select>
+          <p-select id="usuario" formControlName="usuarioId" [options]="usuariosList()" optionLabel="nombre1"
+            optionValue="id" placeholder="Selecciona un usuario" [showClear]="true" class="w-full h-11!">
+          </p-select>
           }
-          
+
           @if (isFieldInvalid('usuarioId')) {
-            <small class="text-red-400 block text-sm">
-              El usuario es requerido
-            </small>
+          <small class="text-red-400 block text-sm">
+            El usuario es requerido
+          </small>
           }
         </div>
 
@@ -56,19 +47,13 @@
           <label for="periodo" class="block text-base font-semibold text-gray-100">
             Período
           </label>
-          <p-select
-            id="periodo"
-            formControlName="periodo"
-            [options]="periodosList()"
-            optionLabel="label"
-            optionValue="value"
-            placeholder="Selecciona un período"
-            class="w-full h-11!">
+          <p-select id="periodo" formControlName="periodo" [options]="periodosList()" optionLabel="label"
+            optionValue="value" placeholder="Selecciona un período" class="w-full h-11!">
           </p-select>
           @if (isFieldInvalid('periodo')) {
-            <small class="text-red-400 block text-sm">
-              El período es requerido
-            </small>
+          <small class="text-red-400 block text-sm">
+            El período es requerido
+          </small>
           }
         </div>
       </div>
@@ -82,18 +67,14 @@
           </label>
           <p-iconfield class="w-full">
             <p-inputicon class="pi pi-hashtag text-gray-400"></p-inputicon>
-            <p-inputnumber
-              id="numero"
-              formControlName="numero"
-              placeholder="Ingresa el número"
-              [useGrouping]="false"
+            <p-inputnumber id="numero" formControlName="numero" placeholder="Ingresa el número" [useGrouping]="false"
               class="w-full h-11!">
             </p-inputnumber>
           </p-iconfield>
           @if (isFieldInvalid('numero')) {
-            <small class="text-red-400 block text-sm">
-              Debe ser mayor a 0
-            </small>
+          <small class="text-red-400 block text-sm">
+            Debe ser mayor a 0
+          </small>
           }
         </div>
 
@@ -104,21 +85,14 @@
           </label>
           <p-iconfield class="w-full">
             <p-inputicon class="pi pi-dollar text-gray-400"></p-inputicon>
-            <p-inputnumber
-              id="valor"
-              formControlName="valor"
-              placeholder="Auto"
-              mode="currency"
-              currency="USD"
-              [useGrouping]="true"
-              [readonly]="true"
-              class="w-full h-11!">
+            <p-inputnumber id="valor" formControlName="valor" placeholder="Auto" mode="currency" currency="USD"
+              [useGrouping]="true" [readonly]="true" class="w-full h-11!">
             </p-inputnumber>
           </p-iconfield>
           @if (isFieldInvalid('valor')) {
-            <small class="text-red-400 block text-sm">
-              El valor es requerido
-            </small>
+          <small class="text-red-400 block text-sm">
+            El valor es requerido
+          </small>
           }
         </div>
       </div>
@@ -130,19 +104,14 @@
           <label for="fecha" class="block text-base font-semibold text-gray-100">
             Fecha
           </label>
-          <p-datepicker
-            id="fecha"
-            formControlName="fecha"
-            dateFormat="dd/mm/yy"
-            placeholder="Selecciona una fecha"
-            [showIcon]="true"
-            class="w-full [&_.p-datepicker-input]:h-11"
-            inputStyleClass="h-11">
+          <p-datepicker id="fecha" formControlName="fecha" dateFormat="dd/mm/yy" placeholder="Selecciona una fecha"
+            [showIcon]="true" [style]="{'width': '100%', 'height': '2.75rem'}" inputStyleClass="w-full h-11 !py-2 !px-3"
+            [inputStyle]="{'height': '2.75rem', 'line-height': '1.5rem', 'padding': '0.5rem 0.75rem'}">
           </p-datepicker>
           @if (isFieldInvalid('fecha')) {
-            <small class="text-red-400 block text-sm">
-              La fecha es requerida
-            </small>
+          <small class="text-red-400 block text-sm">
+            La fecha es requerida
+          </small>
           }
         </div>
 
@@ -151,13 +120,8 @@
           <label class="block text-base font-semibold text-gray-100 invisible">
             &nbsp;
           </label>
-          <p-button
-            type="submit"
-            label="Guardar"
-            icon="pi pi-save"
-            [disabled]="form.invalid || isLoading()"
-            [loading]="isLoading()"
-            class="w-full h-11">
+          <p-button type="submit" label="Guardar" icon="pi pi-save" [disabled]="form.invalid || isLoading()"
+            [loading]="isLoading()" class="w-full h-11">
           </p-button>
         </div>
 
@@ -166,14 +130,8 @@
           <label class="block text-base font-semibold text-gray-100 invisible">
             &nbsp;
           </label>
-          <p-button
-            type="button"
-            label="Limpiar"
-            icon="pi pi-times"
-            severity="secondary"
-            (onClick)="onReset()"
-            [disabled]="isLoading()"
-            class="w-full h-11">
+          <p-button type="button" label="Limpiar" icon="pi pi-times" severity="secondary" (onClick)="onReset()"
+            [disabled]="isLoading()" class="w-full h-11">
           </p-button>
         </div>
       </div>
