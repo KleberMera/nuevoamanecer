@@ -30,8 +30,15 @@
             animationDuration=".5s">
           </p-progressSpinner>
           } @else {
-          <p-select id="usuario" formControlName="usuarioId" [options]="usuariosList()" optionLabel="nombre1"
-            optionValue="id" placeholder="Selecciona un usuario" [showClear]="true" class="w-full h-11!">
+          <p-select id="usuario" formControlName="usuarioId" [options]="usuariosList()"
+            optionValue="id" placeholder="Selecciona un usuario" [showClear]="true" [filter]="true" 
+            filterPlaceholder="Buscar usuario..." class="w-full h-11!">
+            <ng-template #selectedItem let-usuario>
+              {{ usuario.nombre1 }} {{ usuario.nombre2 || '' }} {{ usuario.apellido1 }} {{ usuario.apellido2 || '' }}
+            </ng-template>
+            <ng-template #item let-usuario>
+              {{ usuario.nombre1 }} {{ usuario.nombre2 || '' }} {{ usuario.apellido1 }} {{ usuario.apellido2 || '' }}
+            </ng-template>
           </p-select>
           }
 

@@ -2,7 +2,6 @@ import { Component, inject, signal, computed, linkedSignal } from '@angular/core
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RegistroAccionService } from '../../services/registro-accion-service';
-import { rxResource } from '@angular/core/rxjs-interop';
 import { apiResponse } from '../../../../core/models/apiResponse';
 import { Usuario } from '../../../../core/models/usuario';
 import { accionInterface } from '../../../../core/models/accion';
