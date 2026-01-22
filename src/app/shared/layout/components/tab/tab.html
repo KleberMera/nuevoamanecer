@@ -5,9 +5,9 @@
       @for (item of tabItems().slice(0, 2); track item.id) {
       <button 
         [routerLink]="item.route"
-        routerLinkActive="text-primary bg-primary/10"
+        routerLinkActive="!text-primary "
         [routerLinkActiveOptions]="{exact: true}"
-        class="flex flex-col items-center justify-center gap-1 py-2 px-1 text-surface-400 transition-all duration-200 rounded-lg hover:bg-surface-800/50 active:scale-95">
+        class="flex flex-col items-center justify-center gap-1 py-2 px-1 text-surface-400 transition-all duration-200 rounded-lg hover:text-surface-300 active:scale-95">
         <i [class]="item.icon + ' text-xl'"></i>
         <span class="text-[10px] font-medium leading-tight">{{ item.label }}</span>
       </button>
@@ -17,7 +17,6 @@
       <button 
         type="button"
         (click)="toggleMenu()"
-        [class.bg-surface-800]="menuVisible()"
         class="flex flex-col items-center justify-center relative -mt-2">
         <!-- Elevated Circle -->
         <div class="absolute -top-3 left-1/2 -translate-x-1/2 w-14 h-14 bg-surface-800 rounded-full shadow-lg border border-surface-700 flex items-center justify-center transition-all duration-200 active:scale-95">
@@ -31,9 +30,9 @@
       @for (item of tabItems().slice(2); track item.id) {
       <button 
         [routerLink]="item.route"
-        routerLinkActive="text-primary bg-primary/10"
+        routerLinkActive="!text-primary "
         [routerLinkActiveOptions]="{exact: true}"
-        class="flex flex-col items-center justify-center gap-1 py-2 px-1 text-surface-400 transition-all duration-200 rounded-lg hover:bg-surface-800/50 active:scale-95">
+        class="flex flex-col items-center justify-center gap-1 py-2 px-1 text-surface-400 transition-all duration-200 rounded-lg hover:text-surface-300 active:scale-95">
         <i [class]="item.icon + ' text-xl'"></i>
         <span class="text-[10px] font-medium leading-tight">{{ item.label }}</span>
       </button>
