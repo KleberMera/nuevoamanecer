@@ -13,14 +13,8 @@
       <label for="periodo" class="block text-sm sm:text-base font-semibold text-gray-100">
         Período
       </label>
-      <p-select 
-        id="periodo" 
-        [formControl]="periodoControl"
-        [options]="periodosList()" 
-        optionLabel="label" 
-        optionValue="value"
-        placeholder="Selecciona"
-        class="w-full">
+      <p-select id="periodo" [formControl]="periodoControl" [options]="periodosList()" optionLabel="label"
+        optionValue="value" placeholder="Selecciona" class="w-full">
       </p-select>
     </div>
 
@@ -31,161 +25,123 @@
       </label>
       <p-iconfield class="w-full">
         <p-inputicon class="pi pi-search text-gray-400"></p-inputicon>
-        <input 
-          pInputText
-          type="text" 
-          id="usuarioBusca"
-          [formControl]="usuarioBuscaControl"
-          placeholder="Nombre o apellido..."
-          class="w-full">
+        <input pInputText type="text" id="usuarioBusca" [formControl]="usuarioBuscaControl"
+          placeholder="Nombre o apellido..." class="w-full">
       </p-iconfield>
     </div>
   </div>
 
   <!-- Estados de carga y error -->
   @if (hasError()) {
-    <div class="flex items-center gap-3 p-3 sm:p-4 bg-red-500/10 border border-red-500/30 rounded-lg">
-      <i class="pi pi-exclamation-triangle text-red-400 text-lg sm:text-xl"></i>
-      <div>
-        <p class="text-red-400 font-semibold text-sm sm:text-base">Error al cargar</p>
-        <p class="text-red-300 text-xs sm:text-sm">{{ errorMessage() }}</p>
+  <div class="flex items-center gap-3 p-3 sm:p-4 bg-red-500/10 border border-red-500/30 rounded-lg">
+    <i class="pi pi-exclamation-triangle text-red-400 text-lg sm:text-xl"></i>
+    <div>
+      <p class="text-red-400 font-semibold text-sm sm:text-base">Error al cargar</p>
+      <p class="text-red-300 text-xs sm:text-sm">{{ errorMessage() }}</p>
+    </div>
+  </div>
+  } @else if (isLoading()) {
+  <div class="flex justify-center items-center py-12">
+    <p-progressSpinner></p-progressSpinner>
+  </div>
+  } @else if (acciones().length === 0) {
+  <div class="flex flex-col items-center justify-center py-12 gap-3">
+    <i class="pi pi-inbox text-4xl text-gray-400"></i>
+    <p class="text-gray-400 text-sm md:text-base">No hay acciones registradas</p>
+  </div>
+  } @else {
+  <!-- VISTA DESKTOP: TABLA COMPLETA -->
+  <div class="hidden md:block overflow-x-auto rounded-lg">
+    <p-table [value]="acciones()" [rows]="5" [paginator]="true"
+      [globalFilterFields]="['usuario.nombre1', 'usuario.apellido1', 'numero', 'valor', 'estado']"
+      class="p-datatable-striped" [rowsPerPageOptions]="[5, 10, 20]" rowHover showGridlines>
+      <ng-template pTemplate="header">
+        <tr>
+          <th pSortableColumn="usuario.nombre1">Usuario <p-sortIcon field="usuario.nombre1"></p-sortIcon></th>
+          <th pSortableColumn="periodo">Periodo <p-sortIcon field="periodo"></p-sortIcon></th>
+          <th pSortableColumn="numero">Cantidad <p-sortIcon field="numero"></p-sortIcon></th>
+          <th pSortableColumn="valor">Valor <p-sortIcon field="valor"></p-sortIcon></th>
+          <th pSortableColumn="fecha">Fecha <p-sortIcon field="fecha"></p-sortIcon></th>
+          <th pSortableColumn="estado">Estado <p-sortIcon field="estado"></p-sortIcon></th>
+          <th>Acciones</th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-accion>
+        <tr>
+          <td>
+            <span class="text-gray-200 font-medium">{{ getNombreCompleto(accion) }}</span>
+          </td>
+          <td>
+            <span class="text-gray-200">{{ accion.periodo }}</span>
+          </td>
+          <td>
+            <span class="text-gray-200">{{ accion.numero }}</span>
+          </td>
+          <td>
+            <span class="text-gray-200 font-semibold">{{ accion.valor | currency }}</span>
+          </td>
+          <td>
+            <span class="text-gray-200">{{ accion.fecha | date: 'dd/MM/yyyy' }}</span>
+          </td>
+          <td>
+            <p-tag [value]="getEstadoTexto(accion.estado)" [severity]="accion.estado === 'A' ? 'success' : 'secondary'">
+            </p-tag>
+          </td>
+          <td class="text-center">
+            <p-button icon="pi pi-eye" [rounded]="true" [text]="true" [plain]="true" severity="info"
+              pTooltip="Ver detalles" tooltipPosition="top">
+            </p-button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+
+  <!-- VISTA MOBILE: CARDS -->
+  <div class="md:hidden space-y-3">
+    @for (accion of acciones(); track accion.id) {
+    <div class="bg-surface-900 border border-surface-700 rounded-lg p-4 space-y-3 relative">
+
+      <!-- Header: Usuario y Estado -->
+      <div class="flex items-start justify-between gap-3 pb-3 border-b border-surface-700">
+        <div class="flex-1 min-w-0">
+
+          <p class="text-sm text-gray-100 font-medium truncate">{{ getNombreCompleto(accion) }}</p>
+        </div>
+        <p-tag [value]="getEstadoTexto(accion.estado)" [severity]="accion.estado === 'A' ? 'success' : 'secondary'"
+          class="shrink-0">
+        </p-tag>
+      </div>
+
+      <!-- Grid de datos principales -->
+      <div class="grid grid-cols-3 gap-3">
+        <!-- Fecha -->
+        <div>
+          <p class="text-xs text-gray-400 uppercase font-semibold mb-1">Fecha</p>
+          <p class="text-sm text-gray-100">{{ accion.fecha | date: 'dd/MM/yyyy' }}</p>
+        </div>
+
+        <!-- Cantidad -->
+        <div>
+          <p class="text-xs text-gray-400 uppercase font-semibold mb-1">Cantidad</p>
+          <p class="text-sm text-gray-100 font-medium">{{ accion.numero }}</p>
+        </div>
+
+        <!-- Valor -->
+        <div class="text-right">
+          <p class="text-xs text-gray-400 uppercase font-semibold mb-1">Valor</p>
+          <p class="text-base font-bold text-primary">{{ accion.valor | currency }}</p>
+        </div>
+      </div>
+
+      <!-- Footer: Botón de acción -->
+      <div class="flex justify-end pt-2 border-t border-surface-700">
+        <p-button icon="pi pi-eye" label="Ver detalles" [text]="true" severity="info" size="small">
+        </p-button>
       </div>
     </div>
-  } @else if (isLoading()) {
-    <div class="flex justify-center items-center py-12">
-      <p-progressSpinner></p-progressSpinner>
-    </div>
-  } @else if (acciones().length === 0) {
-    <div class="flex flex-col items-center justify-center py-12 gap-3">
-      <i class="pi pi-inbox text-4xl text-gray-400"></i>
-      <p class="text-gray-400 text-sm md:text-base">No hay acciones registradas</p>
-    </div>
-  } @else {
-    <!-- VISTA DESKTOP: TABLA COMPLETA -->
-    <div class="hidden md:block overflow-x-auto rounded-lg">
-      <p-table
-        [value]="acciones()"
-        [rows]="5"
-        [paginator]="true"
-        [globalFilterFields]="['usuario.nombre1', 'usuario.apellido1', 'numero', 'valor', 'estado']"
-        class="p-datatable-striped"
-        [rowsPerPageOptions]="[5, 10, 20]"
-        rowHover
-        showGridlines
-      >
-        <ng-template pTemplate="header">
-          <tr>
-            <th pSortableColumn="usuario.nombre1">Usuario <p-sortIcon field="usuario.nombre1"></p-sortIcon></th>
-            <th pSortableColumn="periodo">Periodo <p-sortIcon field="periodo"></p-sortIcon></th>
-            <th pSortableColumn="numero">Cantidad <p-sortIcon field="numero"></p-sortIcon></th>
-            <th pSortableColumn="valor">Valor <p-sortIcon field="valor"></p-sortIcon></th>
-            <th pSortableColumn="fecha">Fecha <p-sortIcon field="fecha"></p-sortIcon></th>
-            <th pSortableColumn="estado">Estado <p-sortIcon field="estado"></p-sortIcon></th>
-            <th>Acciones</th>
-          </tr>
-        </ng-template>
-        
-        <ng-template pTemplate="body" let-accion>
-          <tr>
-            <td>
-              <span class="text-gray-200 font-medium">{{ getNombreCompleto(accion) }}</span>
-            </td>
-            <td>
-              <span class="text-gray-200">{{ accion.periodo }}</span>
-            </td>
-            <td>
-              <span class="text-gray-200">{{ accion.numero }}</span>
-            </td>
-            <td>
-              <span class="text-gray-200 font-semibold">{{ accion.valor | currency }}</span>
-            </td>
-            <td>
-              <span class="text-gray-200">{{ accion.fecha | date: 'dd/MM/yyyy' }}</span>
-            </td>
-            <td>
-              <p-tag 
-                [value]="getEstadoTexto(accion.estado)"
-                [severity]="accion.estado === 'A' ? 'success' : 'secondary'">
-              </p-tag>
-            </td>
-            <td class="text-center">
-              <p-button 
-                icon="pi pi-eye" 
-                [rounded]="true" 
-                [text]="true" 
-                [plain]="true"
-                severity="info"
-                pTooltip="Ver detalles"
-                tooltipPosition="top">
-              </p-button>
-            </td>
-          </tr>
-        </ng-template>
-      </p-table>
-    </div>
-
-    <!-- VISTA MOBILE: CARDS -->
-    <div class="md:hidden space-y-3">
-      @for (accion of acciones(); track accion.id) {
-        <div class="bg-surface-900 border border-surface-700 rounded-lg p-4 space-y-4 relative">
-          <!-- Estado en esquina superior derecha -->
-          <div class="absolute top-4 right-4">
-            <p-tag 
-              [value]="getEstadoTexto(accion.estado)"
-              [severity]="accion.estado === 'A' ? 'success' : 'secondary'">
-            </p-tag>
-          </div>
-
-          <!-- Fila 1: Usuario y Fecha -->
-          <div class="grid grid-cols-2 gap-4">
-            <!-- Usuario -->
-            <div>
-              <p class="text-xs text-gray-400 uppercase font-semibold">Usuario</p>
-              <p class="text-sm text-gray-100 font-medium">{{ getNombreCompleto(accion) }}</p>
-            </div>
-
-            <!-- Fecha -->
-            <div>
-              <p class="text-xs text-gray-400 uppercase font-semibold">Fecha</p>
-              <p class="text-sm text-gray-100">{{ accion.fecha | date: 'dd/MM/yyyy' }}</p>
-            </div>
-          </div>
-
-          <!-- Fila 2: Cantidad y Valor -->
-          <div class="grid grid-cols-2 gap-4">
-            <!-- Cantidad -->
-            <div>
-              <p class="text-xs text-gray-400 uppercase font-semibold">Cantidad</p>
-              <p class="text-sm text-gray-100">{{ accion.numero }}</p>
-            </div>
-
-            <!-- Valor -->
-            <div>
-              <p class="text-xs text-gray-400 uppercase font-semibold">Valor</p>
-              <p class="text-sm text-gray-100 font-semibold">{{ accion.valor | currency }}</p>
-            </div>
-          </div>
-
-          <!-- Fila 3: Período y Botón -->
-          <div class="flex items-end justify-between">
-            <div>
-              <p class="text-xs text-gray-400 uppercase font-semibold">Período</p>
-              <p class="text-sm text-gray-100">{{ accion.periodo }}</p>
-            </div>
-
-            <!-- Botón de acciones -->
-            <p-button 
-              icon="pi pi-eye" 
-              [rounded]="true" 
-              [text]="true"
-              severity="info"
-              pTooltip="Ver detalles"
-              tooltipPosition="top">
-            </p-button>
-          </div>
-        </div>
-      }
-    </div>
+    }
+  </div>
   }
 </div>
-
