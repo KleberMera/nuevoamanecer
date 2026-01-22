@@ -1,12 +1,16 @@
 <div class="space-y-4 sm:space-y-6 w-full">
   <!-- Encabezado con título -->
-  <div class="flex items-center justify-between flex-wrap gap-3">
-    <h2 class="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-100">
-      Historial de <span class="text-primary">Acciones</span>
-    </h2>
-    <!-- Opcional: Badge con total de registros -->
+<!-- Encabezado con título -->
+<div class="flex items-center justify-between flex-wrap gap-3">
+  <h2 class="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-100">
+    Historial de <span class="text-primary">Acciones</span>
+  </h2>
+  <!-- Badge con total de registros y valor total -->
+  <div class="flex items-center gap-2 flex-wrap">
     <p-tag [value]="acciones().length + ' registros'" severity="secondary"></p-tag>
+    <p-tag [value]="'Total: ' + (calcularValorTotal() | currency)" severity="success"></p-tag>
   </div>
+</div>
 
   <!-- Filtros: Período y Búsqueda Usuario -->
 <!-- Filtros: Período y Búsqueda Usuario -->
@@ -73,18 +77,20 @@
     </div>
   } @else {
     <!-- VISTA DESKTOP: TABLA COMPLETA -->
-    <div class="hidden md:block overflow-x-auto rounded-lg border border-surface-700">
-      <p-table 
-        [value]="acciones()" 
-        [rows]="5" 
-        [paginator]="true"
-        [globalFilterFields]="['usuario.nombre1', 'usuario.apellido1', 'numero', 'valor', 'estado']"
-        styleClass="p-datatable-striped" 
-        [rowsPerPageOptions]="[5, 10, 20, 50]" 
-        [rowHover]="true"
-        [showGridlines]="true"
-        currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
-        [showCurrentPageReport]="true">
+    <div class="rounded-lg border border-surface-700 overflow-hidden">
+      
+      <div class="">
+        <p-table 
+          class="hidden md:block rounded-lg border border-surface-700 overflow-hidden"
+          [value]="acciones()" 
+          [rows]="5" 
+          [paginator]="true"
+          [globalFilterFields]="['usuario.nombre1', 'usuario.apellido1', 'numero', 'valor', 'estado']"
+          [rowsPerPageOptions]="[5, 10, 20, 50]" 
+          [rowHover]="true"
+          [showGridlines]="true"
+          currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+          [showCurrentPageReport]="true">
         
         <ng-template pTemplate="header">
           <tr>
@@ -176,6 +182,7 @@
           </tr>
         </ng-template>
       </p-table>
+      </div>
     </div>
 
     <!-- VISTA MOBILE: CARDS -->

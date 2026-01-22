@@ -114,4 +114,14 @@ export default class HistorialAccion {
       this.usuarioBusca.set(value || '');
     });
   }
+
+  // Calcular el total del valor de las acciones mostradas
+  protected getTotalValor(): number {
+    return this.acciones().reduce((total, accion) => total + accion.valor, 0);
+  }
+
+
+  calcularValorTotal(): number {
+  return this.acciones().reduce((total, accion) => total + (accion.valor || 0), 0);
+}
 }
