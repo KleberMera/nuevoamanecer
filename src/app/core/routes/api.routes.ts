@@ -24,6 +24,7 @@ export const API_ROUTES = {
     CREAR_ACCION: '',
     LISTAR_ACCIONES_USUARIO: 'usuario',
     LISTAR_ACCIONES_PERIODO: 'periodo',
+    TOTAL_ACCIONES: 'total',
   }),
 };
 

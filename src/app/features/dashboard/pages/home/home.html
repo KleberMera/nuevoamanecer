@@ -1,1 +1,147 @@
-<p>home works!</p>
+<div class="space-y-4 sm:space-y-6 w-full">
+  <!-- Encabezado -->
+  <div>
+    <h2 class="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-100">
+      Panel de <span class="text-primary">Control</span>
+    </h2>
+    <p class="text-sm text-gray-400 mt-1">Resumen financiero actualizado</p>
+  </div>
+
+  <!-- Estados de carga y error -->
+  @if (hasError()) {
+    <div class="flex items-center gap-3 p-4 bg-red-500/10 border border-red-500/30 rounded-lg">
+      <i class="pi pi-exclamation-triangle text-red-400 text-xl"></i>
+      <div class="flex-1">
+        <p class="text-red-400 font-semibold text-sm sm:text-base">Error al cargar</p>
+        <p class="text-red-300 text-xs sm:text-sm">No se pudieron obtener los totales</p>
+      </div>
+    </div>
+  } @else if (isLoading()) {
+    <div class="flex justify-center items-center py-16">
+      <p-progressSpinner 
+        styleClass="w-12 h-12" 
+        strokeWidth="4" 
+        animationDuration="1s">
+      </p-progressSpinner>
+    </div>
+  } @else if (totales()) {
+    
+    <!-- Grid de Cards -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-5">
+      
+      <!-- Card 1: Acciones y Valor Total con Filtro -->
+      <div class="bg-surface-900 border border-surface-700 rounded-lg p-4 sm:p-5 hover:border-primary/50 transition-colors">
+        <!-- Header con título y filtro -->
+        <div class="flex items-center justify-between gap-3 mb-4">
+          <h3 class="text-base sm:text-lg font-semibold text-gray-100">Acciones Registradas</h3>
+          <div class="w-32 sm:w-40">
+            <p-select 
+              id="periodo" 
+              [formControl]="periodoControl" 
+              [options]="periodosList()" 
+              optionLabel="label"
+              optionValue="value" 
+              placeholder="Período" 
+              class="w-full"
+             >
+            </p-select>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-around gap-4">
+          <!-- Total Acciones -->
+          <div class="flex flex-col items-center text-center flex-1">
+            <div class="w-12 h-12 sm:w-14 sm:h-14 bg-primary/10 rounded-lg flex items-center justify-center mb-2">
+              <i class="pi pi-chart-bar text-xl sm:text-2xl text-primary"></i>
+            </div>
+            <p class="text-xs sm:text-sm text-gray-400 font-medium mb-1">Acciones</p>
+            <p class="text-2xl sm:text-3xl font-bold text-gray-100">{{ totales()!.totalNumero }}</p>
+          </div>
+
+          <!-- Separador -->
+          <div class="w-px h-20 sm:h-24 bg-surface-700"></div>
+
+          <!-- Total Valor -->
+          <div class="flex flex-col items-center text-center flex-1">
+            <div class="w-12 h-12 sm:w-14 sm:h-14 bg-green-500/10 rounded-lg flex items-center justify-center mb-2">
+              <i class="pi pi-dollar text-xl sm:text-2xl text-green-500"></i>
+            </div>
+            <p class="text-xs sm:text-sm text-gray-400 font-medium mb-1">Valor Total</p>
+            <p class="text-2xl sm:text-3xl font-bold text-green-500">{{ totales()!.totalValor | currency }}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2: Préstamos y Deudas -->
+      <div class="bg-surface-900 border border-surface-700 rounded-lg p-4 sm:p-5 hover:border-primary/50 transition-colors">
+        <h3 class="text-base sm:text-lg font-semibold text-gray-100 mb-4">Estado Financiero</h3>
+        <div class="flex items-center justify-around gap-4">
+          <!-- Préstamos Activos -->
+          <div class="flex flex-col items-center text-center flex-1">
+            <div class="w-12 h-12 sm:w-14 sm:h-14 bg-blue-500/10 rounded-lg flex items-center justify-center mb-2">
+              <i class="pi pi-wallet text-xl sm:text-2xl text-blue-500"></i>
+            </div>
+            <p class="text-xs sm:text-sm text-gray-400 font-medium mb-1">Préstamos</p>
+            <p class="text-2xl sm:text-3xl font-bold text-gray-100">{{ 8 }}</p>
+          </div>
+
+          <!-- Separador -->
+          <div class="w-px h-20 sm:h-24 bg-surface-700"></div>
+
+          <!-- Total Deudas -->
+          <div class="flex flex-col items-center text-center flex-1">
+            <div class="w-12 h-12 sm:w-14 sm:h-14 bg-orange-500/10 rounded-lg flex items-center justify-center mb-2">
+              <i class="pi pi-exclamation-circle text-xl sm:text-2xl text-orange-500"></i>
+            </div>
+            <p class="text-xs sm:text-sm text-gray-400 font-medium mb-1">Deudas</p>
+            <p class="text-2xl sm:text-3xl font-bold text-orange-500">{{ 12500 | currency }}</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Card 3: Letras (Ancho completo) -->
+    <div class="bg-surface-900 border border-surface-700 rounded-lg p-4 sm:p-5 hover:border-primary/50 transition-colors">
+      <h3 class="text-base sm:text-lg font-semibold text-gray-100 mb-4">Control de Letras</h3>
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <!-- Letras Totales -->
+        <div class="flex flex-col items-center text-center">
+          <div class="w-12 h-12 sm:w-14 sm:h-14 bg-purple-500/10 rounded-lg flex items-center justify-center mb-2">
+            <i class="pi pi-file text-xl sm:text-2xl text-purple-500"></i>
+          </div>
+          <p class="text-xs sm:text-sm text-gray-400 font-medium mb-1">Total</p>
+          <p class="text-xl sm:text-2xl font-bold text-gray-100">{{ 45 }}</p>
+        </div>
+
+        <!-- Letras Pagadas -->
+        <div class="flex flex-col items-center text-center">
+          <div class="w-12 h-12 sm:w-14 sm:h-14 bg-green-500/10 rounded-lg flex items-center justify-center mb-2">
+            <i class="pi pi-check-circle text-xl sm:text-2xl text-green-500"></i>
+          </div>
+          <p class="text-xs sm:text-sm text-gray-400 font-medium mb-1">Pagadas</p>
+          <p class="text-xl sm:text-2xl font-bold text-green-500">{{ 28 }}</p>
+        </div>
+
+        <!-- Letras Pendientes -->
+        <div class="flex flex-col items-center text-center">
+          <div class="w-12 h-12 sm:w-14 sm:h-14 bg-yellow-500/10 rounded-lg flex items-center justify-center mb-2">
+            <i class="pi pi-clock text-xl sm:text-2xl text-yellow-500"></i>
+          </div>
+          <p class="text-xs sm:text-sm text-gray-400 font-medium mb-1">Pendientes</p>
+          <p class="text-xl sm:text-2xl font-bold text-yellow-500">{{ 12 }}</p>
+        </div>
+
+        <!-- Letras Vencidas -->
+        <div class="flex flex-col items-center text-center">
+          <div class="w-12 h-12 sm:w-14 sm:h-14 bg-red-500/10 rounded-lg flex items-center justify-center mb-2">
+            <i class="pi pi-times-circle text-xl sm:text-2xl text-red-500"></i>
+          </div>
+          <p class="text-xs sm:text-sm text-gray-400 font-medium mb-1">Vencidas</p>
+          <p class="text-xl sm:text-2xl font-bold text-red-500">{{ 5 }}</p>
+        </div>
+      </div>
+    </div>
+
+  }
+</div>
