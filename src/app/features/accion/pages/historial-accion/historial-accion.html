@@ -76,11 +76,11 @@
     <div class="hidden md:block overflow-x-auto rounded-lg border border-surface-700">
       <p-table 
         [value]="acciones()" 
-        [rows]="10" 
+        [rows]="5" 
         [paginator]="true"
         [globalFilterFields]="['usuario.nombre1', 'usuario.apellido1', 'numero', 'valor', 'estado']"
         styleClass="p-datatable-striped" 
-        [rowsPerPageOptions]="[10, 20, 50]" 
+        [rowsPerPageOptions]="[5, 10, 20, 50]" 
         [rowHover]="true"
         [showGridlines]="true"
         currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
