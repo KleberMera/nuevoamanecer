@@ -15,6 +15,7 @@ import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { ScreenService } from '@app/shared/services/screen-service';
 
 @Component({
   selector: 'app-historial-accion',
@@ -39,6 +40,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 export default class HistorialAccion {
   protected readonly regAccion = inject(RegistroAccionService);
   protected readonly periodoService = inject(PeriodoService);
+  protected readonly _screenService = inject(ScreenService);
 
   // FormControl para el período
   protected periodoControl = new FormControl<string>(this.periodoService.getPeriodoActual());
