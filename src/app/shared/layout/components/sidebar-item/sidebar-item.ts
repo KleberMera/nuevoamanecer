@@ -1,4 +1,4 @@
-import { Component, inject, signal, effect } from '@angular/core';
+import { Component, inject, signal, effect, output } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { SiderbarService } from '@shared/services/siderbar-service';
 import { ViewportService } from '@shared/services/viewport-service';
@@ -17,6 +17,9 @@ export class SidebarItem {
   private readonly viewportService = inject(ViewportService);
   readonly expandedItems = signal<Record<number, boolean>>({});
   protected readonly menuItems = signal<MenuItem[]>(MENU_ITEMS);
+  
+  // Output para notificar cuando se hace clic en un item
+  readonly itemClicked = output<void>();
 
   constructor() {
     // Expandir automáticamente el menú padre si un subitem está activo
@@ -72,6 +75,7 @@ export class SidebarItem {
       }
       if (item.route) {
         this.router.navigate([item.route]);
+        this.itemClicked.emit();
       }
     }
   }
@@ -82,6 +86,7 @@ export class SidebarItem {
     }
     if (subitemRoute) {
       this.router.navigate([subitemRoute]);
+      this.itemClicked.emit();
     }
   }
 }

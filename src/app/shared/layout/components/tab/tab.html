@@ -21,6 +21,7 @@
       <!-- Center Menu Button with Logo -->
       <button 
         type="button"
+        (click)="toggleMenu()"
         class="flex flex-col items-center justify-center text-surface-400 transition-colors duration-200 relative group pt-1">
         <div class="relative flex flex-col items-center">
           <div class="p-2 rounded-full transition-all duration-200 group-hover:bg-primary-500/10 -mt-3">
@@ -50,3 +51,31 @@
     </div>
   </div>
 </nav>
+
+<!-- Drawer del menú -->
+<p-drawer 
+  [(visible)]="menuVisible" 
+  position="bottom"
+  [modal]="true"
+  [dismissible]="true"
+  [showCloseIcon]="true"
+  [style]="{'height': 'auto', 'max-height': '70vh'}">
+  <ng-template #header>
+    <div class="flex items-center gap-3">
+      <img src="logo_main.svg" alt="Logo" class="w-8 h-8">
+      <h2 class="text-lg font-bold text-gray-100">Menú Principal</h2>
+    </div>
+  </ng-template>
+  
+  <!-- Grid de botones -->
+  <div class="grid grid-cols-3 gap-3 p-4">
+    @for (item of allMenuItems(); track item.id) {
+      <button 
+        (click)="navigateTo(item.route)"
+        class="flex flex-col items-center gap-2 p-4 bg-surface-900 hover:bg-surface-800 border border-surface-700 hover:border-primary/50 rounded-lg transition-all duration-200">
+        <i [class]="item.icon + ' text-2xl text-primary'"></i>
+        <span class="text-xs text-gray-100 text-center font-medium">{{ item.label }}</span>
+      </button>
+    }
+  </div>
+</p-drawer>
