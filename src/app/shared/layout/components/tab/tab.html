@@ -1,51 +1,41 @@
-<nav class="fixed bottom-0 left-0 right-0 z-40 bg-surface-950/80 backdrop-blur-md md:hidden px-0 pb-safe pt-3 border-t border-surface-500/40">
-  <div class="w-full">
-    <div class="grid gap-0 px-3 pb-3 items-end" [style.gridTemplateColumns]="'repeat(5, minmax(0, 1fr))'">
+<nav class="fixed bottom-0 left-0 right-0 z-40 bg-surface-950/95 backdrop-blur-lg md:hidden border-t border-surface-700/50 shadow-2xl">
+  <div class="w-full px-2 pb-safe pt-2">
+    <div class="grid gap-1" [style.gridTemplateColumns]="'repeat(5, minmax(0, 1fr))'">
       <!-- Primeros 2 tabs -->
       @for (item of tabItems().slice(0, 2); track item.id) {
       <button 
         [routerLink]="item.route"
-        routerLinkActive="text-primary-500!"
+        routerLinkActive="text-primary bg-primary/10"
         [routerLinkActiveOptions]="{exact: true}"
-        class="flex flex-col items-center justify-center text-surface-400 transition-colors duration-200 relative group">
-        <div class="relative flex flex-col items-center">
-          <div class="p-2 rounded-lg transition-all duration-200 group-hover:bg-primary-500/10">
-            <i [attr.class]="'text-xl transition-transform duration-200 group-hover:scale-110 ' + item.icon"></i>
-          </div>
-          <span class="text-xs font-medium mt-1">{{ item.label }}</span>
-          <div class="absolute -top-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-primary-500 opacity-0 transition-all duration-200 scale-0 group-hover:opacity-100 group-hover:scale-100"></div>
-        </div>
+        class="flex flex-col items-center justify-center gap-1 py-2 px-1 text-surface-400 transition-all duration-200 rounded-lg hover:bg-surface-800/50 active:scale-95">
+        <i [class]="item.icon + ' text-xl'"></i>
+        <span class="text-[10px] font-medium leading-tight">{{ item.label }}</span>
       </button>
       }
 
-      <!-- Center Menu Button with Logo -->
+      <!-- Center Menu Button -->
       <button 
         type="button"
         (click)="toggleMenu()"
-        class="flex flex-col items-center justify-center text-surface-400 transition-colors duration-200 relative group pt-1">
-        <div class="relative flex flex-col items-center">
-          <div class="p-2 rounded-full transition-all duration-200 group-hover:bg-primary-500/10 -mt-3">
-            <img src="logo_main.svg" alt="Menu" class="w-6 h-6 object-contain">
-          </div>
-          <span class="text-xs font-medium mt-1">Menu</span>
-          <div class="absolute -top-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-primary-500 opacity-0 transition-all duration-200 scale-0 group-hover:opacity-100 group-hover:scale-100"></div>
+        [class.bg-surface-800]="menuVisible()"
+        class="flex flex-col items-center justify-center relative -mt-2">
+        <!-- Elevated Circle -->
+        <div class="absolute -top-3 left-1/2 -translate-x-1/2 w-14 h-14 bg-surface-800 rounded-full shadow-lg border border-surface-700 flex items-center justify-center transition-all duration-200 active:scale-95">
+          <img src="logo_main.svg" alt="Menu" class="w-8 h-8 object-contain">
         </div>
+        <!-- Label below -->
+        <span class="text-[10px] font-medium mt-9 text-surface-400">Menú</span>
       </button>
 
       <!-- Últimos 2 tabs -->
       @for (item of tabItems().slice(2); track item.id) {
       <button 
         [routerLink]="item.route"
-        routerLinkActive="text-primary-500!"
+        routerLinkActive="text-primary bg-primary/10"
         [routerLinkActiveOptions]="{exact: true}"
-        class="flex flex-col items-center justify-center text-surface-400 transition-colors duration-200 relative group">
-        <div class="relative flex flex-col items-center">
-          <div class="p-2 rounded-lg transition-all duration-200 group-hover:bg-primary-500/10">
-            <i [attr.class]="'text-xl transition-transform duration-200 group-hover:scale-110 ' + item.icon"></i>
-          </div>
-          <span class="text-xs font-medium mt-1">{{ item.label }}</span>
-          <div class="absolute -top-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-primary-500 opacity-0 transition-all duration-200 scale-0 group-hover:opacity-100 group-hover:scale-100"></div>
-        </div>
+        class="flex flex-col items-center justify-center gap-1 py-2 px-1 text-surface-400 transition-all duration-200 rounded-lg hover:bg-surface-800/50 active:scale-95">
+        <i [class]="item.icon + ' text-xl'"></i>
+        <span class="text-[10px] font-medium leading-tight">{{ item.label }}</span>
       </button>
       }
     </div>
@@ -59,23 +49,46 @@
   [modal]="true"
   [dismissible]="true"
   [showCloseIcon]="true"
-  [style]="{'height': 'auto', 'max-height': '70vh'}">
+  [style]="{'height': 'auto', 'max-height': '75vh', 'border-top-left-radius': '16px', 'border-top-right-radius': '16px'}">
+  
   <ng-template #header>
-    <div class="flex items-center gap-3">
-      <img src="logo_main.svg" alt="Logo" class="w-8 h-8">
-      <h2 class="text-lg font-bold text-gray-100">Menú Principal</h2>
+    <div class="flex items-center justify-between w-full pb-4 border-b border-surface-700">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 bg-surface-800 rounded-lg flex items-center justify-center">
+          <img src="logo_main.svg" alt="Logo" class="w-7 h-7">
+        </div>
+        <h2 class="text-lg font-bold text-gray-100">Menú Principal</h2>
+      </div>
     </div>
   </ng-template>
   
   <!-- Grid de botones -->
-  <div class="grid grid-cols-3 gap-3 p-4">
-    @for (item of allMenuItems(); track item.id) {
+  <div class="py-4">
+    <!-- Indicador de deslizar -->
+    <div class="flex justify-center mb-4">
+      <div class="w-10 h-1 bg-surface-700 rounded-full"></div>
+    </div>
+    
+    <div class="grid grid-cols-3 gap-3 px-4">
+      @for (item of allMenuItems(); track item.id) {
+        <button 
+          (click)="navigateTo(item.route)"
+          class="flex flex-col items-center gap-3 p-4 bg-surface-900 hover:bg-surface-800 rounded-lg transition-all duration-200 active:scale-95">
+          <div class="w-12 h-12 bg-surface-800 rounded-lg flex items-center justify-center">
+            <i [class]="item.icon + ' text-2xl text-primary'"></i>
+          </div>
+          <span class="text-xs text-gray-100 text-center font-medium leading-tight">{{ item.label }}</span>
+        </button>
+      }
+    </div>
+
+    <!-- Botón de cerrar al final -->
+    <div class="px-4 mt-6 pb-2">
       <button 
-        (click)="navigateTo(item.route)"
-        class="flex flex-col items-center gap-2 p-4 bg-surface-900 hover:bg-surface-800 border border-surface-700 hover:border-primary/50 rounded-lg transition-all duration-200">
-        <i [class]="item.icon + ' text-2xl text-primary'"></i>
-        <span class="text-xs text-gray-100 text-center font-medium">{{ item.label }}</span>
+        (click)="menuVisible.set(false)"
+        class="w-full py-3 bg-surface-800 hover:bg-surface-700 text-gray-100 font-medium rounded-lg transition-colors">
+        Cerrar
       </button>
-    }
+    </div>
   </div>
 </p-drawer>
