@@ -3,22 +3,22 @@
   <app-header></app-header>
 
   <!-- Contenedor principal -->
-  <div class="flex">
+  <div class="flex w-full">
     <!-- Sidebar -->
     <app-sidebar></app-sidebar>
 
     <!-- Main content -->
     <main
-      class="flex-1 min-h-screen transition-all duration-300 ease-out pt-18"
-      [class.ml-64]="sidebarService.isOpen()"
-      [class.ml-0]="!sidebarService.isOpen()"
+      class="flex-1 w-full min-h-screen transition-all duration-300 ease-out pt-16 md:pt-18"
+      [class.md:ml-64]="sidebarService.isOpen()"
+      [class.md:ml-0]="!sidebarService.isOpen()"
     >
-      <div class="p-4 sm:p-6">
+      <div class="px-3 py-4 sm:px-4 sm:py-5 md:p-6 w-full overflow-hidden">
         <router-outlet></router-outlet>
       </div>
     </main>
   </div>
-    @if (_screenService.isMobile()) {
+  @if (_screenService.isMobile()) {
     <app-tab></app-tab>
   }
 </div>
