@@ -1,245 +1,210 @@
 <div class="space-y-4 sm:space-y-6 w-full">
   <!-- Encabezado con título -->
-<!-- Encabezado con título -->
-<div class="flex items-center justify-between flex-wrap gap-3">
-  <h2 class="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-100">
-    Historial de <span class="text-primary">Acciones</span>
-  </h2>
-  <!-- Badge con total de registros y valor total -->
-  <div class="flex items-center gap-2 flex-wrap">
-    <p-tag [value]="acciones().length + ' registros'" severity="secondary"></p-tag>
-    <p-tag [value]="'Total: ' + (calcularValorTotal() | currency)" severity="success"></p-tag>
+  <!-- Encabezado con título -->
+  <div class="flex items-center justify-between flex-wrap gap-3">
+    <h2 class="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-100">
+      Historial de <span class="text-primary">Acciones</span>
+    </h2>
+    <!-- Badge con total de registros y valor total -->
+    <div class="flex items-center gap-2 flex-wrap">
+      <p-tag [value]="acciones().length + ' registros'" severity="secondary"></p-tag>
+      <p-tag [value]="'Total: ' + (calcularValorTotal() | currency)" severity="success"></p-tag>
+    </div>
   </div>
-</div>
 
   <!-- Filtros: Período y Búsqueda Usuario -->
-<!-- Filtros: Período y Búsqueda Usuario -->
-<div class="grid grid-cols-1 sm:grid-cols-12 gap-3 sm:gap-4">
-  <!-- Selector de Período (más estrecho) -->
-  <div class="sm:col-span-4 space-y-2">
-    <label for="periodo" class="block text-sm font-semibold text-gray-100">
-      Período
-    </label>
-    <p-select 
-      id="periodo" 
-      [formControl]="periodoControl" 
-      [options]="periodosList()" 
-      optionLabel="label"
-      optionValue="value" 
-      placeholder="Seleccionar..." 
-      class="w-full"
-      [showClear]="true">
-    </p-select>
-  </div>
+  <!-- Filtros: Período y Búsqueda Usuario -->
+  <div class="grid grid-cols-1 sm:grid-cols-12 gap-3 sm:gap-4">
+    <!-- Selector de Período (más estrecho) -->
+    <div class="sm:col-span-4 space-y-2">
+      <label for="periodo" class="block text-sm font-semibold text-gray-100">
+        Período
+      </label>
+      <p-select id="periodo" [formControl]="periodoControl" [options]="periodosList()" optionLabel="label"
+        optionValue="value" placeholder="Seleccionar..." class="w-full" [showClear]="true">
+      </p-select>
+    </div>
 
-  <!-- Búsqueda de Usuario (más ancho) -->
-  <div class="sm:col-span-8 space-y-2">
-    <label for="usuarioBusca" class="block text-sm font-semibold text-gray-100">
-      Buscar Usuario
-    </label>
-    <p-iconfield class="w-full">
-      <p-inputicon class="pi pi-search text-gray-400"></p-inputicon>
-      <input 
-        pInputText 
-        type="text" 
-        id="usuarioBusca" 
-        [formControl]="usuarioBuscaControl"
-        placeholder="Nombre o apellido..." 
-        class="w-full">
-    </p-iconfield>
+    <!-- Búsqueda de Usuario (más ancho) -->
+    <div class="sm:col-span-8 space-y-2">
+      <label for="usuarioBusca" class="block text-sm font-semibold text-gray-100">
+        Buscar Usuario
+      </label>
+      <p-iconfield class="w-full">
+        <p-inputicon class="pi pi-search text-gray-400"></p-inputicon>
+        <input pInputText type="text" id="usuarioBusca" [formControl]="usuarioBuscaControl"
+          placeholder="Nombre o apellido..." class="w-full">
+      </p-iconfield>
+    </div>
   </div>
-</div>
 
   <!-- Estados de carga y error -->
   @if (hasError()) {
-    <div class="flex items-center gap-3 p-4 bg-red-500/10 border border-red-500/30 rounded-lg">
-      <i class="pi pi-exclamation-triangle text-red-400 text-xl"></i>
-      <div class="flex-1">
-        <p class="text-red-400 font-semibold text-sm sm:text-base">Error al cargar</p>
-        <p class="text-red-300 text-xs sm:text-sm">{{ errorMessage() }}</p>
-      </div>
+  <div class="flex items-center gap-3 p-4 bg-red-500/10 border border-red-500/30 rounded-lg">
+    <i class="pi pi-exclamation-triangle text-red-400 text-xl"></i>
+    <div class="flex-1">
+      <p class="text-red-400 font-semibold text-sm sm:text-base">Error al cargar</p>
+      <p class="text-red-300 text-xs sm:text-sm">{{ errorMessage() }}</p>
     </div>
+  </div>
   } @else if (isLoading()) {
-    <div class="flex justify-center items-center py-16">
-      <p-progressSpinner 
-        class="w-12 h-12" 
-        strokeWidth="4" 
-        animationDuration="1s">
-      </p-progressSpinner>
-    </div>
+  <div class="flex justify-center items-center py-16">
+    <p-progressSpinner class="w-12 h-12" strokeWidth="4" animationDuration="1s">
+    </p-progressSpinner>
+  </div>
   } @else if (acciones().length === 0) {
-    <div class="flex flex-col items-center justify-center py-16 gap-4 bg-surface-900/50 rounded-lg border border-surface-700 border-dashed">
-      <i class="pi pi-inbox text-5xl text-gray-500"></i>
-      <div class="text-center">
-        <p class="text-gray-300 font-medium text-base mb-1">No hay acciones registradas</p>
-        <p class="text-gray-500 text-sm">Intenta cambiar los filtros o agregar nuevas acciones</p>
-      </div>
+  <div
+    class="flex flex-col items-center justify-center py-16 gap-4 bg-surface-900/50 rounded-lg border border-surface-700 border-dashed">
+    <i class="pi pi-inbox text-5xl text-gray-500"></i>
+    <div class="text-center">
+      <p class="text-gray-300 font-medium text-base mb-1">No hay acciones registradas</p>
+      <p class="text-gray-500 text-sm">Intenta cambiar los filtros o agregar nuevas acciones</p>
     </div>
+  </div>
   } @else {
-    @if (this._screenService.isMobile()) {
-       <!-- VISTA MOBILE: CARDS -->
-    <div class="space-y-3">
-      @for (accion of acciones(); track accion.id) {
-        <div class="bg-surface-900 border border-surface-700 rounded-lg p-4 space-y-3 hover:border-primary/50 transition-colors">
-          
-          <!-- Header: Nombre y Estado -->
-          <div class="flex items-start justify-between gap-3 pb-3 border-b border-surface-700">
-            <div class="flex-1 min-w-0">
-              <p class="text-sm text-gray-100 font-medium truncate">{{ getNombreCompleto(accion) }}</p>
-              <p class="text-xs text-gray-400 mt-1">Período: {{ accion.periodo }}</p>
-            </div>
-            <p-tag 
-              [value]="getEstadoTexto(accion.estado)"
-              [severity]="accion.estado === 'A' ? 'success' : 'secondary'"
-              styleClass="flex-shrink-0">
-            </p-tag>
-          </div>
+  @if (this._screenService.isMobile()) {
+  <!-- VISTA MOBILE: CARDS -->
+  <div class="space-y-3">
+    @for (accion of acciones(); track accion.id) {
+    <div
+      class="bg-surface-900 border border-surface-700 rounded-lg p-4 space-y-3 hover:border-primary/50 transition-colors">
 
-          <!-- Grid de datos principales -->
-          <div class="grid grid-cols-3 gap-3">
-            <!-- Fecha -->
-            <div>
-              <p class="text-xs text-gray-400 uppercase font-semibold mb-1">Fecha</p>
-              <p class="text-sm text-gray-100">{{ accion.fecha | date: 'dd/MM/yyyy' }}</p>
-            </div>
-
-            <!-- Cantidad -->
-            <div>
-              <p class="text-xs text-gray-400 uppercase font-semibold mb-1">Cantidad</p>
-              <p class="text-sm text-gray-100 font-medium">{{ accion.numero }}</p>
-            </div>
-
-            <!-- Valor -->
-            <div class="text-right">
-              <p class="text-xs text-gray-400 uppercase font-semibold mb-1">Valor</p>
-              <p class="text-base font-bold text-primary">{{ accion.valor | currency }}</p>
-            </div>
-          </div>
-
-          <!-- Footer: Botón de acción -->
-          <div class="flex justify-end pt-2 border-t border-surface-700">
-            <p-button 
-              icon="pi pi-eye" 
-              label="Ver detalles"
-              [text]="true"
-              severity="info"
-              size="small">
-            </p-button>
-          </div>
+      <!-- Header: Nombre y Estado -->
+      <div class="flex items-start justify-between gap-3 pb-3 border-b border-surface-700">
+        <div class="flex-1 min-w-0">
+          <p class="text-sm text-gray-100 font-medium truncate">{{ getNombreCompleto(accion) }}</p>
+          <p class="text-xs text-gray-400 mt-1">Período: {{ accion.periodo }}</p>
         </div>
-      }
-    </div>
-
-    } @else {
-
-       <!-- VISTA DESKTOP: TABLA COMPLETA -->
-    <div class="card">
-        <p-table 
-          showGridlines
-          stripedRows 
-          [value]="acciones()" 
-          [rows]="10" 
-          [paginator]="true"
-          [rowsPerPageOptions]="[10, 20, 50]" 
-          [showCurrentPageReport]="true"
-          currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
-          [globalFilterFields]="['usuario.nombre1', 'usuario.apellido1', 'numero', 'valor', 'estado']"
-          [tableStyle]="{ 'min-width': '50rem' }"
-          [rowHover]="true"
-          [scrollable]="true" scrollHeight="500px"
-          >
-        
-        <ng-template pTemplate="header">
-          <tr>
-            <th pSortableColumn="usuario.nombre1" class="bg-surface-800">
-              <div class="flex items-center gap-2">
-                Usuario 
-                <p-sortIcon field="usuario.nombre1"></p-sortIcon>
-              </div>
-            </th>
-            <th pSortableColumn="periodo" class="bg-surface-800">
-              <div class="flex items-center gap-2">
-                Período 
-                <p-sortIcon field="periodo"></p-sortIcon>
-              </div>
-            </th>
-            <th pSortableColumn="numero" class="bg-surface-800">
-              <div class="flex items-center gap-2">
-                Cantidad 
-                <p-sortIcon field="numero"></p-sortIcon>
-              </div>
-            </th>
-            <th pSortableColumn="valor" class="bg-surface-800">
-              <div class="flex items-center gap-2">
-                Valor 
-                <p-sortIcon field="valor"></p-sortIcon>
-              </div>
-            </th>
-            <th pSortableColumn="fecha" class="bg-surface-800">
-              <div class="flex items-center gap-2">
-                Fecha 
-                <p-sortIcon field="fecha"></p-sortIcon>
-              </div>
-            </th>
-            <th pSortableColumn="estado" class="bg-surface-800">
-              <div class="flex items-center gap-2">
-                Estado 
-                <p-sortIcon field="estado"></p-sortIcon>
-              </div>
-            </th>
-            <th class="bg-surface-800 text-center">Acciones</th>
-          </tr>
-        </ng-template>
-
-        <ng-template pTemplate="body" let-accion>
-          <tr>
-            <td>
-              <span class="text-gray-100 font-medium">{{ getNombreCompleto(accion) }}</span>
-            </td>
-            <td>
-              <span class="text-gray-200">{{ accion.periodo }}</span>
-            </td>
-            <td>
-              <span class="text-gray-200 font-medium">{{ accion.numero }}</span>
-            </td>
-            <td>
-              <span class="text-primary font-semibold">{{ accion.valor | currency }}</span>
-            </td>
-            <td>
-              <span class="text-gray-200">{{ accion.fecha | date: 'dd/MM/yyyy' }}</span>
-            </td>
-            <td>
-              <p-tag 
-                [value]="getEstadoTexto(accion.estado)" 
-                [severity]="accion.estado === 'A' ? 'success' : 'secondary'">
-              </p-tag>
-            </td>
-            <td class="text-center">
-              <p-button 
-                icon="pi pi-eye" 
-                [rounded]="true" 
-                [text]="true" 
-                severity="info"
-                pTooltip="Ver detalles" 
-                tooltipPosition="top"
-                size="small">
-              </p-button>
-            </td>
-          </tr>
-        </ng-template>
-
-        <ng-template pTemplate="emptymessage">
-          <tr>
-            <td colspan="7" class="text-center py-8">
-              <div class="flex flex-col items-center gap-3">
-                <i class="pi pi-filter-slash text-3xl text-gray-500"></i>
-                <p class="text-gray-400">No se encontraron resultados</p>
-              </div>
-            </td>
-          </tr>
-        </ng-template>
-      </p-table>
+        <p-tag [value]="getEstadoTexto(accion.estado)" [severity]="accion.estado === 'A' ? 'success' : 'secondary'"
+          styleClass="flex-shrink-0">
+        </p-tag>
       </div>
+
+      <!-- Grid de datos principales -->
+      <div class="grid grid-cols-3 gap-3">
+        <!-- Fecha -->
+        <div>
+          <p class="text-xs text-gray-400 uppercase font-semibold mb-1">Fecha</p>
+          <p class="text-sm text-gray-100">{{ accion.fecha | date: 'dd/MM/yyyy' }}</p>
+        </div>
+
+        <!-- Cantidad -->
+        <div>
+          <p class="text-xs text-gray-400 uppercase font-semibold mb-1">Cantidad</p>
+          <p class="text-sm text-gray-100 font-medium">{{ accion.numero }}</p>
+        </div>
+
+        <!-- Valor -->
+        <div class="text-right">
+          <p class="text-xs text-gray-400 uppercase font-semibold mb-1">Valor</p>
+          <p class="text-base font-bold text-primary">{{ accion.valor | currency }}</p>
+        </div>
+      </div>
+
+      <!-- Footer: Botón de acción -->
+      <div class="flex justify-end pt-2 border-t border-surface-700">
+        <p-button icon="pi pi-eye" label="Ver detalles" [text]="true" severity="info" size="small">
+        </p-button>
+      </div>
+    </div>
     }
+  </div>
+
+  } @else {
+
+  <!-- VISTA DESKTOP: TABLA COMPLETA -->
+  <div class="border border-surface-700 rounded-lg shadow-xl ">
+    <p-table showGridlines stripedRows [value]="acciones()" [rows]="10" [paginator]="true"
+      [rowsPerPageOptions]="[10, 20, 50]" [showCurrentPageReport]="true"
+      currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+      [globalFilterFields]="['usuario.nombre1', 'usuario.apellido1', 'numero', 'valor', 'estado']"
+      [tableStyle]="{ 'min-width': '50rem' }" [rowHover]="true" [scrollable]="true" scrollHeight="500px">
+
+      <ng-template pTemplate="header">
+        <tr>
+          <th class="bg-surface-800 w-12 text-center">N°</th>
+          <th pSortableColumn="usuario.nombre1" class="bg-surface-800">
+            <div class="flex items-center gap-2">
+              Usuario
+              <p-sortIcon field="usuario.nombre1"></p-sortIcon>
+            </div>
+          </th>
+          <th pSortableColumn="periodo" class="bg-surface-800">
+            <div class="flex items-center gap-2">
+              Período
+              <p-sortIcon field="periodo"></p-sortIcon>
+            </div>
+          </th>
+          <th pSortableColumn="numero" class="bg-surface-800">
+            <div class="flex items-center gap-2">
+              Cantidad
+              <p-sortIcon field="numero"></p-sortIcon>
+            </div>
+          </th>
+          <th pSortableColumn="valor" class="bg-surface-800">
+            <div class="flex items-center gap-2">
+              Valor
+              <p-sortIcon field="valor"></p-sortIcon>
+            </div>
+          </th>
+          <th pSortableColumn="fecha" class="bg-surface-800">
+            <div class="flex items-center gap-2">
+              Fecha
+              <p-sortIcon field="fecha"></p-sortIcon>
+            </div>
+          </th>
+          <th pSortableColumn="estado" class="bg-surface-800">
+            <div class="flex items-center gap-2">
+              Estado
+              <p-sortIcon field="estado"></p-sortIcon>
+            </div>
+          </th>
+          <th class="bg-surface-800 text-center">Acciones</th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-accion let-rowIndex="rowIndex">
+        <tr>
+          <td class="text-center font-semibold text-gray-300 w-12">{{ rowIndex + 1 }}</td>
+          <td>
+            <span class="text-gray-100 font-medium">{{ getNombreCompleto(accion) }}</span>
+          </td>
+          <td>
+            <span class="text-gray-200">{{ accion.periodo }}</span>
+          </td>
+          <td>
+            <span class="text-gray-200 font-medium">{{ accion.numero }}</span>
+          </td>
+          <td>
+            <span class="text-primary font-semibold">{{ accion.valor | currency }}</span>
+          </td>
+          <td>
+            <span class="text-gray-200">{{ accion.fecha | date: 'dd/MM/yyyy' }}</span>
+          </td>
+          <td>
+            <p-tag [value]="getEstadoTexto(accion.estado)" [severity]="accion.estado === 'A' ? 'success' : 'secondary'">
+            </p-tag>
+          </td>
+          <td class="text-center">
+            <p-button icon="pi pi-eye" [rounded]="true" [text]="true" severity="info" pTooltip="Ver detalles"
+              tooltipPosition="top" size="small">
+            </p-button>
+          </td>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="8" class="text-center py-8">
+            <div class="flex flex-col items-center gap-3">
+              <i class="pi pi-filter-slash text-3xl text-gray-500"></i>
+              <p class="text-gray-400">No se encontraron resultados</p>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+  }
   }
 </div>

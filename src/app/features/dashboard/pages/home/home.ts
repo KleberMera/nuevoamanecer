@@ -7,7 +7,7 @@ import { apiResponse } from '@app/core/models/apiResponse';
 import { ProgressSpinner } from "primeng/progressspinner";
 import { SelectModule } from 'primeng/select';
 import { ReactiveFormsModule, FormControl } from '@angular/forms';
-import { PeriodoService } from '@shared/services/periodo.service';
+import { PeriodoService } from '@app/shared/services/periodo-service';
 
 @Component({
   selector: 'app-home',

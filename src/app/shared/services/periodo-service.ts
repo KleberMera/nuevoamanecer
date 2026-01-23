@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { computed, signal } from '@angular/core';
 
 export interface Periodo {
   label: string;
@@ -10,7 +9,7 @@ export interface Periodo {
   providedIn: 'root',
 })
 export class PeriodoService {
-  /**
+   /**
    * Genera una lista de períodos disponibles (desde 202601 hacia adelante)
    * @param cantidad Número de períodos a generar (default: 24)
    * @returns Array de períodos con formato { label: 'YYYY-MM', value: 'YYYYMM' }

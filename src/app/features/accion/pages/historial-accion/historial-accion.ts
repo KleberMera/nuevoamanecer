@@ -4,7 +4,7 @@ import { CommonModule, CurrencyPipe, DatePipe } from '@angular/common';
 import { ReactiveFormsModule, FormControl } from '@angular/forms';
 import { apiResponse } from '@app/core/models/apiResponse';
 import { accionInterface } from '@app/core/models/accion';
-import { PeriodoService } from '@shared/services/periodo.service';
+
 import { httpResource } from '@angular/common/http';
 import { TableModule } from 'primeng/table';
 import { SelectModule } from 'primeng/select';
@@ -16,6 +16,7 @@ import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { ScreenService } from '@app/shared/services/screen-service';
+import { PeriodoService } from '@app/shared/services/periodo-service';
 
 @Component({
   selector: 'app-historial-accion',

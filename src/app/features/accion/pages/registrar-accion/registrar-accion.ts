@@ -7,7 +7,7 @@ import { Usuario } from '@core/models/usuario';
 import { accionInterface } from '@core/models/accion';
 import { toast } from 'ngx-sonner';
 import { HttpErrorResponse, httpResource } from '@angular/common/http';
-import { PeriodoService } from '@shared/services/periodo.service';
+
 import { FormCard } from '@shared/components/form-card/form-card';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
@@ -20,6 +20,7 @@ import { InputIconModule } from 'primeng/inputicon';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { ClassNamesModule } from 'primeng/classnames';
 import { firstValueFrom } from 'rxjs';
+import { PeriodoService } from '@app/shared/services/periodo-service';
 
 @Component({
   selector: 'app-registrar-accion',
