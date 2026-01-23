@@ -37,6 +37,40 @@ export class DialogUsuario {
   protected formGroup = this.usuarioService.formUsuario();
   protected isSubmitting = signal(false);
 
+  constructor() {
+    // Generar nombre de usuario: primera letra de nombre1 + apellido1
+    this.formGroup()
+      .get('nombre1')
+      ?.valueChanges.subscribe(() => {
+        this.generarNombreUsuario();
+      });
+    this.formGroup()
+      .get('apellido1')
+      ?.valueChanges.subscribe(() => {
+        this.generarNombreUsuario();
+      });
+
+    // Generar contraseña desde la cédula
+    this.formGroup()
+      .get('cedula')
+      ?.valueChanges.subscribe((cedula) => {
+        if (cedula) {
+          this.formGroup().get('password')?.setValue(cedula);
+        }
+      });
+  }
+
+  private generarNombreUsuario() {
+    const nombre1 = this.formGroup().get('nombre1')?.value || '';
+    const apellido1 = this.formGroup().get('apellido1')?.value || '';
+
+    if (nombre1 && apellido1) {
+      const primeraLetra = nombre1.charAt(0).toLowerCase();
+      const nombreUsuario = primeraLetra + apellido1.toLowerCase();
+      this.formGroup().get('nombreUsuario')?.setValue(nombreUsuario, { emitEvent: false });
+    }
+  }
+
   protected guardarUsuario() {
     if (this.formGroup().invalid) {
       return;
