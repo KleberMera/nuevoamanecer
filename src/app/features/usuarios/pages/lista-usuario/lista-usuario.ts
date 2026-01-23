@@ -1,11 +1,118 @@
-import { Component } from '@angular/core';
+import { Component, inject, computed, signal } from '@angular/core';
+import { UsuarioService } from '../services/usuario-service';
+import { httpResource } from '@angular/common/http';
+import { apiResponse } from '@app/core/models/apiResponse';
+import { Usuario } from '@app/core/models/usuario';
+import { ReactiveFormsModule, FormControl } from '@angular/forms';
+
+import { TableModule } from 'primeng/table';
+import { SelectModule } from 'primeng/select';
+import { ButtonModule } from 'primeng/button';
+import { TooltipModule } from 'primeng/tooltip';
+import { TagModule } from 'primeng/tag';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
+import { InputTextModule } from 'primeng/inputtext';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { ScreenService } from '@app/shared/services/screen-service';
 
 @Component({
   selector: 'app-lista-usuario',
-  imports: [],
+  imports: [
+    ReactiveFormsModule,
+    TableModule,
+    SelectModule,
+    ButtonModule,
+    TooltipModule,
+    TagModule,
+    IconFieldModule,
+    InputIconModule,
+    InputTextModule,
+    ProgressSpinnerModule,
+  ],
   templateUrl: './lista-usuario.html',
   styleUrl: './lista-usuario.css',
 })
 export default class ListaUsuario {
+  protected readonly usuarioService = inject(UsuarioService);
+  protected readonly _screenService = inject(ScreenService);
 
+  // FormControl para estado
+  protected estadoControl = new FormControl<string>('A');
+
+  // FormControl para búsqueda
+  protected usuarioBuscaControl = new FormControl<string>('');
+
+  // Signal para estado seleccionado
+  private estadoSeleccionado = signal<string>('A');
+
+  // Signal para búsqueda
+  private usuarioBusca = signal<string>('');
+
+  // Usuarios con httpResource
+  usuarios = httpResource<apiResponse<Usuario[]>>(() =>
+    this.usuarioService.listarUsuariosPorEstado(this.estadoSeleccionado()),
+  );
+
+  // Usuarios filtrados para mostrar en tabla
+  protected usuariosList = computed(() => {
+    const data = this.usuarios.value();
+    const listaUsuarios = data?.data || [];
+
+    // Filtrar por búsqueda
+    const busca = this.usuarioBusca().toLowerCase();
+    if (!busca) return listaUsuarios;
+
+    return listaUsuarios.filter((usuario) => {
+      const nombreCompleto = this.getNombreCompleto(usuario).toLowerCase();
+      const email = usuario.email?.toLowerCase() || '';
+      const nombreUsuario = usuario.nombreUsuario?.toLowerCase() || '';
+
+      return (
+        nombreCompleto.includes(busca) || email.includes(busca) || nombreUsuario.includes(busca)
+      );
+    });
+  });
+
+  // Estados de carga y error
+  protected isLoading = computed(() => this.usuarios.isLoading());
+  protected hasError = computed(() => !!this.usuarios.error());
+  protected errorMessage = computed(() => {
+    const error = this.usuarios.error();
+    return error ? 'No se pudo cargar el listado de usuarios' : '';
+  });
+
+  // Obtener nombre completo del usuario
+  protected getNombreCompleto(usuario: Usuario): string {
+    const { nombre1 = '', nombre2 = '', apellido1 = '', apellido2 = '' } = usuario;
+    return `${nombre1} ${nombre2} ${apellido1} ${apellido2}`.trim();
+  }
+
+  // Convertir estado a texto legible
+  protected getEstadoTexto(estado: string | undefined): string {
+    const estadoMap: { [key: string]: string } = {
+      A: 'ACTIVO',
+      I: 'INACTIVO',
+      D: 'DESCONTINUADO',
+    };
+    return estadoMap[estado || ''] || estado || 'N/A';
+  }
+
+  // Estados disponibles
+  protected estadosList = [
+    { label: 'ACTIVOS', value: 'A' },
+    { label: 'INACTIVOS', value: 'I' },
+  ];
+
+  constructor() {
+    // Escuchar cambios de estado
+    this.estadoControl.valueChanges.subscribe((value) => {
+      this.estadoSeleccionado.set(value || 'A');
+    });
+
+    // Escuchar cambios de búsqueda
+    this.usuarioBuscaControl.valueChanges.subscribe((value) => {
+      this.usuarioBusca.set(value || '');
+    });
+  }
 }
