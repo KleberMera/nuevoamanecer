@@ -13,6 +13,7 @@ import { InputIconModule } from 'primeng/inputicon';
 import { httpResource } from '@angular/common/http';
 import { apiResponse } from '@app/core/models/apiResponse';
 import { Rol } from '@app/core/models/rol';
+import { toast } from 'ngx-sonner';
 
 @Component({
   selector: 'app-dialog-usuario',
@@ -84,6 +85,7 @@ export class DialogUsuario {
       },
       error: (error) => {
         console.error('Error al crear usuario:', error);
+        toast.error(error?.error?.message || 'Error al crear el usuario');
         this.isSubmitting.set(false);
       },
     });

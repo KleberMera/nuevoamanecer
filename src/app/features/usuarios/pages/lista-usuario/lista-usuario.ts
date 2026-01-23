@@ -4,7 +4,7 @@ import { httpResource } from '@angular/common/http';
 import { apiResponse } from '@app/core/models/apiResponse';
 import { Usuario } from '@app/core/models/usuario';
 import { ReactiveFormsModule, FormControl } from '@angular/forms';
-import { DialogService } from 'primeng/dynamicdialog';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 
 import { TableModule } from 'primeng/table';
 import { SelectModule } from 'primeng/select';
@@ -40,7 +40,7 @@ export default class ListaUsuario {
   protected readonly usuarioService = inject(UsuarioService);
   protected readonly _screenService = inject(ScreenService);
   protected readonly dialogService = inject(DialogService);
-
+  ref: DynamicDialogRef | undefined;
   // FormControl para estado
   protected estadoControl = new FormControl<string>('A');
 
@@ -53,10 +53,14 @@ export default class ListaUsuario {
   // Signal para búsqueda
   private usuarioBusca = signal<string>('');
 
+  // Signal para forzar recarga de usuarios
+  private reloadVersion = signal<number>(0);
+
   // Usuarios con httpResource
-  usuarios = httpResource<apiResponse<Usuario[]>>(() =>
-    this.usuarioService.listarUsuariosPorEstado(this.estadoSeleccionado()),
-  );
+  usuarios = httpResource<apiResponse<Usuario[]>>(() => {
+    this.reloadVersion(); // Crear dependencia del signal de reload
+    return this.usuarioService.listarUsuariosPorEstado(this.estadoSeleccionado());
+  });
 
   // Usuarios filtrados para mostrar en tabla
   protected usuariosList = computed(() => {
@@ -110,15 +114,22 @@ export default class ListaUsuario {
 
   // Método para abrir el dialog de crear usuario
   protected abrirDialogUsuario() {
-    this.dialogService.open(DialogUsuario, {
+    const dialogRef = this.dialogService.open(DialogUsuario, {
       header: 'Crear Nuevo Usuario',
       modal: true,
-     width: '50vw',
-            //modal: true,
-            breakpoints: {
-                '960px': '75vw',
-                '640px': '90vw'
-            },
+      width: '50vw',
+      breakpoints: {
+        '960px': '75vw',
+        '640px': '90vw',
+      },
+    });
+
+    // Escuchar cuando se cierre el dialog
+    dialogRef!.onClose.subscribe((result) => {
+      if (result) {
+        // Si se creó exitosamente, recargar la lista
+        this.reloadVersion.update((v) => v + 1);
+      }
     });
   }
 

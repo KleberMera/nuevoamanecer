@@ -30,9 +30,9 @@ export class UsuarioService {
       new FormGroup({
         cedula: new FormControl(data.cedula, [Validators.required]),
         nombre1: new FormControl(data.nombre1, [Validators.required]),
-        nombre2: new FormControl(data.nombre2),
+        nombre2: new FormControl(data.nombre2 || ''),
         apellido1: new FormControl(data.apellido1, [Validators.required]),
-        apellido2: new FormControl(data.apellido2),
+        apellido2: new FormControl(data.apellido2 || ''),
         telefono: new FormControl(data.telefono, [Validators.required]),
         email: new FormControl(data.email, [Validators.email]),
         nombreUsuario: new FormControl(data.nombreUsuario, [Validators.required]),
@@ -45,7 +45,7 @@ export class UsuarioService {
   }
 
   crearUsuario(usuario: Usuario): Observable<apiResponse<Usuario>> {
-    const url = this.apiUrl.AUTH.REGISTER;
+    const url = this.apiUrl.USUARIO.CREAR;
     return this.http.post<apiResponse<Usuario>>(url, usuario);
   }
 }
