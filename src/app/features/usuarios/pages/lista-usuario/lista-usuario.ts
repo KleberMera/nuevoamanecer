@@ -4,6 +4,7 @@ import { httpResource } from '@angular/common/http';
 import { apiResponse } from '@app/core/models/apiResponse';
 import { Usuario } from '@app/core/models/usuario';
 import { ReactiveFormsModule, FormControl } from '@angular/forms';
+import { DialogService } from 'primeng/dynamicdialog';
 
 import { TableModule } from 'primeng/table';
 import { SelectModule } from 'primeng/select';
@@ -15,6 +16,7 @@ import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { ScreenService } from '@app/shared/services/screen-service';
+import { DialogUsuario } from '../components/dialog-usuario/dialog-usuario';
 
 @Component({
   selector: 'app-lista-usuario',
@@ -32,10 +34,12 @@ import { ScreenService } from '@app/shared/services/screen-service';
   ],
   templateUrl: './lista-usuario.html',
   styleUrl: './lista-usuario.css',
+     providers: [DialogService]
 })
 export default class ListaUsuario {
   protected readonly usuarioService = inject(UsuarioService);
   protected readonly _screenService = inject(ScreenService);
+  protected readonly dialogService = inject(DialogService);
 
   // FormControl para estado
   protected estadoControl = new FormControl<string>('A');
@@ -103,6 +107,20 @@ export default class ListaUsuario {
     { label: 'ACTIVOS', value: 'A' },
     { label: 'INACTIVOS', value: 'I' },
   ];
+
+  // Método para abrir el dialog de crear usuario
+  protected abrirDialogUsuario() {
+    this.dialogService.open(DialogUsuario, {
+      header: 'Crear Nuevo Usuario',
+      modal: true,
+     width: '50vw',
+            //modal: true,
+            breakpoints: {
+                '960px': '75vw',
+                '640px': '90vw'
+            },
+    });
+  }
 
   constructor() {
     // Escuchar cambios de estado

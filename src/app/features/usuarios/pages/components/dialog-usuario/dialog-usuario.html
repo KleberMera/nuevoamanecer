@@ -1,0 +1,124 @@
+<form [formGroup]="formGroup()" class="space-y-4">
+  <!-- Cédula y Primer Nombre -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    <div class="space-y-2">
+      <label for="cedula" class="block text-sm font-semibold text-gray-100">
+        Cédula *
+      </label>
+      <input pInputText formControlName="cedula" id="cedula" type="text" placeholder="1234567890" class="w-full">
+      @if (formGroup().get('cedula')?.invalid && formGroup().get('cedula')?.touched) {
+      <p class="text-red-500 text-xs">La cédula es requerida</p>
+      }
+    </div>
+    <div class="space-y-2">
+      <label for="nombre1" class="block text-sm font-semibold text-gray-100">
+        Primer Nombre *
+      </label>
+      <input pInputText formControlName="nombre1" id="nombre1" type="text" placeholder="Juan" class="w-full">
+      @if (formGroup().get('nombre1')?.invalid && formGroup().get('nombre1')?.touched) {
+      <p class="text-red-500 text-xs">El nombre es requerido</p>
+      }
+    </div>
+  </div>
+
+  <!-- Segundo Nombre y Primer Apellido -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    <div class="space-y-2">
+      <label for="nombre2" class="block text-sm font-semibold text-gray-100">
+        Segundo Nombre
+      </label>
+      <input pInputText formControlName="nombre2" id="nombre2" type="text" placeholder="(Opcional)" class="w-full">
+    </div>
+    <div class="space-y-2">
+      <label for="apellido1" class="block text-sm font-semibold text-gray-100">
+        Primer Apellido *
+      </label>
+      <input pInputText formControlName="apellido1" id="apellido1" type="text" placeholder="Pérez" class="w-full">
+      @if (formGroup().get('apellido1')?.invalid && formGroup().get('apellido1')?.touched) {
+      <p class="text-red-500 text-xs">El apellido es requerido</p>
+      }
+    </div>
+  </div>
+
+  <!-- Segundo Apellido y Teléfono -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    <div class="space-y-2">
+      <label for="apellido2" class="block text-sm font-semibold text-gray-100">
+        Segundo Apellido
+      </label>
+      <input pInputText formControlName="apellido2" id="apellido2" type="text" placeholder="(Opcional)" class="w-full">
+    </div>
+    <div class="space-y-2">
+      <label for="telefono" class="block text-sm font-semibold text-gray-100">
+        Teléfono *
+      </label>
+      <input pInputText formControlName="telefono" id="telefono" type="text" placeholder="0987654321" class="w-full">
+      @if (formGroup().get('telefono')?.invalid && formGroup().get('telefono')?.touched) {
+      <p class="text-red-500 text-xs">El teléfono es requerido</p>
+      }
+    </div>
+  </div>
+
+  <!-- Email -->
+  <div class="space-y-2">
+    <label for="email" class="block text-sm font-semibold text-gray-100">
+      Email
+    </label>
+    <input pInputText formControlName="email" id="email" type="email" placeholder="correo@ejemplo.com" class="w-full">
+    @if (formGroup().get('email')?.invalid && formGroup().get('email')?.touched) {
+    <p class="text-red-500 text-xs">El email no es válido</p>
+    }
+  </div>
+
+  <!-- Nombre de Usuario -->
+  <div class="space-y-2">
+    <label for="nombreUsuario" class="block text-sm font-semibold text-gray-100">
+      Nombre de Usuario *
+    </label>
+    <input pInputText formControlName="nombreUsuario" id="nombreUsuario" type="text" placeholder="usuario123" class="w-full">
+    @if (formGroup().get('nombreUsuario')?.invalid && formGroup().get('nombreUsuario')?.touched) {
+    <p class="text-red-500 text-xs">El nombre de usuario es requerido</p>
+    }
+  </div>
+
+  <!-- Contraseña -->
+  <div class="space-y-2">
+    <label for="password" class="block text-sm font-semibold text-gray-100">
+      Contraseña *
+    </label>
+    <p-password formControlName="password" id="password" [toggleMask]="true" placeholder="Mínimo 8 caracteres"
+      [feedback]="false" class="w-full"></p-password>
+    @if (formGroup().get('password')?.invalid && formGroup().get('password')?.touched) {
+    <p class="text-red-500 text-xs">La contraseña debe tener al menos 8 caracteres</p>
+    }
+  </div>
+
+  <!-- Rol -->
+  <div class="space-y-2">
+    <label for="rolId" class="block text-sm font-semibold text-gray-100">
+      Rol *
+    </label>
+    <p-select id="rolId" formControlName="rolId" placeholder="Seleccionar rol..." class="w-full"></p-select>
+    @if (formGroup().get('rolId')?.invalid && formGroup().get('rolId')?.touched) {
+    <p class="text-red-500 text-xs">El rol es requerido</p>
+    }
+  </div>
+
+  <!-- Estado -->
+  <div class="space-y-2">
+    <label for="estado" class="block text-sm font-semibold text-gray-100">
+      Estado
+    </label>
+    <p-select id="estado" formControlName="estado" [options]="[
+      { label: 'ACTIVO', value: 'A' },
+      { label: 'INACTIVO', value: 'I' }
+    ]" optionLabel="label" optionValue="value" class="w-full"></p-select>
+  </div>
+
+  <!-- Botones -->
+  <div class="flex justify-end gap-2 pt-4">
+    <p-button label="Cancelar" [text]="true" severity="secondary" (onClick)="cancelar()"></p-button>
+    <p-button label="Guardar" [loading]="isSubmitting()" (onClick)="guardarUsuario()"
+      [disabled]="formGroup().invalid || isSubmitting()"></p-button>
+  </div>
+</form>
