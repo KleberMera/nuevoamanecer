@@ -87,7 +87,7 @@
       Contraseña *
     </label>
     <p-password formControlName="password" id="password" [toggleMask]="true" placeholder="Mínimo 8 caracteres"
-      [feedback]="false" class="w-full"></p-password>
+      [feedback]="false" fluid ></p-password>
     @if (formGroup().get('password')?.invalid && formGroup().get('password')?.touched) {
     <p class="text-red-500 text-xs">La contraseña debe tener al menos 8 caracteres</p>
     }
@@ -98,7 +98,8 @@
     <label for="rolId" class="block text-sm font-semibold text-gray-100">
       Rol *
     </label>
-    <p-select id="rolId" formControlName="rolId" placeholder="Seleccionar rol..." class="w-full"></p-select>
+    <p-select id="rolId" formControlName="rolId" [options]="roles.value()?.data" optionLabel="nombre"
+      optionValue="id" placeholder="Seleccionar rol..." class="w-full"></p-select>
     @if (formGroup().get('rolId')?.invalid && formGroup().get('rolId')?.touched) {
     <p class="text-red-500 text-xs">El rol es requerido</p>
     }

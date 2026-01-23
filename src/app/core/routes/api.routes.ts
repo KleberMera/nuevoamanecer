@@ -26,6 +26,9 @@ export const API_ROUTES = {
     LISTAR_ACCIONES_PERIODO: 'periodo',
     TOTAL_ACCIONES: 'total',
   }),
+  ROL: createRoutes('rol', {
+    LISTAR_ROLES: '',
+  }),
 };
 
 export default API_ROUTES;

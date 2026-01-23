@@ -10,6 +10,9 @@ import { TooltipModule } from 'primeng/tooltip';
 import { PasswordModule } from 'primeng/password';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
+import { httpResource } from '@angular/common/http';
+import { apiResponse } from '@app/core/models/apiResponse';
+import { Rol } from '@app/core/models/rol';
 
 @Component({
   selector: 'app-dialog-usuario',
@@ -31,7 +34,7 @@ export class DialogUsuario {
   protected readonly usuarioService = inject(UsuarioService);
   protected readonly dialogRef = inject(DynamicDialogRef);
 
-  protected formGroup = this.usuarioService.formUsuario()
+  protected formGroup = this.usuarioService.formUsuario();
   protected isSubmitting = signal(false);
 
   protected guardarUsuario() {
@@ -55,4 +58,6 @@ export class DialogUsuario {
   protected cancelar() {
     this.dialogRef.close();
   }
+
+  roles = httpResource<apiResponse<Rol[]>>(() => this.usuarioService.listaRoles());
 }

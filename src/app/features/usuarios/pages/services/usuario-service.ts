@@ -11,12 +11,17 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class UsuarioService {
-  private readonly apiUrl = API_ROUTES.AUTH;
+  private readonly apiUrl = API_ROUTES;
   protected readonly http = inject(HttpClient);
 
   //Listar usuarios por estado
   listarUsuariosPorEstado(estado: string) {
-    const url = `${API_ROUTES.USUARIO.LISTAR_USUARIOS}/${estado}`;
+    const url = `${this.apiUrl.USUARIO.LISTAR_USUARIOS}/${estado}`;
+    return url;
+  }
+
+  listaRoles() {
+    const url = this.apiUrl.ROL.LISTAR_ROLES;
     return url;
   }
 
@@ -40,7 +45,7 @@ export class UsuarioService {
   }
 
   crearUsuario(usuario: Usuario): Observable<apiResponse<Usuario>> {
-    const url = this.apiUrl.REGISTER;
+    const url = this.apiUrl.AUTH.REGISTER;
     return this.http.post<apiResponse<Usuario>>(url, usuario);
   }
 }
