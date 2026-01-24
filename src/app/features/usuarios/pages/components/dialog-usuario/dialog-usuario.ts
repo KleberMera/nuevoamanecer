@@ -1,5 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { UsuarioService } from '../../services/usuario-service';
 import { ButtonModule } from 'primeng/button';

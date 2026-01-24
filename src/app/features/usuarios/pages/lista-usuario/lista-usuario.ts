@@ -5,7 +5,6 @@ import { apiResponse } from '@core/models/apiResponse';
 import { Usuario } from '@core/models/usuario';
 import { ReactiveFormsModule, FormControl } from '@angular/forms';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-
 import { TableModule } from 'primeng/table';
 import { SelectModule } from 'primeng/select';
 import { ButtonModule } from 'primeng/button';
@@ -118,6 +117,7 @@ export default class ListaUsuario {
       header: 'Crear Nuevo Usuario',
       modal: true,
       width: '50vw',
+      closable: true,
       breakpoints: {
         '960px': '75vw',
         '640px': '90vw',
