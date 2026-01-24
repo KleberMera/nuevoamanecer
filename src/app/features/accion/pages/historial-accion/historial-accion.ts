@@ -2,8 +2,8 @@ import { Component, inject, computed, signal } from '@angular/core';
 import { RegistroAccionService } from '../../services/registro-accion-service';
 import { CommonModule, CurrencyPipe, DatePipe } from '@angular/common';
 import { ReactiveFormsModule, FormControl } from '@angular/forms';
-import { apiResponse } from '@app/core/models/apiResponse';
-import { accionInterface } from '@app/core/models/accion';
+import { apiResponse } from '@core/models/apiResponse';
+import { accionInterface } from '@core/models/accion';
 
 import { httpResource } from '@angular/common/http';
 import { TableModule } from 'primeng/table';
@@ -15,8 +15,8 @@ import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
-import { ScreenService } from '@app/shared/services/screen-service';
-import { PeriodoService } from '@app/shared/services/periodo-service';
+import { ScreenService } from '@shared/services/screen-service';
+import { PeriodoService } from '@shared/services/periodo-service';
 
 @Component({
   selector: 'app-historial-accion',

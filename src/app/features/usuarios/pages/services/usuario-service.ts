@@ -2,9 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
 import { inject } from '@angular/core/primitives/di';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { apiResponse } from '@app/core/models/apiResponse';
-import { Usuario } from '@app/core/models/usuario';
-import API_ROUTES from '@app/core/routes/api.routes';
+import { apiResponse } from '@core/models/apiResponse';
+import { Usuario } from '@core/models/usuario';
+import API_ROUTES from '@core/routes/api.routes';
 import { Observable } from 'rxjs';
 
 @Injectable({

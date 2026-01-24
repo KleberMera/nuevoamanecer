@@ -20,7 +20,7 @@ import { InputIconModule } from 'primeng/inputicon';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { ClassNamesModule } from 'primeng/classnames';
 import { firstValueFrom } from 'rxjs';
-import { PeriodoService } from '@app/shared/services/periodo-service';
+import { PeriodoService } from '@shared/services/periodo-service';
 
 @Component({
   selector: 'app-registrar-accion',

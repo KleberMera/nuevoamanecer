@@ -1,13 +1,13 @@
 import { Component, inject, computed, signal } from '@angular/core';
-import { Storage } from '@app/shared/services/storage';
+import { Storage } from '@shared/services/storage';
 import { HomeService } from '../../services/home-service';
 import { CurrencyPipe } from '@angular/common';
 import { httpResource } from '@angular/common/http';
-import { apiResponse } from '@app/core/models/apiResponse';
+import { apiResponse } from '@core/models/apiResponse';
 import { ProgressSpinner } from "primeng/progressspinner";
 import { SelectModule } from 'primeng/select';
 import { ReactiveFormsModule, FormControl } from '@angular/forms';
-import { PeriodoService } from '@app/shared/services/periodo-service';
+import { PeriodoService } from '@shared/services/periodo-service';
 
 @Component({
   selector: 'app-home',

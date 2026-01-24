@@ -11,8 +11,8 @@ import { PasswordModule } from 'primeng/password';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { httpResource } from '@angular/common/http';
-import { apiResponse } from '@app/core/models/apiResponse';
-import { Rol } from '@app/core/models/rol';
+import { apiResponse } from '@core/models/apiResponse';
+import { Rol } from '@core/models/rol';
 import { toast } from 'ngx-sonner';
 
 @Component({

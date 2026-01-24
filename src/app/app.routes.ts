@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
-import PAGES_ROUTES from './core/routes/pages.routes';
-import { Layout } from './shared/layout/layout';
+import PAGES_ROUTES from '@core/routes/pages.routes';
+import { Layout } from '@shared/layout/layout';
 
 export const routes: Routes = [
   {

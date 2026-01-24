@@ -1,8 +1,8 @@
 import { Component, inject, computed, signal } from '@angular/core';
 import { UsuarioService } from '../services/usuario-service';
 import { httpResource } from '@angular/common/http';
-import { apiResponse } from '@app/core/models/apiResponse';
-import { Usuario } from '@app/core/models/usuario';
+import { apiResponse } from '@core/models/apiResponse';
+import { Usuario } from '@core/models/usuario';
 import { ReactiveFormsModule, FormControl } from '@angular/forms';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 
@@ -15,7 +15,7 @@ import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
-import { ScreenService } from '@app/shared/services/screen-service';
+import { ScreenService } from '@shared/services/screen-service';
 import { DialogUsuario } from '../components/dialog-usuario/dialog-usuario';
 
 @Component({
