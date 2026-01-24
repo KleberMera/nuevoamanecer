@@ -90,11 +90,11 @@
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div class="space-y-2">
             <label for="password" class="block text-sm font-semibold text-gray-100">
-                Contraseña *
+                Contraseña @if (isEditMode()) { <span class="text-gray-400">(no editable)</span> } @else { * }
             </label>
             <p-password formControlName="password" id="password" [toggleMask]="true" placeholder="Mínimo 8 caracteres"
                 [feedback]="false" fluid autocomplete="new-password"></p-password>
-            @if (formGroup().get('password')?.invalid && formGroup().get('password')?.touched) {
+            @if (formGroup().get('password')?.invalid && formGroup().get('password')?.touched && !isEditMode()) {
             <p class="text-red-500 text-xs">La contraseña debe tener al menos 8 caracteres</p>
             }
         </div>

@@ -114,10 +114,13 @@
             [rowsPerPageOptions]="[10, 20, 50]" [showCurrentPageReport]="true"
             currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
             [globalFilterFields]="['nombre1', 'apellido1', 'nombreUsuario', 'email']"
-            [tableStyle]="{ 'min-width': '50rem' }" [rowHover]="true" [scrollable]="true" scrollHeight="500px">
+            [tableStyle]="{ 'min-width': '50rem' }" [rowHover]="true" [scrollable]="true" scrollHeight="500px"
+            selectionMode="single" [(selection)]="selectedUsuario" dataKey="id" 
+            (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect()">
 
             <ng-template pTemplate="header">
                 <tr>
+                    
                     <th class="bg-surface-800 w-12 text-center">N°</th>
                     <th pSortableColumn="nombre1" class="bg-surface-800">
                         <div class="flex items-center gap-2">
@@ -149,12 +152,12 @@
                             <p-sortIcon field="estado"></p-sortIcon>
                         </div>
                     </th>
-                    <th class="bg-surface-800 text-center">Acciones</th>
                 </tr>
             </ng-template>
 
             <ng-template pTemplate="body" let-usuario let-rowIndex="rowIndex">
-                <tr>
+                <tr [pSelectableRow]="usuario" [pSelectableRowDisabled]="false">
+                    
                     <td class="text-center font-semibold text-gray-300 w-12">{{ rowIndex + 1 }}</td>
                     <td>
                         <span class="text-gray-100 font-medium">{{ getNombreCompleto(usuario) }}</span>
@@ -172,11 +175,6 @@
                         <p-tag [value]="getEstadoTexto(usuario.estado)"
                             [severity]="usuario.estado === 'A' ? 'success' : 'secondary'">
                         </p-tag>
-                    </td>
-                    <td class="text-center">
-                        <p-button icon="pi pi-eye" [rounded]="true" [text]="true" severity="info"
-                            pTooltip="Ver detalles" tooltipPosition="top" size="small">
-                        </p-button>
                     </td>
                 </tr>
             </ng-template>

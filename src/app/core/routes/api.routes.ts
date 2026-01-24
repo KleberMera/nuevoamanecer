@@ -20,6 +20,7 @@ export const API_ROUTES = {
   USUARIO: createRoutes('usuario', {
     LISTAR_USUARIOS: 'estado',
     CREAR: '',
+    ACTUALIZAR: '',
   }),
   ACCION: createRoutes('accion', {
     CREAR_ACCION: '',

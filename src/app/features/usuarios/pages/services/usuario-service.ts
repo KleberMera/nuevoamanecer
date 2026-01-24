@@ -48,4 +48,9 @@ export class UsuarioService {
     const url = this.apiUrl.USUARIO.CREAR;
     return this.http.post<apiResponse<Usuario>>(url, usuario);
   }
+
+  actualizarUsuario(usuarioId: number, usuario: Usuario): Observable<apiResponse<Usuario>> {
+    const url = `${this.apiUrl.USUARIO.ACTUALIZAR}${usuarioId}`;
+    return this.http.patch<apiResponse<Usuario>>(url, usuario);
+  }
 }

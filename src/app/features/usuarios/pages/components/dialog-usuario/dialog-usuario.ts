@@ -1,7 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { DialogService, DynamicDialogRef, DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { UsuarioService } from '../../services/usuario-service';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
@@ -15,6 +15,7 @@ import { httpResource } from '@angular/common/http';
 import { apiResponse } from '@core/models/apiResponse';
 import { Rol } from '@core/models/rol';
 import { toast } from 'ngx-sonner';
+import { Usuario } from '@core/models/usuario';
 
 @Component({
   selector: 'app-dialog-usuario',
@@ -35,11 +36,46 @@ import { toast } from 'ngx-sonner';
 export class DialogUsuario {
   protected readonly usuarioService = inject(UsuarioService);
   protected readonly dialogRef = inject(DynamicDialogRef);
+  protected readonly dynamicDialogConfig = inject(DynamicDialogConfig);
 
   protected formGroup = this.usuarioService.formUsuario();
   protected isSubmitting = signal(false);
+  protected isEditMode = signal(false);
+  protected usuarioId: number | null = null;
 
   constructor() {
+    // Verificar si se pasó un usuario (modo edición)
+    const dialogData = this.dynamicDialogConfig.data as { usuario?: Usuario };
+    if (dialogData?.usuario) {
+      this.isEditMode.set(true);
+      this.usuarioId = dialogData.usuario.id || null;
+      this.cargarUsuarioEnFormulario(dialogData.usuario);
+    } else {
+      // Modo creación: generar nombre de usuario y contraseña
+      this.setupFormularioCreacion();
+    }
+  }
+
+  private cargarUsuarioEnFormulario(usuario: Usuario) {
+    this.formGroup().patchValue({
+      cedula: usuario.cedula,
+      nombre1: usuario.nombre1,
+      nombre2: usuario.nombre2,
+      apellido1: usuario.apellido1,
+      apellido2: usuario.apellido2,
+      telefono: usuario.telefono,
+      email: usuario.email,
+      nombreUsuario: usuario.nombreUsuario,
+      rolId: usuario.rol?.id,
+      estado: usuario.estado,
+    });
+
+    // Desactivar los campos en modo edición
+    this.formGroup().get('cedula')?.disable();
+    this.formGroup().get('password')?.disable();
+  }
+
+  private setupFormularioCreacion() {
     // Generar nombre de usuario: primera letra de nombre1 + apellido1
     this.formGroup()
       .get('nombre1')
@@ -79,17 +115,40 @@ export class DialogUsuario {
     }
 
     this.isSubmitting.set(true);
-    this.usuarioService.crearUsuario(this.formGroup().value).subscribe({
-      next: (response) => {
-        this.isSubmitting.set(false);
-        this.dialogRef.close(response.data);
-      },
-      error: (error) => {
-        console.error('Error al crear usuario:', error);
-        toast.error(error?.error?.message || 'Error al crear el usuario');
-        this.isSubmitting.set(false);
-      },
-    });
+
+    if (this.isEditMode() && this.usuarioId) {
+      // Modo edición: actualizar usuario
+      const dataActualizar = {
+        ...this.formGroup().getRawValue(),
+        id: this.usuarioId,
+      };
+      this.usuarioService.actualizarUsuario(this.usuarioId, dataActualizar).subscribe({
+        next: (response) => {
+          this.isSubmitting.set(false);
+          toast.success(response.message || 'Usuario actualizado correctamente');
+          this.dialogRef.close(response.data);
+        },
+        error: (error) => {
+          console.error('Error al actualizar usuario:', error);
+          toast.error(error?.error?.message || 'Error al actualizar el usuario');
+          this.isSubmitting.set(false);
+        },
+      });
+    } else {
+      // Modo creación: crear nuevo usuario
+      this.usuarioService.crearUsuario(this.formGroup().value).subscribe({
+        next: (response) => {
+          this.isSubmitting.set(false);
+          toast.success('Usuario creado correctamente');
+          this.dialogRef.close(response.data);
+        },
+        error: (error) => {
+          console.error('Error al crear usuario:', error);
+          toast.error(error?.error?.message || 'Error al crear el usuario');
+          this.isSubmitting.set(false);
+        },
+      });
+    }
   }
 
   protected cancelar() {
