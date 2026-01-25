@@ -124,7 +124,7 @@
     <!-- Botones -->
     <div class="flex justify-end gap-2 pt-4">
         <p-button label="Cancelar" [text]="true" severity="secondary" (onClick)="cancelar()"></p-button>
-        <p-button label="Guardar" [loading]="isSubmitting()" (onClick)="guardarUsuario()"
+        <p-button [label]="isEditMode() ? 'Actualizar' : 'Guardar'" [loading]="isSubmitting()" (onClick)="guardarUsuario()"
             [disabled]="formGroup().invalid || isSubmitting()"></p-button>
     </div>
 </form>
