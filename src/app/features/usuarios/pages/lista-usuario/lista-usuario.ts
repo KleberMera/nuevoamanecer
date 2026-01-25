@@ -165,6 +165,34 @@ export default class ListaUsuario {
     });
   }
 
+  abriDialagMobiel(usuario : Usuario) {
+      this.selectedUsuario.set(usuario);
+    console.log('Usuario seleccionado:', usuario);
+    
+    // Abrir el dialog con la información del usuario
+    const dialogRef = this.dialogService.open(DialogUsuario, {
+      header: 'Editar Usuario',
+      modal: true,
+      width: '50vw',
+      closable: true,
+      breakpoints: {
+        '960px': '75vw',
+        '640px': '90vw',
+      },
+      data: { usuario }, // Pasar los datos del usuario al dialog
+    });
+
+    // Escuchar cuando se cierre el dialog
+    dialogRef!.onClose.subscribe((result) => {
+      if (result) {
+        // Si se actualizó exitosamente, recargar la lista
+        this.reloadVersion.update((v) => v + 1);
+        this.selectedUsuario.set(undefined);
+      }
+    });
+  }
+
+
   // Método para manejar la deselección de fila
   protected onRowUnselect() {
     this.selectedUsuario.set(undefined);
