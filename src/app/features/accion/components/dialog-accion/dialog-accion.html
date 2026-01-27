@@ -127,9 +127,10 @@
       (onClick)="cancelar()" 
       [disabled]="isSubmitting()">
     </p-button>
+    <!-- icon="pi pi-check"  -->
     <p-button 
-      label="Guardar" 
-      icon="pi pi-check" 
+      [label]="isEditMode() ? 'Actualizar' : 'Guardar'" 
+      
       (onClick)="guardarAccion()" 
       [loading]="isSubmitting()" 
       [disabled]="formGroup().invalid || isSubmitting()">

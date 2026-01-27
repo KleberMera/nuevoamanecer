@@ -197,4 +197,33 @@ export default class HistorialAccion {
   calcularValorTotal(): number {
   return this.acciones().reduce((total, accion) => total + (accion.valor || 0), 0);
 }
+
+
+  abriDialagMobiel(accion : accionInterface) {
+      this.selectedAccion.set(accion);
+    console.log('Usuario seleccionado:', accion);
+    
+    // Abrir el dialog con la información del usuario
+    const dialogRef = this.dialogService.open(DialogAccion, {
+      header: 'Editar Usuario',
+      modal: true,
+      width: '50vw',
+      closable: true,
+      breakpoints: {
+        '960px': '75vw',
+        '640px': '90vw',
+      },
+      data: { accion }, // Pasar los datos del usuario al dialog
+    });
+
+    // Escuchar cuando se cierre el dialog
+    dialogRef!.onClose.subscribe((result) => {
+      if (result) {
+        // Si se actualizó exitosamente, recargar la lista
+        this.reloadVersion.update((v) => v + 1);
+        this.selectedAccion.set(undefined);
+      }
+    });
+  }
+
 }
