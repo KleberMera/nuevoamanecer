@@ -35,9 +35,21 @@ export class RegistroAccionService {
     return url
   }
 
+  // Listar usuarios activos (para el dialog)
+  listarUsuariosActivos(): Observable<apiResponse<Usuario[]>> {
+    const url = `${this.apiUrl.USUARIO.LISTAR_USUARIOS}/A`;
+    return this._http.get<apiResponse<Usuario[]>>(url);
+  }
+
   // Crear nueva acción
   crearAccion(accion: accionInterface): Observable<apiResponse<accionInterface>> {
     return this._http.post<apiResponse<accionInterface>>(this.apiUrl.ACCION.CREAR_ACCION, accion);
+  }
+
+  // Actualizar acción
+  actualizarAccion(accionId: number, accion: accionInterface): Observable<apiResponse<accionInterface>> {
+    const url = `${this.apiUrl.ACCION.CREAR_ACCION}/${accionId}`;
+    return this._http.put<apiResponse<accionInterface>>(url, accion);
   }
 
   // Listar acciones del usuario

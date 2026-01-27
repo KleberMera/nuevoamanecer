@@ -17,14 +17,15 @@ export const MENU_ITEMS: MenuItem[] = [
     id: 2,
     label: 'Usuarios',
     icon: 'pi pi-users',
-    subitems: [
-      {
-        id: 21,
-        label: 'Lista de Usuarios',
-        icon: 'pi pi-list',
-        route: buildUsuariosRoute(PAGES_ROUTES.USUARIOS.LISTA),
-      },
-    ],
+      route: buildUsuariosRoute(PAGES_ROUTES.USUARIOS.LISTA),
+    // subitems: [
+    //   {
+    //     id: 21,
+    //     label: 'Lista de Usuarios',
+    //     icon: 'pi pi-list',
+    //     route: buildUsuariosRoute(PAGES_ROUTES.USUARIOS.LISTA),
+    //   },
+    // ],
   },
   {
     id: 3,

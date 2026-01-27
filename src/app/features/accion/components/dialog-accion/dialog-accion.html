@@ -1,0 +1,138 @@
+<form [formGroup]="formGroup()" class="space-y-4">
+  <!-- Selector de Usuario y Período -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    <!-- Usuario -->
+    <div class="space-y-2">
+      <label for="usuario" class="block text-sm font-semibold text-gray-100">
+        Usuario *
+      </label>
+
+      @if (usuarios.isLoading()) {
+        <p-progressSpinner [style]="{ width: '50px', height: '50px' }" strokeWidth="4" 
+          fill="var(--surface-ground)" animationDuration=".5s">
+        </p-progressSpinner>
+      } @else if (usuarios.error()) {
+        <div class="flex items-center gap-2 p-3 bg-red-500/10 border border-red-500/30 rounded-lg">
+          <i class="pi pi-exclamation-triangle text-red-400"></i>
+          <span class="text-red-400 text-sm">No se pudo cargar la lista de usuarios</span>
+        </div>
+      } @else {
+        <p-select id="usuario" formControlName="usuarioId" [options]="usuariosList()" optionValue="id"
+          placeholder="Selecciona un usuario" [showClear]="true" [filter]="true"
+          filterBy="nombre1,nombre2,apellido1,apellido2" filterPlaceholder="Buscar usuario..." 
+          class="w-full h-11!">
+          <ng-template #selectedItem let-usuario>
+            {{ usuario.nombre1 }} {{ usuario.nombre2 || '' }} {{ usuario.apellido1 }} {{ usuario.apellido2 || '' }}
+          </ng-template>
+          <ng-template #item let-usuario>
+            {{ usuario.nombre1 }} {{ usuario.nombre2 || '' }} {{ usuario.apellido1 }} {{ usuario.apellido2 || '' }}
+          </ng-template>
+        </p-select>
+      }
+
+      @if (isFieldInvalid('usuarioId')) {
+        <small class="text-red-400 block text-sm">
+          El usuario es requerido
+        </small>
+      }
+    </div>
+
+    <!-- Período -->
+    <div class="space-y-2">
+      <label for="periodo" class="block text-sm font-semibold text-gray-100">
+        Período *
+      </label>
+      <p-select id="periodo" formControlName="periodo" [options]="periodosList()" optionLabel="label"
+        optionValue="value" placeholder="Selecciona un período" class="w-full h-11!">
+      </p-select>
+      @if (isFieldInvalid('periodo')) {
+        <small class="text-red-400 block text-sm">
+          El período es requerido
+        </small>
+      }
+    </div>
+  </div>
+
+  <!-- Número y Valor -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    <!-- Número -->
+    <div class="space-y-2">
+      <label for="numero" class="block text-sm font-semibold text-gray-100">
+        Cantidad *
+      </label>
+      <p-iconfield class="w-full">
+        <p-inputicon class="pi pi-hashtag text-gray-400"></p-inputicon>
+        <p-inputnumber id="numero" formControlName="numero" placeholder="Ingresa el número" [useGrouping]="false"
+          class="w-full h-11!">
+        </p-inputnumber>
+      </p-iconfield>
+      @if (isFieldInvalid('numero')) {
+        <small class="text-red-400 block text-sm">
+          Debe ser mayor a 0
+        </small>
+      }
+    </div>
+
+    <!-- Valor -->
+    <div class="space-y-2">
+      <label for="valor" class="block text-sm font-semibold text-gray-100">
+        Valor
+      </label>
+      <p-iconfield class="w-full">
+        <p-inputicon class="pi pi-dollar text-gray-400"></p-inputicon>
+        <p-inputnumber id="valor" formControlName="valor" placeholder="Auto" mode="currency" currency="USD"
+          [useGrouping]="true" [readonly]="true" class="w-full h-11!">
+        </p-inputnumber>
+      </p-iconfield>
+      @if (isFieldInvalid('valor')) {
+        <small class="text-red-400 block text-sm">
+          El valor es requerido
+        </small>
+      }
+    </div>
+  </div>
+
+  <!-- Fecha y Estado -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    <div class="space-y-2">
+      <label for="fecha" class="block text-sm font-semibold text-gray-100">
+        Fecha *
+      </label>
+      <p-datepicker id="fecha" formControlName="fecha" placeholder="Selecciona una fecha" 
+        dateFormat="yy-mm-dd" [showIcon]="true" class="w-full h-11!" fluid>
+      </p-datepicker>
+      @if (isFieldInvalid('fecha')) {
+        <small class="text-red-400 block text-sm">
+          La fecha es requerida
+        </small>
+      }
+    </div>
+
+    <!-- Estado (Oculto, siempre 'A') -->
+    <div class="space-y-2">
+      <label for="estado" class="block text-sm font-semibold text-gray-100">
+        Estado
+      </label>
+      <p-select id="estado" formControlName="estado" [options]="estadosList()" optionLabel="label"
+        optionValue="value" placeholder="ACTIVO" class="w-full h-11!">
+      </p-select>
+    </div>
+  </div>
+
+  <!-- Botones -->
+  <div class="flex gap-3 justify-end pt-4 border-t border-surface-700">
+    <p-button 
+      label="Cancelar" 
+      severity="secondary" 
+      (onClick)="cancelar()" 
+      [disabled]="isSubmitting()">
+    </p-button>
+    <p-button 
+      label="Guardar" 
+      icon="pi pi-check" 
+      (onClick)="guardarAccion()" 
+      [loading]="isSubmitting()" 
+      [disabled]="formGroup().invalid || isSubmitting()">
+    </p-button>
+  </div>
+</form>

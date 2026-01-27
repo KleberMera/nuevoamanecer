@@ -9,23 +9,55 @@ export interface Periodo {
   providedIn: 'root',
 })
 export class PeriodoService {
-   /**
-   * Genera una lista de períodos disponibles (desde 202601 hacia adelante)
-   * @param cantidad Número de períodos a generar (default: 24)
+  /**
+   * Genera una lista de períodos disponibles
+   * Incluye todos los meses del año anterior y el año actual
    * @returns Array de períodos con formato { label: 'YYYY-MM', value: 'YYYYMM' }
    */
-  generarPeriodos(cantidad: number = 24): Periodo[] {
+  generarPeriodos(): Periodo[] {
     const periodos: Periodo[] = [];
-    for (let i = 0; i < cantidad; i++) {
-      const month = ((i % 12) + 1).toString().padStart(2, '0');
-      const year = 2026 + Math.floor(i / 12);
+    const now = new Date();
+    const currentYear = now.getFullYear();
+    const previousYear = currentYear - 1;
+
+    // Añadir todos los meses del año anterior
+    for (let i = 1; i <= 12; i++) {
+      const month = i.toString().padStart(2, '0');
       periodos.push({
-        label: `${year}-${month}`,
-        value: `${year}${month}`,
+        label: `${previousYear}-${month}`,
+        value: `${previousYear}${month}`,
       });
     }
+
+    // Añadir todos los meses del año actual
+    for (let i = 1; i <= 12; i++) {
+      const month = i.toString().padStart(2, '0');
+      periodos.push({
+        label: `${currentYear}-${month}`,
+        value: `${currentYear}${month}`,
+      });
+    }
+
     return periodos;
   }
+
+
+  //   generarPeriodos(): Periodo[] {
+  //   const periodos: Periodo[] = [];
+  //   const now = new Date();
+  //   const currentYear = now.getFullYear();
+  //   const year = currentYear;
+
+
+  //   for (let i = 1; i <= 12; i++) {
+  //     const month = i.toString().padStart(2, '0');
+  //     periodos.push({
+  //       label: `${year}-${month}`,
+  //       value: `${year}${month}`,
+  //     });
+  //   }
+  //   return periodos;
+  // }
 
   /**
    * Obtiene el período actual en formato YYYYMM

@@ -16,7 +16,7 @@
   <!-- Filtros: Período y Búsqueda Usuario -->
   <div class="grid grid-cols-1 sm:grid-cols-12 gap-3 sm:gap-4">
     <!-- Selector de Período (más estrecho) -->
-    <div class="sm:col-span-4 space-y-2">
+    <div class="sm:col-span-3 space-y-2">
       <label for="periodo" class="block text-sm font-semibold text-gray-100">
         Período
       </label>
@@ -25,8 +25,8 @@
       </p-select>
     </div>
 
-    <!-- Búsqueda de Usuario (más ancho) -->
-    <div class="sm:col-span-8 space-y-2">
+    <!-- Búsqueda de Usuario -->
+    <div class="sm:col-span-5 space-y-2">
       <label for="usuarioBusca" class="block text-sm font-semibold text-gray-100">
         Buscar Usuario
       </label>
@@ -35,6 +35,11 @@
         <input pInputText type="text" id="usuarioBusca" [formControl]="usuarioBuscaControl"
           placeholder="Nombre o apellido..." class="w-full">
       </p-iconfield>
+    </div>
+
+    <!-- Botón Nueva Acción -->
+    <div class="sm:col-span-4 flex items-end">
+      <p-button label="Nueva" icon="pi pi-plus" severity="success" class="w-full" (onClick)="abrirDialogAccion()"></p-button>
     </div>
   </div>
 
@@ -118,7 +123,9 @@
       [rowsPerPageOptions]="[10, 20, 50]" [showCurrentPageReport]="true"
       currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
       [globalFilterFields]="['usuario.nombre1', 'usuario.apellido1', 'numero', 'valor', 'estado']"
-      [tableStyle]="{ 'min-width': '50rem' }" [rowHover]="true" [scrollable]="true" scrollHeight="500px">
+      [tableStyle]="{ 'min-width': '50rem' }" [rowHover]="true" [scrollable]="true" scrollHeight="500px"
+      [(selection)]="selectedAccion" (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect()"
+      [selectionMode]="'single'">
 
       <ng-template pTemplate="header">
         <tr>
@@ -159,12 +166,11 @@
               <p-sortIcon field="estado"></p-sortIcon>
             </div>
           </th>
-          <th class="bg-surface-800 text-center">Acciones</th>
         </tr>
       </ng-template>
 
       <ng-template pTemplate="body" let-accion let-rowIndex="rowIndex">
-        <tr>
+        <tr [pSelectableRow]="accion">
           <td class="text-center font-semibold text-gray-300 w-12">{{ rowIndex + 1 }}</td>
           <td>
             <span class="text-gray-100 font-medium">{{ getNombreCompleto(accion) }}</span>
@@ -185,17 +191,12 @@
             <p-tag [value]="getEstadoTexto(accion.estado)" [severity]="accion.estado === 'A' ? 'success' : 'secondary'">
             </p-tag>
           </td>
-          <td class="text-center">
-            <p-button icon="pi pi-eye" [rounded]="true" [text]="true" severity="info" pTooltip="Ver detalles"
-              tooltipPosition="top" size="small">
-            </p-button>
-          </td>
         </tr>
       </ng-template>
 
       <ng-template pTemplate="emptymessage">
         <tr>
-          <td colspan="8" class="text-center py-8">
+          <td colspan="7" class="text-center py-8">
             <div class="flex flex-col items-center gap-3">
               <i class="pi pi-filter-slash text-3xl text-gray-500"></i>
               <p class="text-gray-400">No se encontraron resultados</p>

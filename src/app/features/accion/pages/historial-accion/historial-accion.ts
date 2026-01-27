@@ -4,6 +4,7 @@ import { CommonModule, CurrencyPipe, DatePipe } from '@angular/common';
 import { ReactiveFormsModule, FormControl } from '@angular/forms';
 import { apiResponse } from '@core/models/apiResponse';
 import { accionInterface } from '@core/models/accion';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 
 import { httpResource } from '@angular/common/http';
 import { TableModule } from 'primeng/table';
@@ -17,6 +18,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { ScreenService } from '@shared/services/screen-service';
 import { PeriodoService } from '@shared/services/periodo-service';
+import { DialogAccion } from '../../components/dialog-accion/dialog-accion';
 
 @Component({
   selector: 'app-historial-accion',
@@ -37,11 +39,18 @@ import { PeriodoService } from '@shared/services/periodo-service';
   ],
   templateUrl: './historial-accion.html',
   styleUrl: './historial-accion.css',
+  providers: [DialogService]
 })
 export default class HistorialAccion {
   protected readonly regAccion = inject(RegistroAccionService);
   protected readonly periodoService = inject(PeriodoService);
   protected readonly _screenService = inject(ScreenService);
+  protected readonly dialogService = inject(DialogService);
+  
+  ref: DynamicDialogRef | undefined;
+
+  // Signal para acción seleccionada
+  protected selectedAccion = signal<accionInterface | undefined>(undefined);
 
   // FormControl para el período
   protected periodoControl = new FormControl<string>(this.periodoService.getPeriodoActual());
@@ -116,6 +125,62 @@ export default class HistorialAccion {
     this.usuarioBuscaControl.valueChanges.subscribe((value) => {
       this.usuarioBusca.set(value || '');
     });
+  }
+
+  // Método para abrir el dialog de crear acción
+  protected abrirDialogAccion() {
+    const dialogRef = this.dialogService.open(DialogAccion, {
+      header: 'Registrar Nueva Acción',
+      modal: true,
+      width: '50vw',
+      closable: true,
+      breakpoints: {
+        '960px': '75vw',
+        '640px': '90vw',
+      },
+    });
+
+    // Escuchar cuando se cierre el dialog
+    dialogRef!.onClose.subscribe((result) => {
+      if (result) {
+        // Si se creó exitosamente, recargar el historial
+        // Aquí puedes agregar lógica para recargar la lista
+      }
+    });
+  }
+
+  // Método para manejar la selección de fila
+  protected onRowSelect(event: any) {
+    const accion = event.data;
+    this.selectedAccion.set(accion);
+    console.log('Acción seleccionada:', accion);
+    
+    // Abrir el dialog con la información de la acción
+    const dialogRef = this.dialogService.open(DialogAccion, {
+      header: 'Editar Acción',
+      modal: true,
+      width: '50vw',
+      closable: true,
+      breakpoints: {
+        '960px': '75vw',
+        '640px': '90vw',
+      },
+      data: { accion }, // Pasar los datos de la acción al dialog
+    });
+
+    // Escuchar cuando se cierre el dialog
+    dialogRef!.onClose.subscribe((result) => {
+      if (result) {
+        // Si se actualizó exitosamente, recargar el historial
+        this.selectedAccion.set(undefined);
+      }
+    });
+  }
+
+  // Método para manejar la deselección de fila
+  protected onRowUnselect() {
+    this.selectedAccion.set(undefined);
+    console.log('Selección eliminada');
   }
 
   // Calcular el total del valor de las acciones mostradas
