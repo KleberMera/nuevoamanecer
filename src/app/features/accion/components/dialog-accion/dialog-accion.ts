@@ -127,7 +127,6 @@ export class DialogAccion {
 
     // Desactivar campos en modo edición
     this.formGroup().get('usuarioId')?.disable();
-    this.formGroup().get('estado')?.disable();
   }
 
   private setupFormularioCreacion() {

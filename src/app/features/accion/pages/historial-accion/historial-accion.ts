@@ -52,6 +52,9 @@ export default class HistorialAccion {
   // Signal para acción seleccionada
   protected selectedAccion = signal<accionInterface | undefined>(undefined);
 
+  // Signal para forzar recarga de acciones
+  private reloadVersion = signal<number>(0);
+
   // FormControl para el período
   protected periodoControl = new FormControl<string>(this.periodoService.getPeriodoActual());
 
@@ -65,9 +68,10 @@ export default class HistorialAccion {
   private usuarioBusca = signal<string>('');
 
   // Historial con httpResource
-  historial = httpResource<apiResponse<accionInterface[]>>(() =>
-    this.regAccion.listarAccionesPeriodo(this.periodoSeleccionado()),
-  );
+  historial = httpResource<apiResponse<accionInterface[]>>(() => {
+    this.reloadVersion(); // Crear dependencia del signal de reload
+    return this.regAccion.listarAccionesPeriodo(this.periodoSeleccionado());
+  });
 
   // Acciones para mostrar en tabla
   protected acciones = computed(() => {
@@ -143,8 +147,8 @@ export default class HistorialAccion {
     // Escuchar cuando se cierre el dialog
     dialogRef!.onClose.subscribe((result) => {
       if (result) {
-        // Si se creó exitosamente, recargar el historial
-        // Aquí puedes agregar lógica para recargar la lista
+        // Si se creó exitosamente, recargar la tabla
+        this.reloadVersion.update((v) => v + 1);
       }
     });
   }
@@ -171,7 +175,8 @@ export default class HistorialAccion {
     // Escuchar cuando se cierre el dialog
     dialogRef!.onClose.subscribe((result) => {
       if (result) {
-        // Si se actualizó exitosamente, recargar el historial
+        // Si se actualizó exitosamente, recargar la tabla
+        this.reloadVersion.update((v) => v + 1);
         this.selectedAccion.set(undefined);
       }
     });

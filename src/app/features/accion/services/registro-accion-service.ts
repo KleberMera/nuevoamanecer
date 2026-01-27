@@ -48,8 +48,8 @@ export class RegistroAccionService {
 
   // Actualizar acción
   actualizarAccion(accionId: number, accion: accionInterface): Observable<apiResponse<accionInterface>> {
-    const url = `${this.apiUrl.ACCION.CREAR_ACCION}/${accionId}`;
-    return this._http.put<apiResponse<accionInterface>>(url, accion);
+    const url = `${this.apiUrl.ACCION.CREAR_ACCION}${accionId}`;
+    return this._http.patch<apiResponse<accionInterface>>(url, accion);
   }
 
   // Listar acciones del usuario
