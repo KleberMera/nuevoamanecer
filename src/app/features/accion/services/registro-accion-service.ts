@@ -53,12 +53,12 @@ export class RegistroAccionService {
   }
 
   // Listar acciones del usuario
-  listarAccionesUsuario(usuarioId: number, periodo?: string): Observable<apiResponse<accionInterface[]>> {
+  listarAccionesUsuario(usuarioId: number, periodo?: string) {
     let url = `${this.apiUrl.ACCION.LISTAR_ACCIONES_USUARIO}/${usuarioId}`;
     if (periodo) {
       url += `?periodo=${periodo}`;
     }
-    return this._http.get<apiResponse<accionInterface[]>>(url);
+    return url
   }
 
 
