@@ -1,49 +1,80 @@
 <nav class="p-3">
-    <ul class="space-y-1">
-        @for (item of menuItems(); track item.id) {
-        <li class="relative">
-            <!-- Item principal -->
-            <div class="relative" (click)="manejarClickItem(item)">
-                <a [routerLink]="item.route" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="border-l-2 border-primary-500" 
-                    class="flex items-center justify-between w-full px-3 py-2.5 rounded-lg transition-all duration-200 group text-surface-400"
-                    [class.!text-white]="isItemActive(item)"
-                    [class.!bg-primary-500]="isItemActive(item)"
-                >
-                    <div class="flex items-center gap-3">
-                        <i [attr.class]="'min-w-[20px] ' + item.icon + (isItemActive(item) ? ' !text-white' : ' text-gray-600')"></i>
-                        <span class="text-sm font-medium">{{ item.label }}</span>
-                    </div>
-                    @if (item.subitems?.length) {
-                    <i class="pi pi-chevron-down transition-transform duration-200" [class.rotate-180]="expandedItems()[item.id]" [class.!text-white]="isItemActive(item)"></i>
-                    }
-                </a>
-            </div>
+  <ul class="space-y-1.5">
+    @for (item of menuItems(); track item.id) {
+    <li class="relative">
+      <!-- Item principal -->
+      <div class="relative" (click)="manejarClickItem(item)">
+        <a 
+          [routerLink]="item.route" 
+          [routerLinkActiveOptions]="{exact: true}" 
+          routerLinkActive="active-menu-item" 
+          class="flex items-center justify-between w-full px-3 py-2.5 rounded-lg transition-all duration-200 group hover:bg-surface-800"
+          [class.!bg-primary]="isItemActive(item)"
+          [class.!text-white]="isItemActive(item)"
+          [class.text-surface-400]="!isItemActive(item)"
+        >
+          <div class="flex items-center gap-3 flex-1 min-w-0">
+            <i 
+              [class]="item.icon + ' text-lg shrink-0'"
+              [class.!text-white]="isItemActive(item)"
+              [class.text-surface-500]="!isItemActive(item)"
+              [class.group-hover:text-primary]="!isItemActive(item)">
+            </i>
+            <span class="text-sm font-medium truncate">{{ item.label }}</span>
+          </div>
+          
+          @if (item.subitems?.length) {
+          <i 
+            class="pi pi-chevron-down text-xs transition-transform duration-200 shrink-0 ml-2" 
+            [class.rotate-180]="expandedItems()[item.id]"
+            [class.!text-white]="isItemActive(item)"
+            [class.text-surface-500]="!isItemActive(item)">
+          </i>
+          }
+        </a>
+      </div>
 
-            <!-- Subitems -->
-            @if (item.subitems?.length) {
-            <div [class.max-h-96]="expandedItems()[item.id]" [class.max-h-0]="!expandedItems()[item.id]" class="overflow-hidden transition-all duration-300 ease-out">
-                <ul class="mt-1 ml-6 space-y-1 border-l border-surface-500/40">
-                    @for (subitem of item.subitems; track subitem.id) {
-                    <li>
-                        <a [routerLink]="subitem.route" routerLinkActive=""
-                            (click)="handleSubItemClick(subitem.route)"
-                            class="flex items-center gap-2 px-3 py-2 text-xs rounded-lg transition-all duration-200 relative text-surface-400"
-                           [class.!text-white]="router.url.includes(subitem.route)"
-                          [class.!bg-primary-500]="router.url.includes(subitem.route)"
-                        >
-                            @if (subitem.icon) {
-                            <i [attr.class]="'w-4 h-4 ' + subitem.icon + (router.url.includes(subitem.route) ? ' !text-white' : ' text-primary-500')"></i>
-                            } @else {
-                            <span class="w-2 h-2 rounded-full bg-primary-500/60"></span>
-                            }
-                            <span>{{ subitem.label }}</span>
-                        </a>
-                    </li>
-                    }
-                </ul>
-            </div>
-            }
-        </li>
-        }
-    </ul>
+      <!-- Subitems con animación -->
+      @if (item.subitems?.length) {
+      <div 
+        class="overflow-hidden transition-all duration-300 ease-in-out"
+        [class.max-h-96]="expandedItems()[item.id]" 
+        [class.max-h-0]="!expandedItems()[item.id]"
+        [class.opacity-100]="expandedItems()[item.id]"
+        [class.opacity-0]="!expandedItems()[item.id]">
+        
+        <ul class="mt-1.5 ml-4 space-y-1 pl-4 border-l-2 border-surface-700">
+          @for (subitem of item.subitems; track subitem.id) {
+          <li>
+            <a 
+              [routerLink]="subitem.route" 
+              (click)="handleSubItemClick(subitem.route)"
+              class="flex items-center gap-2.5 px-3 py-2 text-sm rounded-lg transition-all duration-200 relative hover:bg-surface-800"
+              [class.!bg-primary]="router.url.includes(subitem.route)"
+              [class.!text-white]="router.url.includes(subitem.route)"
+              [class.text-surface-400]="!router.url.includes(subitem.route)"
+            >
+              @if (subitem.icon) {
+              <i 
+                [class]="subitem.icon + ' text-base'"
+                [class.!text-white]="router.url.includes(subitem.route)"
+                [class.text-primary]="!router.url.includes(subitem.route)">
+              </i>
+              } @else {
+              <span 
+                class="w-1.5 h-1.5 rounded-full shrink-0"
+                [class.bg-white]="router.url.includes(subitem.route)"
+                [class.bg-primary]="!router.url.includes(subitem.route)">
+              </span>
+              }
+              <span class="truncate">{{ subitem.label }}</span>
+            </a>
+          </li>
+          }
+        </ul>
+      </div>
+      }
+    </li>
+    }
+  </ul>
 </nav>

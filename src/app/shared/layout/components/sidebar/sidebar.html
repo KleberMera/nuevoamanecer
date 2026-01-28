@@ -1,15 +1,37 @@
 @if (showOverlay()) {
-<div class="fixed inset-0 bg-black/30 backdrop-blur-sm z-40 transition-opacity duration-300"
+<div 
+  class="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 transition-opacity duration-300 md:hidden"
   (click)="_sidebarService.toggle()">
 </div>
 }
 
-<aside class="fixed top-0 left-0 z-40 h-full w-64 bg-surface-950 transition-transform duration-300 ease-out border-r border-surface-500/40" 
-  [class.translate-x-0]="_sidebarService.isOpen()" [class.-translate-x-full]="!_sidebarService.isOpen()">
-  <div class="pt-18">
-    <!-- <div class="px-4 py-3 border-b border-surface-500/40">
-      <h2 class="text-sm font-bold text-primary-500 uppercase tracking-wider">Menú</h2>
+<aside 
+  class="fixed top-0 left-0 z-40 h-full w-64 bg-surface-950/95 backdrop-blur-lg transition-transform duration-300 ease-out border-r border-surface-700 shadow-2xl" 
+  [class.translate-x-0]="_sidebarService.isOpen()" 
+  [class.-translate-x-full]="!_sidebarService.isOpen()">
+  
+  <div class="h-full flex flex-col pt-16">
+    <!-- Header del Sidebar (opcional) -->
+    <!-- <div class="px-4 py-4 border-b border-surface-700">
+      <div class="flex items-center gap-3">
+        <img src="logo_main.svg" alt="Logo" class="w-8 h-8">
+        <div>
+          <h2 class="text-sm font-bold text-gray-100">Navegación</h2>
+          <p class="text-xs text-gray-400">Menú principal</p>
+        </div>
+      </div>
     </div> -->
-    <app-sidebar-item></app-sidebar-item>
+
+    <!-- Contenido scrolleable -->
+    <div class="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-surface-700 scrollbar-track-transparent">
+      <app-sidebar-item></app-sidebar-item>
+    </div>
+
+    <!-- Footer del Sidebar (opcional) -->
+    <!-- <div class="p-4 border-t border-surface-700">
+      <div class="text-xs text-gray-500 text-center">
+        v1.0.0
+      </div>
+    </div> -->
   </div>
 </aside>
