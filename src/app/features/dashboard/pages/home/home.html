@@ -7,6 +7,12 @@
   
   </div> ----->
 
+   <h1 class="sm:hidden text-lg font-bold text-white tracking-wide">
+        Hola,
+        <span class="text-primary-500 font-black">
+          {{ userName() }}
+        </span>
+      </h1>
   <!-- Estados de carga y error -->
   @if (hasError()) {
     <div class="flex items-center gap-3 p-4 bg-red-500/10 border border-red-500/30 rounded-lg">

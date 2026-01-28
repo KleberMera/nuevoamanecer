@@ -19,7 +19,7 @@ export default class Home {
   protected readonly storage = inject(Storage);
   protected readonly homeService = inject(HomeService);
   protected readonly periodoService = inject(PeriodoService);
-  
+  userName  = signal<string>(this.storage.getNombre() || 'Usuario');
   protected usuarioId = this.storage.getUsuarioId();
   
   // FormControl y signal para el período
