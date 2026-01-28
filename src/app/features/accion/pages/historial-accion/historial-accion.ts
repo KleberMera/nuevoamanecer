@@ -61,11 +61,17 @@ export default class HistorialAccion {
   // FormControl para buscar usuario
   protected usuarioBuscaControl = new FormControl<string>('');
 
+  // FormControl para filtrar por estado
+  protected estadoFilterControl = new FormControl<string>('');
+
   // Signal para el período seleccionado
   private periodoSeleccionado = signal<string>(this.periodoService.getPeriodoActual());
 
   // Signal para el usuario a buscar
   private usuarioBusca = signal<string>('');
+
+  // Signal para el estado a filtrar
+  private estadoFilter = signal<string>('');
 
   // Historial con httpResource
   historial = httpResource<apiResponse<accionInterface[]>>(() => {
@@ -76,7 +82,13 @@ export default class HistorialAccion {
   // Acciones para mostrar en tabla
   protected acciones = computed(() => {
     const data = this.historial.value();
-    const acciones = data?.data || [];
+    let acciones = data?.data || [];
+
+    // Filtrar por estado
+    const estadoFilter = this.estadoFilter();
+    if (estadoFilter) {
+      acciones = acciones.filter((accion) => accion.estado === estadoFilter);
+    }
 
     // Filtrar por búsqueda de usuario
     const busca = this.usuarioBusca().toLowerCase();
@@ -128,6 +140,11 @@ export default class HistorialAccion {
     // Escuchar cambios de búsqueda de usuario
     this.usuarioBuscaControl.valueChanges.subscribe((value) => {
       this.usuarioBusca.set(value || '');
+    });
+
+    // Escuchar cambios de filtro de estado
+    this.estadoFilterControl.valueChanges.subscribe((value) => {
+      this.estadoFilter.set(value || '');
     });
   }
 

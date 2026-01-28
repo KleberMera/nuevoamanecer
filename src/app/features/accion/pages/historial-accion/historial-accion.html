@@ -15,8 +15,8 @@
   <!-- Filtros: Período y Búsqueda Usuario -->
   <!-- Filtros: Período y Búsqueda Usuario -->
   <div class="grid grid-cols-1 sm:grid-cols-12 gap-3 sm:gap-4">
-    <!-- Selector de Período (más estrecho) -->
-    <div class="sm:col-span-3 space-y-2">
+    <!-- Selector de Período -->
+    <div class="sm:col-span-2 space-y-2">
       <label for="periodo" class="block text-sm font-semibold text-gray-100">
         Período
       </label>
@@ -25,8 +25,23 @@
       </p-select>
     </div>
 
+    <!-- Filtro de Estado -->
+    <div class="sm:col-span-2 space-y-2">
+      <label for="estado" class="block text-sm font-semibold text-gray-100">
+        Estado
+      </label>
+      <p-select id="estado" [formControl]="estadoFilterControl" 
+        [options]="[
+          { label: 'Todos', value: '' },
+          { label: 'Activo', value: 'A' },
+          { label: 'Inactivo', value: 'I' }
+        ]" 
+        optionLabel="label" optionValue="value" placeholder="Seleccionar..." class="w-full" [showClear]="true">
+      </p-select>
+    </div>
+
     <!-- Búsqueda de Usuario -->
-    <div class="sm:col-span-5 space-y-2">
+    <div class="sm:col-span-4 space-y-2">
       <label for="usuarioBusca" class="block text-sm font-semibold text-gray-100">
         Buscar Usuario
       </label>
@@ -39,7 +54,7 @@
 
     <!-- Botón Nueva Acción -->
     <div class="sm:col-span-4 flex items-end">
-      <p-button label="Nueva" icon="pi pi-plus" severity="success" class="w-full" (onClick)="abrirDialogAccion()"></p-button>
+      <p-button label="Nuevo" icon="pi pi-plus" severity="success" class="w-full" (onClick)="abrirDialogAccion()"></p-button>
     </div>
   </div>
 
