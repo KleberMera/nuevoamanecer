@@ -15,8 +15,12 @@
                     <label for="valor" class="block text-sm font-semibold text-gray-100">
                         Valor del Préstamo *
                     </label>
-                    <p-inputNumber inputId="valor" formControlName="valorPrestamo" mode="currency"
-                        currency="USD" class="w-full"></p-inputNumber>
+                    <p-iconfield class="w-full">
+                        <p-inputicon class="pi pi-dollar text-gray-400"></p-inputicon>
+                        <p-inputNumber inputId="valor" formControlName="valorPrestamo" 
+                           mode="currency" currency="USD"
+                          class="w-full"></p-inputNumber>
+                    </p-iconfield>
                     @if (form().get('valorPrestamo')?.invalid && form().get('valorPrestamo')?.touched) {
                     <small class="text-red-400 block text-sm">
                         El valor es requerido y debe ser mayor a 0
@@ -29,8 +33,11 @@
                     <label for="tasa" class="block text-sm font-semibold text-gray-100">
                         Tasa de Interés Mensual (%) *
                     </label>
-                    <p-inputNumber inputId="tasa" formControlName="tasaInteres" [min]="0.01" [minFractionDigits]="2"
-                        [maxFractionDigits]="2" class="w-full"></p-inputNumber>
+                    <p-iconfield class="w-full">
+                        <p-inputicon class="pi pi-percentage text-gray-400"></p-inputicon>
+                        <p-inputNumber inputId="tasa" formControlName="tasaInteres" [min]="0.01" 
+                            [minFractionDigits]="2" [maxFractionDigits]="2" placeholder="" class="w-full"></p-inputNumber>
+                    </p-iconfield>
                     @if (form().get('tasaInteres')?.invalid && form().get('tasaInteres')?.touched) {
                     <small class="text-red-400 block text-sm">
                         La tasa es requerida y debe ser mayor a 0
@@ -43,8 +50,11 @@
                     <label for="cuotas" class="block text-sm font-semibold text-gray-100">
                         Número de Cuotas *
                     </label>
-                    <p-inputNumber inputId="cuotas" formControlName="numeroCuotas" placeholder="0" [min]="1"
-                        [useGrouping]="false" class="w-full"></p-inputNumber>
+                    <p-iconfield class="w-full">
+                        <p-inputicon class="pi pi-list text-gray-400"></p-inputicon>
+                        <p-inputNumber inputId="cuotas" formControlName="numeroCuotas" [min]="1"
+                            [useGrouping]="false" placeholder="" class="w-full"></p-inputNumber>
+                    </p-iconfield>
                     @if (form().get('numeroCuotas')?.invalid && form().get('numeroCuotas')?.touched) {
                     <small class="text-red-400 block text-sm">
                         Las cuotas son requeridas y deben ser mayor a 0
@@ -69,15 +79,15 @@
     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div class="bg-surface-900 border border-surface-700 rounded-lg p-4 space-y-3">
             <p class="text-sm font-semibold text-gray-300">Capital Mensual (Constante)</p>
-            <p class="text-3xl font-bold text-primary">{{ capitalConstante | currency }}</p>
+            <p class="text-3xl font-bold text-primary">{{ capitalConstante() | currency }}</p>
         </div>
         <div class="bg-surface-900 border border-surface-700 rounded-lg p-4 space-y-3">
             <p class="text-sm font-semibold text-gray-300">Total de Intereses</p>
-            <p class="text-3xl font-bold text-orange-400">{{ totalInteres | currency }}</p>
+            <p class="text-3xl font-bold text-orange-400">{{ totalInteres() | currency }}</p>
         </div>
         <div class="bg-surface-900 border border-surface-700 rounded-lg p-4 space-y-3">
             <p class="text-sm font-semibold text-gray-300">Total a Pagar</p>
-            <p class="text-3xl font-bold text-green-400">{{ totalPagado | currency }}</p>
+            <p class="text-3xl font-bold text-green-400">{{ totalPagado() | currency }}</p>
         </div>
     </div>
 

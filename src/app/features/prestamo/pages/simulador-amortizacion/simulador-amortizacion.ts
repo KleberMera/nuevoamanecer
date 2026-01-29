@@ -7,6 +7,8 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { CardModule } from 'primeng/card';
 
 import { toast } from 'ngx-sonner';
+import { IconField } from "primeng/iconfield";
+import { InputIcon } from "primeng/inputicon";
 
 interface CuotaAmortizacion {
   numero: number;
@@ -25,29 +27,28 @@ interface CuotaAmortizacion {
     ButtonModule,
     InputNumberModule,
     CardModule,
-
-    CurrencyPipe
-  ],
+    CurrencyPipe,
+    IconField,
+    InputIcon
+],
   templateUrl: './simulador-amortizacion.html',
   styleUrl: './simulador-amortizacion.css',
 
 })
 export default class SimuladorAmortizacion {
  
-  capitalConstante: number = 0;
-  totalInteres: number = 0;
-  totalPagado: number = 0;
+  capitalConstante = signal<number>(0);
+  totalInteres = signal<number>(0);
+  totalPagado = signal<number>(0);
   tabla = signal<CuotaAmortizacion[]>([]);
 
-  constructor(private fb: FormBuilder) {
-  
-  }
+
 
   form = signal<FormGroup>(
     new FormGroup({
-      valorPrestamo: new FormControl(0, [Validators.required, Validators.min(1)]),
-      tasaInteres: new FormControl(0, [Validators.required, Validators.min(0.01)]),
-      numeroCuotas: new FormControl(0, [Validators.required, Validators.min(1)])
+      valorPrestamo: new FormControl(null, [Validators.required, Validators.min(1)]),
+      tasaInteres: new FormControl(null, [Validators.required, Validators.min(0.01)]),
+      numeroCuotas: new FormControl(null, [Validators.required, Validators.min(1)])
     }),
   )
 
@@ -63,17 +64,17 @@ export default class SimuladorAmortizacion {
     const tasaMensual = tasaInteres / 100;
 
     // En amortización alemana, el capital es constante
-    this.capitalConstante = valorPrestamo / numeroCuotas;
+    this.capitalConstante.set(valorPrestamo / numeroCuotas);
 
     // Generar tabla de amortización
     let saldoRestante = valorPrestamo;
-    this.totalInteres = 0;
-    this.totalPagado = 0;
+    let totalInteresTmp = 0;
+    let totalPagadoTmp = 0;
     const nuevaTabla: CuotaAmortizacion[] = [];
 
     for (let i = 1; i <= numeroCuotas; i++) {
       const interes = saldoRestante * tasaMensual;
-      const capital = this.capitalConstante;
+      const capital = this.capitalConstante();
       const cuota = capital + interes;
       saldoRestante -= capital;
 
@@ -90,20 +91,22 @@ export default class SimuladorAmortizacion {
         saldo: saldoRestante,
       });
 
-      this.totalInteres += interes;
-      this.totalPagado += cuota;
+      totalInteresTmp += interes;
+      totalPagadoTmp += cuota;
     }
 
     this.tabla.set(nuevaTabla);
+    this.totalInteres.set(totalInteresTmp);
+    this.totalPagado.set(totalPagadoTmp);
     toast.success('Amortización calculada correctamente');
   }
 
   limpiar() {
     this.form().reset({ valorPrestamo: 0, tasaInteres: 0, numeroCuotas: 0 });
     this.tabla.set([]);
-    this.capitalConstante = 0;
-    this.totalInteres = 0;
-    this.totalPagado = 0;
+    this.capitalConstante.set(0);
+    this.totalInteres.set(0);
+    this.totalPagado.set(0);
   }
     
 }
