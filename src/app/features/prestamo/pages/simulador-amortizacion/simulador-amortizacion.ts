@@ -40,6 +40,7 @@ export default class SimuladorAmortizacion {
   capitalConstante = signal<number>(0);
   totalInteres = signal<number>(0);
   totalPagado = signal<number>(0);
+  valorPrestamo = signal<number>(0);
   tabla = signal<CuotaAmortizacion[]>([]);
 
 
@@ -64,6 +65,7 @@ export default class SimuladorAmortizacion {
     const tasaMensual = tasaInteres / 100;
 
     // En amortización alemana, el capital es constante
+    this.valorPrestamo.set(valorPrestamo);
     this.capitalConstante.set(valorPrestamo / numeroCuotas);
 
     // Generar tabla de amortización
@@ -103,6 +105,7 @@ export default class SimuladorAmortizacion {
 
   limpiar() {
     this.form().reset({ valorPrestamo: 0, tasaInteres: 0, numeroCuotas: 0 });
+    this.valorPrestamo.set(0);
     this.tabla.set([]);
     this.capitalConstante.set(0);
     this.totalInteres.set(0);
