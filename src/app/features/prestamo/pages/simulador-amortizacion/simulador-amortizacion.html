@@ -15,7 +15,7 @@
                     <label for="valor" class="block text-sm font-semibold text-gray-100">
                         Valor del Préstamo *
                     </label>
-                    <p-inputNumber id="valor" formControlName="valorPrestamo" mode="currency"
+                    <p-inputNumber inputId="valor" formControlName="valorPrestamo" mode="currency"
                         currency="USD" class="w-full"></p-inputNumber>
                     @if (form().get('valorPrestamo')?.invalid && form().get('valorPrestamo')?.touched) {
                     <small class="text-red-400 block text-sm">
@@ -29,7 +29,7 @@
                     <label for="tasa" class="block text-sm font-semibold text-gray-100">
                         Tasa de Interés Mensual (%) *
                     </label>
-                    <p-inputNumber id="tasa" formControlName="tasaInteres" [min]="0.01" [minFractionDigits]="2"
+                    <p-inputNumber inputId="tasa" formControlName="tasaInteres" [min]="0.01" [minFractionDigits]="2"
                         [maxFractionDigits]="2" class="w-full"></p-inputNumber>
                     @if (form().get('tasaInteres')?.invalid && form().get('tasaInteres')?.touched) {
                     <small class="text-red-400 block text-sm">
@@ -43,7 +43,7 @@
                     <label for="cuotas" class="block text-sm font-semibold text-gray-100">
                         Número de Cuotas *
                     </label>
-                    <p-inputNumber id="cuotas" formControlName="numeroCuotas" placeholder="0" [min]="1"
+                    <p-inputNumber inputId="cuotas" formControlName="numeroCuotas" placeholder="0" [min]="1"
                         [useGrouping]="false" class="w-full"></p-inputNumber>
                     @if (form().get('numeroCuotas')?.invalid && form().get('numeroCuotas')?.touched) {
                     <small class="text-red-400 block text-sm">

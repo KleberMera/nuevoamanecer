@@ -5,7 +5,6 @@ import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { CardModule } from 'primeng/card';
-import { ToastModule } from 'primeng/toast';
 
 import { toast } from 'ngx-sonner';
 
@@ -26,7 +25,7 @@ interface CuotaAmortizacion {
     ButtonModule,
     InputNumberModule,
     CardModule,
-    ToastModule,
+
     CurrencyPipe
   ],
   templateUrl: './simulador-amortizacion.html',
