@@ -6,7 +6,8 @@ const buildRoute = (parent: string, child: string): string => `${parent}/${child
 const buildUsuariosRoute = (child: string): string =>
   buildRoute(PAGES_ROUTES.USUARIOS.DEFAULT, child);
 const buildAccionRoute = (child: string): string => buildRoute(PAGES_ROUTES.ACCION.DEFAULT, child);
-
+const buildPrestamoRoute = (child: string): string =>
+  buildRoute(PAGES_ROUTES.PRESTAMO.DEFAULT, child);
 export const MENU_ITEMS: MenuItem[] = [
   {
     id: 1,
@@ -60,6 +61,13 @@ export const MENU_ITEMS: MenuItem[] = [
     icon: 'pi pi-history',
     route: buildAccionRoute(PAGES_ROUTES.ACCION.HISTORIAL_USUARIO),
   },
+  {
+    id: 5,
+    label: 'Prestamos',
+    icon: 'pi pi-wallet',
+    route: buildPrestamoRoute(PAGES_ROUTES.PRESTAMO.LISTA),
+
+  }
 ];
 
 // Items para la barra de tabs (mobile)

@@ -35,6 +35,10 @@ export const PAGES_ROUTES = {
     REGISTRO: 'registro',
     HISTORIAL: 'historial',
     HISTORIAL_USUARIO: 'usuario',
+  },
+  PRESTAMO: {
+    DEFAULT: 'prestamos',
+    LISTA: 'lista-prestamos',
   }
 };
 export default PAGES_ROUTES;

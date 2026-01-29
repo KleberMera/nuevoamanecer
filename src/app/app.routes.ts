@@ -35,6 +35,10 @@ export const routes: Routes = [
           {
             path: PAGES_ROUTES.DASHBOARD.DEFAULT,
             loadChildren: () => import('./features/accion/accion.routes')
+          },
+          {
+            path: PAGES_ROUTES.DASHBOARD.DEFAULT,
+            loadChildren: () => import('./features/prestamo/prestamos.route')
           }
                    
         ],

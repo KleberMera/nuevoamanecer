@@ -6,6 +6,6 @@ import { Component } from '@angular/core';
   templateUrl: './prestamo.html',
   styleUrl: './prestamo.css',
 })
-export class Prestamo {
+export default class Prestamo {
 
 }
