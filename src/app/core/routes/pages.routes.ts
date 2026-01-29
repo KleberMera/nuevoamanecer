@@ -39,6 +39,7 @@ export const PAGES_ROUTES = {
   PRESTAMO: {
     DEFAULT: 'prestamos',
     LISTA: 'lista-prestamos',
+    SIMULADOR: 'simulador',
   }
 };
 export default PAGES_ROUTES;

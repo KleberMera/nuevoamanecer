@@ -67,6 +67,12 @@ export const MENU_ITEMS: MenuItem[] = [
     icon: 'pi pi-wallet',
     route: buildPrestamoRoute(PAGES_ROUTES.PRESTAMO.LISTA),
 
+  },
+  {
+    id: 6,
+    label: 'Simulador',
+    icon: 'pi pi-calculator',
+    route: buildPrestamoRoute(PAGES_ROUTES.PRESTAMO.SIMULADOR),
   }
 ];
 

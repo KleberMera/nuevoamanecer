@@ -1,0 +1,128 @@
+<div class="space-y-4 sm:space-y-6 w-full">
+    <!-- Título -->
+    <div class="flex items-center justify-between flex-wrap gap-3">
+        <h2 class="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-100">
+            Simulador de <span class="text-primary">Amortización</span>
+        </h2>
+    </div>
+
+    <!-- Formulario -->
+    <div class="bg-surface-900 border border-surface-700 rounded-lg p-6 space-y-4">
+        <form [formGroup]="form()" (ngSubmit)="calcularAmortizacion()" class="space-y-4">
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <!-- Valor del Préstamo -->
+                <div class="space-y-2">
+                    <label for="valor" class="block text-sm font-semibold text-gray-100">
+                        Valor del Préstamo *
+                    </label>
+                    <p-inputNumber id="valor" formControlName="valorPrestamo" mode="currency"
+                        currency="USD" class="w-full"></p-inputNumber>
+                    @if (form().get('valorPrestamo')?.invalid && form().get('valorPrestamo')?.touched) {
+                    <small class="text-red-400 block text-sm">
+                        El valor es requerido y debe ser mayor a 0
+                    </small>
+                    }
+                </div>
+
+                <!-- Tasa de Interés -->
+                <div class="space-y-2">
+                    <label for="tasa" class="block text-sm font-semibold text-gray-100">
+                        Tasa de Interés Mensual (%) *
+                    </label>
+                    <p-inputNumber id="tasa" formControlName="tasaInteres" [min]="0.01" [minFractionDigits]="2"
+                        [maxFractionDigits]="2" class="w-full"></p-inputNumber>
+                    @if (form().get('tasaInteres')?.invalid && form().get('tasaInteres')?.touched) {
+                    <small class="text-red-400 block text-sm">
+                        La tasa es requerida y debe ser mayor a 0
+                    </small>
+                    }
+                </div>
+
+                <!-- Número de Cuotas -->
+                <div class="space-y-2">
+                    <label for="cuotas" class="block text-sm font-semibold text-gray-100">
+                        Número de Cuotas *
+                    </label>
+                    <p-inputNumber id="cuotas" formControlName="numeroCuotas" placeholder="0" [min]="1"
+                        [useGrouping]="false" class="w-full"></p-inputNumber>
+                    @if (form().get('numeroCuotas')?.invalid && form().get('numeroCuotas')?.touched) {
+                    <small class="text-red-400 block text-sm">
+                        Las cuotas son requeridas y deben ser mayor a 0
+                    </small>
+                    }
+                </div>
+            </div>
+
+            <!-- Botones -->
+            <div class="flex gap-3 pt-4 border-t border-surface-700">
+                <p-button type="button" label="Limpiar" icon="pi pi-trash" severity="secondary" (onClick)="limpiar()"
+                    class="flex-1"></p-button>
+                <p-button type="submit" label="Calcular" icon="pi pi-calculator" severity="success"
+                    [disabled]="form().invalid" class="flex-1"></p-button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Resultados -->
+    @if (tabla().length > 0) {
+    <!-- Resumen -->
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div class="bg-surface-900 border border-surface-700 rounded-lg p-4 space-y-3">
+            <p class="text-sm font-semibold text-gray-300">Capital Mensual (Constante)</p>
+            <p class="text-3xl font-bold text-primary">{{ capitalConstante | currency }}</p>
+        </div>
+        <div class="bg-surface-900 border border-surface-700 rounded-lg p-4 space-y-3">
+            <p class="text-sm font-semibold text-gray-300">Total de Intereses</p>
+            <p class="text-3xl font-bold text-orange-400">{{ totalInteres | currency }}</p>
+        </div>
+        <div class="bg-surface-900 border border-surface-700 rounded-lg p-4 space-y-3">
+            <p class="text-sm font-semibold text-gray-300">Total a Pagar</p>
+            <p class="text-3xl font-bold text-green-400">{{ totalPagado | currency }}</p>
+        </div>
+    </div>
+
+    <!-- Tabla de Amortización -->
+    <div class="bg-surface-900 border border-surface-700 rounded-lg overflow-hidden">
+        <p-table [value]="tabla()" [scrollable]="true" scrollHeight="500px" [paginator]="tabla.length > 12" [rows]="12"
+            [rowsPerPageOptions]="[12, 24, 48]" responsiveLayout="scroll" class="w-full">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="numero" class="bg-surface-800 text-center">
+                        Cuota <p-sortIcon field="numero"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="cuota" class="bg-surface-800 text-right">
+                        Pago Mensual <p-sortIcon field="cuota"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="interes" class="bg-surface-800 text-right">
+                        Intereses <p-sortIcon field="interes"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="capital" class="bg-surface-800 text-right">
+                        Capital <p-sortIcon field="capital"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="saldo" class="bg-surface-800 text-right">
+                        Saldo Restante <p-sortIcon field="saldo"></p-sortIcon>
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-fila>
+                <tr class="hover:bg-surface-800/50 transition-colors">
+                    <td class="text-center font-semibold text-primary">{{ fila.numero }}</td>
+                    <td class="text-right">{{ fila.cuota | currency }}</td>
+                    <td class="text-right text-orange-400">{{ fila.interes | currency }}</td>
+                    <td class="text-right text-green-400">{{ fila.capital | currency }}</td>
+                    <td class="text-right font-medium">{{ fila.saldo | currency }}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+    } @else if (form().touched) {
+    <div
+        class="flex flex-col items-center justify-center py-16 gap-4 bg-surface-900/50 rounded-lg border border-surface-700 border-dashed">
+        <i class="pi pi-inbox text-5xl text-gray-500"></i>
+        <div class="text-center">
+            <p class="text-gray-300 font-medium text-base mb-1">Ingresa los datos y calcula la amortización</p>
+            <p class="text-gray-500 text-sm">Verás aquí la tabla de amortización detallada</p>
+        </div>
+    </div>
+    }
+</div>

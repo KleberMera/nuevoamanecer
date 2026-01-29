@@ -9,6 +9,10 @@ export const prestamoRoutes: Routes = [
         path: PAGES_ROUTES.PRESTAMO.LISTA,
         loadComponent: () => import('./pages/prestamo/prestamo'),
       },
+      {
+        path: PAGES_ROUTES.PRESTAMO.SIMULADOR,
+        loadComponent: () => import('./pages/simulador-amortizacion/simulador-amortizacion'),
+      }
     ],
   },
 ];
