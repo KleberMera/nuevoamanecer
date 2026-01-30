@@ -32,8 +32,8 @@ export class PrestamoService {
 
   //crear Prestamo
 
-  crearPrestamo(prestamo: PrestamoInterface): Observable<apiResponse<PrestamoInterface>> {
-    const url = this.apiUrl.PRESTAMO.CREAR;
+  crearPrestamo(usuarioId: number,prestamo: PrestamoInterface): Observable<apiResponse<PrestamoInterface>> {
+    const url =  `${this.apiUrl.PRESTAMO.CREAR}${usuarioId}`;
     return this._http.post<apiResponse<PrestamoInterface>>(url, prestamo);
   }
 

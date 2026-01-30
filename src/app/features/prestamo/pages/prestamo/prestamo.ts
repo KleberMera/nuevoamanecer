@@ -148,13 +148,13 @@ export default class Prestamo {
       const periodoCuota = this.periodoService.getSiguientePeriodo(periodo, i);
 
       nuevaTabla.push({
-        
+      
         cuotaNum: i,
         monto: cuotaTotal,
         interes: interesCuota,
         capital: capitalCuota,
         saldo: saldoRestante,
-        periodoPago: this.formatPeriodo(periodoCuota),
+        periodoPago: periodoCuota,
         estadoPago: 'PENDIENTE',
       });
 
@@ -195,10 +195,12 @@ export default class Prestamo {
     }
 
     this.isSubmitting.set(true);
-    const prestamoData: PrestamoInterface = this.formPrestamo().getRawValue();
-
+    const formValue = this.formPrestamo().value;
+    const usuarioId = formValue.usuarioId;
+    const { usuarioId: _, ...prestamoData } = formValue;
+  
     // Crear el préstamo
-    this._prestamoService.crearPrestamo(prestamoData).subscribe({
+    this._prestamoService.crearPrestamo(usuarioId, prestamoData).subscribe({
       next: (response) => {
         const prestamoId = response.data!.id!;
         
