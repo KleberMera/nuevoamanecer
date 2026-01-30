@@ -17,7 +17,6 @@ export class DettPrestamoService {
     const form = signal<FormGroup>(
       new FormGroup({
         prestamoId: new FormControl(data.prestamoId, [Validators.required]),
-       // fecha: new FormControl(data.fecha, [Validators.required]),
         cuotaNum: new FormControl(data.cuotaNum, [Validators.required]),
         interes: new FormControl(data.interes, [Validators.required, Validators.min(0)]),
         capital: new FormControl(data.capital, [Validators.required, Validators.min(0)]),

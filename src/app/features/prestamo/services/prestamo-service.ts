@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class PrestamoService {
-  apiUrl = API_ROUTES.PRESTAMO;
+  apiUrl = API_ROUTES;
 
   protected readonly _http = inject(HttpClient);
 
@@ -18,12 +18,11 @@ export class PrestamoService {
     const form = signal<FormGroup>(
       new FormGroup({
         usuarioId: new FormControl(data.usuarioId, [Validators.required]),
-        periodo: new FormControl(data.periodo, [Validators.required]),
         monto: new FormControl(data.monto, [Validators.required, Validators.min(1)]),
         interes: new FormControl(data.interes, [Validators.required, Validators.min(0.01)]),
         cuotas: new FormControl(data.cuotas, [Validators.required, Validators.min(1)]),
-        fecha: new FormControl(data.fecha, [Validators.required]),
-        frecuenciaPago: new FormControl(data.frecuenciaPago, [Validators.required]),
+        fecha: new FormControl(data.fecha || new Date(), [Validators.required]),
+        frecuenciaPago: new FormControl(data.frecuenciaPago || 'MENSUAL', [Validators.required]),
         estado: new FormControl(data.estado || 'A'),
       }),
     );
@@ -33,7 +32,12 @@ export class PrestamoService {
   //crear Prestamo
 
   crearPrestamo(prestamo: PrestamoInterface): Observable<apiResponse<PrestamoInterface>> {
-    const url = this.apiUrl.CREAR;
+    const url = this.apiUrl.PRESTAMO.CREAR;
     return this._http.post<apiResponse<PrestamoInterface>>(url, prestamo);
+  }
+
+  listarUsuarios() {
+    const url = `${this.apiUrl.USUARIO.LISTAR_USUARIOS}/A`;
+    return url;
   }
 }

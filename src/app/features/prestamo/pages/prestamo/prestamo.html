@@ -1,1 +1,204 @@
-<p>prestamo works!</p>
+<div class="space-y-4 sm:space-y-6 w-full">
+  <!-- Título -->
+  <div class="flex items-center justify-between flex-wrap gap-3">
+    <h2 class="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-100">
+      Registro de <span class="text-primary">Préstamos</span>
+    </h2>
+  </div>
+
+  <!-- Formulario -->
+  <div class="bg-surface-900 border border-surface-700 rounded-lg p-6 space-y-4">
+    <form [formGroup]="formPrestamo()" (ngSubmit)="calcularAmortizacion()" class="space-y-4">
+      <!-- Selección de Usuario -->
+      <div class="space-y-2">
+        <label for="usuario" class="block text-sm font-semibold text-gray-100">
+          Usuario *
+        </label>
+
+        @if (usuarios.isLoading()) {
+          <p-progressSpinner [style]="{ width: '50px', height: '50px' }" strokeWidth="4"></p-progressSpinner>
+        } @else if (usuarios.error()) {
+          <div class="flex items-center gap-2 p-3 bg-red-500/10 border border-red-500/30 rounded-lg">
+            <i class="pi pi-exclamation-triangle text-red-400"></i>
+            <span class="text-red-400 text-sm">Error al cargar usuarios</span>
+          </div>
+        } @else {
+          <p-select
+            id="usuario"
+            formControlName="usuarioId"
+            [options]="usuariosList()"
+            optionValue="id"
+            placeholder="Selecciona un usuario"
+            [showClear]="true"
+            [filter]="true"
+            filterBy="nombre1,nombre2,apellido1,apellido2"
+            filterPlaceholder="Buscar usuario..."
+            class="w-full h-11!">
+            <ng-template #selectedItem let-usuario>
+              {{ usuario.nombre1 }} {{ usuario.nombre2 || '' }} {{ usuario.apellido1 }} {{ usuario.apellido2 || '' }}
+            </ng-template>
+            <ng-template #item let-usuario>
+              {{ usuario.nombre1 }} {{ usuario.nombre2 || '' }} {{ usuario.apellido1 }} {{ usuario.apellido2 || '' }}
+            </ng-template>
+          </p-select>
+        }
+
+        @if (isFieldInvalid(formPrestamo(), 'usuarioId')) {
+          <small class="text-red-400 block text-sm">
+            {{ getErrorMessage(formPrestamo(), 'usuarioId') }}
+          </small>
+        }
+      </div>
+
+      <!-- Datos del Préstamo -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <!-- Monto -->
+        <div class="space-y-2">
+          <label for="monto" class="block text-sm font-semibold text-gray-100">
+            Monto *
+          </label>
+          <p-iconfield class="w-full">
+            <p-inputicon class="pi pi-dollar text-gray-400"></p-inputicon>
+            <p-inputnumber
+              id="monto"
+              formControlName="monto"
+              placeholder="0"
+              [minFractionDigits]="2"
+              [maxFractionDigits]="2"
+              class="w-full h-11!">
+            </p-inputnumber>
+          </p-iconfield>
+          @if (isFieldInvalid(formPrestamo(), 'monto')) {
+            <small class="text-red-400 block text-sm">
+              {{ getErrorMessage(formPrestamo(), 'monto') }}
+            </small>
+          }
+        </div>
+
+        <!-- Tasa de Interés -->
+        <div class="space-y-2">
+          <label for="interes" class="block text-sm font-semibold text-gray-100">
+            Tasa Mensual (%) *
+          </label>
+          <p-iconfield class="w-full">
+            <p-inputicon class="pi pi-percentage text-gray-400"></p-inputicon>
+            <p-inputnumber
+              id="interes"
+              formControlName="interes"
+              placeholder="0"
+              [minFractionDigits]="2"
+              [maxFractionDigits]="4"
+              class="w-full h-11!">
+            </p-inputnumber>
+          </p-iconfield>
+          @if (isFieldInvalid(formPrestamo(), 'interes')) {
+            <small class="text-red-400 block text-sm">
+              {{ getErrorMessage(formPrestamo(), 'interes') }}
+            </small>
+          }
+        </div>
+
+        <!-- Número de Cuotas -->
+        <div class="space-y-2">
+          <label for="cuotas" class="block text-sm font-semibold text-gray-100">
+            Cuotas *
+          </label>
+          <p-iconfield class="w-full">
+            <p-inputicon class="pi pi-list text-gray-400"></p-inputicon>
+            <p-inputnumber
+              id="cuotas"
+              formControlName="cuotas"
+              placeholder="0"
+              [useGrouping]="false"
+              class="w-full h-11!">
+            </p-inputnumber>
+          </p-iconfield>
+          @if (isFieldInvalid(formPrestamo(), 'cuotas')) {
+            <small class="text-red-400 block text-sm">
+              {{ getErrorMessage(formPrestamo(), 'cuotas') }}
+            </small>
+          }
+        </div>
+      </div>
+
+      <!-- Botones -->
+      <div class="flex gap-3 pt-4 border-t border-surface-700 justify-end">
+        <p-button
+          type="button"
+          label="Limpiar"
+          icon="pi pi-trash"
+          severity="secondary"
+          (onClick)="limpiar()">
+        </p-button>
+        <p-button
+          type="submit"
+          label="Calcular"
+          icon="pi pi-calculator"
+          severity="success">
+        </p-button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Resultados -->
+  @if (tabla().length > 0) {
+    <!-- Resumen -->
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <div class="bg-surface-900 border border-surface-700 rounded-lg p-4 space-y-3">
+        <p class="text-sm font-semibold text-gray-300">Capital Mensual (Constante)</p>
+        <p class="text-3xl font-bold text-primary">{{ capitalConstante() | currency }}</p>
+      </div>
+      <div class="bg-surface-900 border border-surface-700 rounded-lg p-4 space-y-3">
+        <p class="text-sm font-semibold text-gray-300">Total de Intereses</p>
+        <p class="text-3xl font-bold text-orange-400">{{ totalInteres() | currency }}</p>
+      </div>
+      <div class="bg-surface-900 border border-surface-700 rounded-lg p-4 space-y-3">
+        <p class="text-sm font-semibold text-gray-300">Total a Pagar</p>
+        <p class="text-3xl font-bold text-green-400">{{ totalPagado() | currency }}</p>
+      </div>
+    </div>
+
+    <!-- Tabla de Amortización -->
+    <div class="bg-surface-900 border border-surface-700 rounded-lg overflow-hidden">
+      <p-table [value]="tabla()" [scrollable]="true" scrollHeight="500px" [paginator]="tabla().length > 12" [rows]="12"
+        [rowsPerPageOptions]="[12, 24, 48]" responsiveLayout="scroll" class="w-full">
+        <ng-template pTemplate="header">
+          <tr>
+            <th pSortableColumn="numero" class="text-left">
+              Cuota <p-sortIcon field="numero"></p-sortIcon>
+            </th>
+            <th pSortableColumn="capital" class="text-right">
+              Capital <p-sortIcon field="capital"></p-sortIcon>
+            </th>
+            <th pSortableColumn="interes" class="text-right">
+              Interés <p-sortIcon field="interes"></p-sortIcon>
+            </th>
+            <th pSortableColumn="cuota" class="text-right">
+              Cuota <p-sortIcon field="cuota"></p-sortIcon>
+            </th>
+            <th pSortableColumn="saldo" class="text-right">
+              Saldo <p-sortIcon field="saldo"></p-sortIcon>
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-fila>
+          <tr class="hover:bg-surface-800/50 transition-colors">
+            <td class="text-center font-semibold text-primary">{{ fila.numero }}</td>
+            <td class="text-right">{{ fila.cuota | currency }}</td>
+            <td class="text-right text-orange-400">{{ fila.interes | currency }}</td>
+            <td class="text-right text-green-400">{{ fila.capital | currency }}</td>
+            <td class="text-right font-medium">{{ fila.saldo | currency }}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  } @else if (formPrestamo().touched) {
+    <div class="flex flex-col items-center justify-center py-16 gap-4 bg-surface-900/50 rounded-lg border border-surface-700 border-dashed">
+      <i class="pi pi-inbox text-5xl text-gray-500"></i>
+      <div class="text-center">
+        <p class="text-gray-300 font-medium text-base mb-1">Ingresa los datos y calcula la amortización</p>
+        <p class="text-gray-500 text-sm">Verás aquí la tabla de amortización detallada</p>
+      </div>
+    </div>
+  }
+</div>
