@@ -243,6 +243,18 @@
         </ng-template>
       </p-table>
     </div>
+
+    <!-- Botón Registrar Préstamo -->
+    <div class="flex gap-3 justify-end pt-4">
+      <p-button
+        label="Registrar Préstamo"
+        icon="pi pi-check"
+        severity="success"
+        [loading]="isSubmitting()"
+        [disabled]="isSubmitting() || tabla().length === 0"
+        (onClick)="guardarPrestamo()">
+      </p-button>
+    </div>
   } @else if (formPrestamo().touched) {
     <div class="flex flex-col items-center justify-center py-16 gap-4 bg-surface-900/50 rounded-lg border border-surface-700 border-dashed">
       <i class="pi pi-inbox text-5xl text-gray-500"></i>

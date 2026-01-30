@@ -1,6 +1,7 @@
 import { DettPrestamoInterface } from '@app/core/models/dett-prestamo';
 import { Component, inject, signal, computed } from '@angular/core';
 import { PrestamoService } from '../../services/prestamo-service';
+import { DettPrestamoService } from '../../services/dett-prestamo-service';
 import { httpResource } from '@angular/common/http';
 import { FormValidation } from '@app/shared/services/form-validation';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
@@ -16,6 +17,7 @@ import { DatePickerModule } from 'primeng/datepicker';
 import { apiResponse } from '@app/core/models/apiResponse';
 import { Usuario } from '@app/core/models/usuario';
 import { PeriodoService } from '@app/shared/services/periodo-service';
+import { PrestamoInterface } from '@app/core/models/prestamo';
 import { toast } from 'ngx-sonner';
 
 interface CuotaAmortizacion {
@@ -46,6 +48,7 @@ interface CuotaAmortizacion {
 })
 export default class Prestamo {
   protected readonly _prestamoService = inject(PrestamoService);
+  protected readonly _dettPrestamoService = inject(DettPrestamoService);
   protected readonly _validator = inject(FormValidation);
   protected readonly periodoService = inject(PeriodoService);
 
@@ -55,6 +58,7 @@ export default class Prestamo {
   protected totalPagado = signal<number>(0);
   protected valorPrestamo = signal<number>(0);
   protected tabla = signal<DettPrestamoInterface[]>([]);
+  protected isSubmitting = signal<boolean>(false);
 
   // Formulario del préstamo
   protected formPrestamo = this._prestamoService.formPrestamo();
@@ -174,12 +178,68 @@ export default class Prestamo {
       interes: null,
       cuotas: null,
       fecha: null,
-      frecuenciaPago: 'MENSUAL',
+      frecuencia: 'MENSUAL',
     });
     this.tabla.set([]);
     this.valorPrestamo.set(0);
     this.capitalConstante.set(0);
     this.totalInteres.set(0);
     this.totalPagado.set(0);
+  }
+
+  // Guardar préstamo y detalles
+  protected guardarPrestamo() {
+    if (this.formPrestamo().invalid || this.tabla().length === 0) {
+      toast.error('Por favor calcula la amortización primero');
+      return;
+    }
+
+    this.isSubmitting.set(true);
+    const prestamoData: PrestamoInterface = this.formPrestamo().getRawValue();
+
+    // Crear el préstamo
+    this._prestamoService.crearPrestamo(prestamoData).subscribe({
+      next: (response) => {
+        const prestamoId = response.data!.id!;
+        
+        // Obtener la tabla actual y actualizar el prestamoId
+        const detalles: DettPrestamoInterface[] = this.tabla().map(detalle => ({
+          ...detalle,
+          prestamoId: prestamoId,
+        }));
+
+        // Crear los detalles del préstamo
+        this.crearDetallesPrestamo(prestamoId, detalles);
+      },
+      error: (error) => {
+        console.error('Error al crear préstamo:', error);
+        toast.error(error?.error?.message || 'Error al registrar el préstamo');
+        this.isSubmitting.set(false);
+      },
+    });
+  }
+
+  // Crear detalles del préstamo
+  private crearDetallesPrestamo(prestamoId: number, detalles: DettPrestamoInterface[]) {
+    let completados = 0;
+    const total = detalles.length;
+
+    detalles.forEach((detalle) => {
+      this._dettPrestamoService.crearDettPrestamo(prestamoId, detalle).subscribe({
+        next: () => {
+          completados++;
+          if (completados === total) {
+            this.isSubmitting.set(false);
+            toast.success('Préstamo registrado correctamente con todos los detalles');
+            this.limpiar();
+          }
+        },
+        error: (error) => {
+          console.error('Error al crear detalle:', error);
+          toast.error(error?.error?.message || 'Error al registrar los detalles');
+          this.isSubmitting.set(false);
+        },
+      });
+    });
   }
 }

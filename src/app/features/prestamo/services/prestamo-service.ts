@@ -23,7 +23,7 @@ export class PrestamoService {
         cuotas: new FormControl(data.cuotas, [Validators.required, Validators.min(1)]),
         fecha: new FormControl(data.fecha , [Validators.required]),
         periodo: new FormControl(data.periodo || ''),
-        frecuenciaPago: new FormControl(data.frecuenciaPago || 'MENSUAL', [Validators.required]),
+        frecuencia: new FormControl(data.frecuencia || 'MENSUAL', [Validators.required]),
         estado: new FormControl(data.estado || 'A'),
       }),
     );

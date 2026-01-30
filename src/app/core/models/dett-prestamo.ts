@@ -1,6 +1,6 @@
 export interface DettPrestamoInterface {
   prestamoId: number;
-  fecha?: Date;
+
   cuotaNum: number;
   monto: number;
   interes: number;

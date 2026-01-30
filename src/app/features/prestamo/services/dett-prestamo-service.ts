@@ -33,7 +33,7 @@ export class DettPrestamoService {
     prestamoId: number,
     dettPrestamo: DettPrestamoInterface,
   ): Observable<apiResponse<DettPrestamoInterface>> {
-    const url = `${this.apiUrl.CREAR}/${prestamoId}`;
+    const url = `${this.apiUrl.CREAR}${prestamoId}`;
     return this._http.post<apiResponse<DettPrestamoInterface>>(url, dettPrestamo);
   }
 }
