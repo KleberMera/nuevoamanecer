@@ -1,3 +1,4 @@
+import { DettPrestamoInterface } from '@app/core/models/dett-prestamo';
 import { Component, inject, signal, computed } from '@angular/core';
 import { PrestamoService } from '../../services/prestamo-service';
 import { httpResource } from '@angular/common/http';
@@ -11,8 +12,10 @@ import { TableModule } from 'primeng/table';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { DatePickerModule } from 'primeng/datepicker';
 import { apiResponse } from '@app/core/models/apiResponse';
 import { Usuario } from '@app/core/models/usuario';
+import { PeriodoService } from '@app/shared/services/periodo-service';
 import { toast } from 'ngx-sonner';
 
 interface CuotaAmortizacion {
@@ -35,6 +38,7 @@ interface CuotaAmortizacion {
     IconFieldModule,
     InputIconModule,
     ProgressSpinnerModule,
+    DatePickerModule,
     CurrencyPipe,
   ],
   templateUrl: './prestamo.html',
@@ -43,13 +47,14 @@ interface CuotaAmortizacion {
 export default class Prestamo {
   protected readonly _prestamoService = inject(PrestamoService);
   protected readonly _validator = inject(FormValidation);
+  protected readonly periodoService = inject(PeriodoService);
 
   // Signals para la tabla de amortización
   protected capitalConstante = signal<number>(0);
   protected totalInteres = signal<number>(0);
   protected totalPagado = signal<number>(0);
   protected valorPrestamo = signal<number>(0);
-  protected tabla = signal<CuotaAmortizacion[]>([]);
+  protected tabla = signal<DettPrestamoInterface[]>([]);
 
   // Formulario del préstamo
   protected formPrestamo = this._prestamoService.formPrestamo();
@@ -65,6 +70,18 @@ export default class Prestamo {
     const data = this.usuarios.value();
     return data?.data || [];
   });
+
+  // Períodos disponibles
+  protected periodosList = computed(() => this.periodoService.generarPeriodos());
+
+  constructor() {
+    // Inicializar el formulario con valores por defecto
+    const currentPeriodo = this.periodoService.getPeriodoActual();
+    this.formPrestamo().patchValue({
+      periodo: currentPeriodo,
+      frecuenciaPago: 'MENSUAL',
+    });
+  }
 
   // Métodos de validación
   getErrorMessage(form: FormGroup, fieldName: string): string {
@@ -99,7 +116,7 @@ export default class Prestamo {
     let saldoRestante = monto;
     let totalInteresTmp = 0;
     let totalPagadoTmp = 0;
-    const nuevaTabla: CuotaAmortizacion[] = [];
+    const nuevaTabla: DettPrestamoInterface[] = [];
 
     for (let i = 1; i <= cuotas; i++) {
       const interesCuota = saldoRestante * tasaMensual;
@@ -113,11 +130,13 @@ export default class Prestamo {
       }
 
       nuevaTabla.push({
-        numero: i,
-        cuota: cuotaTotal,
+        prestamoId: 0,
+        cuotaNum: i,
+        monto: cuotaTotal,
         interes: interesCuota,
         capital: capitalCuota,
         saldo: saldoRestante,
+        estado: 'PENDIENTE',
       });
 
       totalInteresTmp += interesCuota;
@@ -132,13 +151,15 @@ export default class Prestamo {
 
   // Limpiar formulario
   protected limpiar() {
+    const currentPeriodo = this.periodoService.getPeriodoActual();
     this.formPrestamo().reset({
       usuarioId: null,
+      periodo: currentPeriodo,
       monto: null,
       interes: null,
       cuotas: null,
       fecha: null,
-      frecuenciaPago: null,
+      frecuenciaPago: 'MENSUAL',
     });
     this.tabla.set([]);
     this.valorPrestamo.set(0);

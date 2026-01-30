@@ -50,7 +50,50 @@
         }
       </div>
 
-      <!-- Datos del Préstamo -->
+      <!-- Período y Fecha -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <!-- Período -->
+        <div class="space-y-2">
+          <label for="periodo" class="block text-sm font-semibold text-gray-100">
+            Período *
+          </label>
+          <p-select
+            id="periodo"
+            formControlName="periodo"
+            [options]="periodosList()"
+            optionLabel="label"
+            optionValue="value"
+            placeholder="Selecciona un período"
+            class="w-full h-11!">
+          </p-select>
+          @if (isFieldInvalid(formPrestamo(), 'periodo')) {
+            <small class="text-red-400 block text-sm">
+              {{ getErrorMessage(formPrestamo(), 'periodo') }}
+            </small>
+          }
+        </div>
+
+        <!-- Fecha -->
+        <div class="space-y-2">
+          <label for="fecha" class="block text-sm font-semibold text-gray-100">
+            Fecha *
+          </label>
+          <p-datepicker
+            id="fecha"
+            formControlName="fecha"
+            placeholder="Selecciona una fecha"
+            dateFormat="yy-mm-dd"
+            [showIcon]="true"
+            class="w-full h-11!"
+            fluid>
+          </p-datepicker>
+          @if (isFieldInvalid(formPrestamo(), 'fecha')) {
+            <small class="text-red-400 block text-sm">
+              {{ getErrorMessage(formPrestamo(), 'fecha') }}
+            </small>
+          }
+        </div>
+      </div>
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <!-- Monto -->
         <div class="space-y-2">
@@ -168,11 +211,11 @@
         [rowsPerPageOptions]="[12, 24, 48]"  class="w-full" showGridlines stripedRows>
         <ng-template pTemplate="header">
           <tr>
-            <th pSortableColumn="numero" class="bg-surface-800 text-center">
-              Cuota <p-sortIcon field="numero"></p-sortIcon>
+            <th pSortableColumn="cuotaNum" class="bg-surface-800 text-center">
+              Cuota <p-sortIcon field="cuotaNum"></p-sortIcon>
             </th>
-            <th pSortableColumn="cuota" class="bg-surface-800 text-right">
-              Pago Mensual <p-sortIcon field="cuota"></p-sortIcon>
+            <th pSortableColumn="monto" class="bg-surface-800 text-right">
+              Pago Mensual <p-sortIcon field="monto"></p-sortIcon>
             </th>
             <th pSortableColumn="interes" class="bg-surface-800 text-right">
               Intereses <p-sortIcon field="interes"></p-sortIcon>
@@ -187,8 +230,8 @@
         </ng-template>
         <ng-template pTemplate="body" let-fila>
           <tr class="hover:bg-surface-800/50 transition-colors">
-            <td class="text-center font-semibold text-primary">{{ fila.numero }}</td>
-            <td class="text-right">{{ fila.cuota | currency }}</td>
+            <td class="text-center font-semibold text-primary">{{ fila.cuotaNum }}</td>
+            <td class="text-right">{{ fila.monto | currency }}</td>
             <td class="text-right text-orange-400">{{ fila.interes | currency }}</td>
             <td class="text-right text-green-400">{{ fila.capital | currency }}</td>
             <td class="text-right font-medium">{{ fila.saldo | currency }}</td>
