@@ -1,5 +1,5 @@
 export interface DettPrestamoInterface {
-  prestamoId: number;
+
 
   cuotaNum: number;
   monto: number;
@@ -8,5 +8,5 @@ export interface DettPrestamoInterface {
   saldo: number;
   fechaPago?: Date;
   periodoPago?: string;
-  estado: 'PENDIENTE' | 'PAGADO';
+  estadoPago: 'PENDIENTE' | 'PAGADO';
 }

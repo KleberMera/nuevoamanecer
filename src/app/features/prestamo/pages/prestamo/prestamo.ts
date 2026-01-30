@@ -148,14 +148,14 @@ export default class Prestamo {
       const periodoCuota = this.periodoService.getSiguientePeriodo(periodo, i);
 
       nuevaTabla.push({
-        prestamoId: 0,
+        
         cuotaNum: i,
         monto: cuotaTotal,
         interes: interesCuota,
         capital: capitalCuota,
         saldo: saldoRestante,
         periodoPago: this.formatPeriodo(periodoCuota),
-        estado: 'PENDIENTE',
+        estadoPago: 'PENDIENTE',
       });
 
       totalInteresTmp += interesCuota;
@@ -205,7 +205,7 @@ export default class Prestamo {
         // Obtener la tabla actual y actualizar el prestamoId
         const detalles: DettPrestamoInterface[] = this.tabla().map(detalle => ({
           ...detalle,
-          prestamoId: prestamoId,
+          
         }));
 
         // Crear los detalles del préstamo

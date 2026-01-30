@@ -16,13 +16,13 @@ export class DettPrestamoService {
   formDettPrestamo(data: Partial<DettPrestamoInterface> = {}) {
     const form = signal<FormGroup>(
       new FormGroup({
-        prestamoId: new FormControl(data.prestamoId, [Validators.required]),
+        //prestamoId: new FormControl(data.prestamoId, [Validators.required]),
         cuotaNum: new FormControl(data.cuotaNum, [Validators.required]),
         interes: new FormControl(data.interes, [Validators.required, Validators.min(0)]),
         capital: new FormControl(data.capital, [Validators.required, Validators.min(0)]),
         saldo: new FormControl(data.saldo, [Validators.required, Validators.min(0)]),
         periodoPago: new FormControl(data.periodoPago, [Validators.required]),
-        estado: new FormControl(data.estado || 'PENDIENTE'),
+        estadoPago: new FormControl(data.estadoPago || 'PENDIENTE'),
       }),
     );
     return form;
