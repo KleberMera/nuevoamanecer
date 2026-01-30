@@ -5,10 +5,10 @@ export const accionesRoutes: Routes = [
   {
     path: PAGES_ROUTES.ACCION.DEFAULT,
     children: [
-      {
-        path: PAGES_ROUTES.ACCION.REGISTRO,
-        loadComponent: () => import('./pages/registrar-accion/registrar-accion'),
-      },
+      // {
+      //   path: PAGES_ROUTES.ACCION.REGISTRO,
+      //   loadComponent: () => import('./pages/registrar-accion/registrar-accion'),
+      // },
       {
         path: PAGES_ROUTES.ACCION.HISTORIAL,
         loadComponent: () => import('./pages/historial-accion/historial-accion'),

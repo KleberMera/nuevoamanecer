@@ -32,7 +32,7 @@ export const PAGES_ROUTES = {
   },
   ACCION: {
     DEFAULT: 'acciones',
-    REGISTRO: 'registro',
+    //REGISTRO: 'registro',
     HISTORIAL: 'historial',
     HISTORIAL_USUARIO: 'usuario',
   },

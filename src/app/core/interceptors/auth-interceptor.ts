@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 
 import { catchError, throwError } from 'rxjs';
 import { AuthStateService } from '@shared/services/auth-state-service';
+import PAGES_ROUTES from '../routes/pages.routes';
 
 export const authInterceptor: HttpInterceptorFn = (
   request: HttpRequest<any>,
@@ -18,7 +19,8 @@ export const authInterceptor: HttpInterceptorFn = (
       catchError((error) => {
         if (error instanceof HttpErrorResponse && error.status === 401) {
           authState.signOut();
-          router.navigateByUrl('/auth');
+          router.navigateByUrl(PAGES_ROUTES.AUTH.LOGIN);
+            // this._router.navigate([PAGES_ROUTES.DASHBOARD.DASHBOARD]);
         }
         return throwError(() => error);
       })

@@ -4,7 +4,10 @@ const apiUrl = environment.apiUrl;
 const route = (path: string) => `${apiUrl}${path}`;
 
 // Helper para crear rutas sin repetir el base path
-const createRoutes = <T extends Record<string, string>>(basePath: string, endpoints: T): Record<keyof T, string> => {
+const createRoutes = <T extends Record<string, string>>(
+  basePath: string,
+  endpoints: T,
+): Record<keyof T, string> => {
   const routes = {} as Record<keyof T, string>;
   Object.entries(endpoints).forEach(([key, endpoint]) => {
     routes[key as keyof T] = route(`/${basePath}/${endpoint}`);
@@ -30,6 +33,12 @@ export const API_ROUTES = {
   }),
   ROL: createRoutes('rol', {
     LISTAR_ROLES: '',
+  }),
+  PRESTAMO: createRoutes('prestamo', {
+    CREAR: '',
+  }),
+  DETTALLE_PRESTAMO: createRoutes('dett-prestamo', {
+    CREAR: '',
   }),
 };
 

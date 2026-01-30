@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 
 @Component({
   selector: 'app-prestamo',
@@ -6,6 +6,4 @@ import { Component } from '@angular/core';
   templateUrl: './prestamo.html',
   styleUrl: './prestamo.css',
 })
-export default class Prestamo {
-
-}
+export default class Prestamo {}

@@ -104,7 +104,7 @@ export default class SimuladorAmortizacion {
   }
 
   limpiar() {
-    this.form().reset({ valorPrestamo: 0, tasaInteres: 0, numeroCuotas: 0 });
+    this.form().reset({ valorPrestamo: null, tasaInteres: null, numeroCuotas: null });
     this.valorPrestamo.set(0);
     this.tabla.set([]);
     this.capitalConstante.set(0);

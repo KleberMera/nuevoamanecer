@@ -66,14 +66,13 @@ export const MENU_ITEMS: MenuItem[] = [
     label: 'Prestamos',
     icon: 'pi pi-wallet',
     route: buildPrestamoRoute(PAGES_ROUTES.PRESTAMO.LISTA),
-
   },
   {
     id: 6,
     label: 'Simulador',
     icon: 'pi pi-calculator',
     route: buildPrestamoRoute(PAGES_ROUTES.PRESTAMO.SIMULADOR),
-  }
+  },
 ];
 
 // Items para la barra de tabs (mobile)
@@ -98,9 +97,9 @@ export const TAB_ITEMS: MenuItem[] = [
   },
   {
     id: 31,
-    label: 'Registro',
-    icon: 'pi pi-plus-circle',
-    route: buildAccionRoute(PAGES_ROUTES.ACCION.REGISTRO),
+    label: 'Simulador',
+    icon: 'pi pi-calculator',
+    route: buildPrestamoRoute(PAGES_ROUTES.PRESTAMO.SIMULADOR),
   },
 ];
 
