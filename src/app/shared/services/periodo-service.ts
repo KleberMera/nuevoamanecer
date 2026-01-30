@@ -68,4 +68,25 @@ export class PeriodoService {
     const currentYear = now.getFullYear();
     return `${currentYear}${currentMonth}`;
   }
+
+  /**
+   * Obtiene el siguiente período basado en uno dado
+   * @param periodo Período actual en formato YYYYMM
+   * @param meses Número de meses a sumar (por defecto 1)
+   * @returns Siguiente período en formato YYYYMM
+   */
+  getSiguientePeriodo(periodo: string, meses: number = 1): string {
+    const year = parseInt(periodo.substring(0, 4));
+    const month = parseInt(periodo.substring(4, 6));
+    
+    let newMonth = month + meses;
+    let newYear = year;
+    
+    while (newMonth > 12) {
+      newMonth -= 12;
+      newYear += 1;
+    }
+    
+    return `${newYear}${newMonth.toString().padStart(2, '0')}`;
+  }
 }

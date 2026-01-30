@@ -74,6 +74,14 @@ export default class Prestamo {
   // Períodos disponibles
   protected periodosList = computed(() => this.periodoService.generarPeriodos());
 
+  /**
+   * Formatea un período de YYYYMM a YYYY-MM
+   */
+  protected formatPeriodo(periodo: string): string {
+    if (!periodo || periodo.length !== 6) return periodo;
+    return `${periodo.substring(0, 4)}-${periodo.substring(4, 6)}`;
+  }
+
   constructor() {
     // Inicializar el formulario con valores por defecto
     const currentPeriodo = this.periodoService.getPeriodoActual();
@@ -103,7 +111,10 @@ export default class Prestamo {
       return;
     }
 
-    const { monto, interes, cuotas } = this.formPrestamo().value;
+    const { monto, interes, cuotas, periodo } = this.formPrestamo().value;
+
+    console.log(this.formPrestamo().value);
+    
 
     // La tasa ingresada es MENSUAL (no se divide entre 12)
     const tasaMensual = interes / 100;
@@ -129,6 +140,9 @@ export default class Prestamo {
         saldoRestante = 0;
       }
 
+      // Calcular el período para esta cuota
+      const periodoCuota = this.periodoService.getSiguientePeriodo(periodo, i);
+
       nuevaTabla.push({
         prestamoId: 0,
         cuotaNum: i,
@@ -136,6 +150,7 @@ export default class Prestamo {
         interes: interesCuota,
         capital: capitalCuota,
         saldo: saldoRestante,
+        periodoPago: this.formatPeriodo(periodoCuota),
         estado: 'PENDIENTE',
       });
 

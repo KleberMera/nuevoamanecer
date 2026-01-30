@@ -226,6 +226,9 @@
             <th pSortableColumn="saldo" class="bg-surface-800 text-right">
               Saldo Restante <p-sortIcon field="saldo"></p-sortIcon>
             </th>
+            <th pSortableColumn="periodoPago" class="bg-surface-800 text-center">
+              Período <p-sortIcon field="periodoPago"></p-sortIcon>
+            </th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-fila>
@@ -235,6 +238,7 @@
             <td class="text-right text-orange-400">{{ fila.interes | currency }}</td>
             <td class="text-right text-green-400">{{ fila.capital | currency }}</td>
             <td class="text-right font-medium">{{ fila.saldo | currency }}</td>
+            <td class="text-center text-gray-300">{{ fila.periodoPago }}</td>
           </tr>
         </ng-template>
       </p-table>
