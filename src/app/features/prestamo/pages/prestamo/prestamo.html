@@ -160,24 +160,24 @@
 
     <!-- Tabla de Amortización -->
     <div class="bg-surface-900 border border-surface-700 rounded-lg overflow-hidden">
-      <p-table [value]="tabla()" [scrollable]="true" scrollHeight="500px" [paginator]="tabla().length > 12" [rows]="12"
-        [rowsPerPageOptions]="[12, 24, 48]" responsiveLayout="scroll" class="w-full">
+      <p-table [value]="tabla()"  [tableStyle]="{ 'min-width': '50rem' }" [rowHover]="true" [scrollable]="true" scrollHeight="500px" [paginator]="tabla().length > 12" [rows]="12"
+        [rowsPerPageOptions]="[12, 24, 48]"  class="w-full" showGridlines stripedRows>
         <ng-template pTemplate="header">
           <tr>
-            <th pSortableColumn="numero" class="text-left">
+            <th pSortableColumn="numero" class="bg-surface-800 text-center">
               Cuota <p-sortIcon field="numero"></p-sortIcon>
             </th>
-            <th pSortableColumn="capital" class="text-right">
+            <th pSortableColumn="cuota" class="bg-surface-800 text-right">
+              Pago Mensual <p-sortIcon field="cuota"></p-sortIcon>
+            </th>
+            <th pSortableColumn="interes" class="bg-surface-800 text-right">
+              Intereses <p-sortIcon field="interes"></p-sortIcon>
+            </th>
+            <th pSortableColumn="capital" class="bg-surface-800 text-right">
               Capital <p-sortIcon field="capital"></p-sortIcon>
             </th>
-            <th pSortableColumn="interes" class="text-right">
-              Interés <p-sortIcon field="interes"></p-sortIcon>
-            </th>
-            <th pSortableColumn="cuota" class="text-right">
-              Cuota <p-sortIcon field="cuota"></p-sortIcon>
-            </th>
-            <th pSortableColumn="saldo" class="text-right">
-              Saldo <p-sortIcon field="saldo"></p-sortIcon>
+            <th pSortableColumn="saldo" class="bg-surface-800 text-right">
+              Saldo Restante <p-sortIcon field="saldo"></p-sortIcon>
             </th>
           </tr>
         </ng-template>

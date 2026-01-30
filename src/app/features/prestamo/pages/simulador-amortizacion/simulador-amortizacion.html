@@ -96,8 +96,8 @@
 
     <!-- Tabla de Amortización -->
     <div class="bg-surface-900 border border-surface-700 rounded-lg overflow-hidden">
-        <p-table [value]="tabla()" [scrollable]="true" scrollHeight="500px" [paginator]="tabla.length > 12" [rows]="12"
-            [rowsPerPageOptions]="[12, 24, 48]" responsiveLayout="scroll" class="w-full">
+        <p-table [value]="tabla()" showGridlines stripedRows [tableStyle]="{ 'min-width': '50rem' }" [rowHover]="true" [scrollable]="true" scrollHeight="500px" [paginator]="tabla.length > 12" [rows]="12"
+            [rowsPerPageOptions]="[12, 24, 48]" class="w-full">
             <ng-template pTemplate="header">
                 <tr>
                     <th pSortableColumn="numero" class="bg-surface-800 text-center">
