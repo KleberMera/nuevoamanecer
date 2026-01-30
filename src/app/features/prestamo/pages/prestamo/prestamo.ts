@@ -48,6 +48,7 @@ export default class Prestamo {
   protected capitalConstante = signal<number>(0);
   protected totalInteres = signal<number>(0);
   protected totalPagado = signal<number>(0);
+  protected valorPrestamo = signal<number>(0);
   protected tabla = signal<CuotaAmortizacion[]>([]);
 
   // Formulario del préstamo
@@ -91,6 +92,7 @@ export default class Prestamo {
     const tasaMensual = interes / 100;
 
     // En amortización alemana, el capital es constante
+    this.valorPrestamo.set(monto);
     this.capitalConstante.set(monto / cuotas);
 
     // Generar tabla de amortización
@@ -139,6 +141,7 @@ export default class Prestamo {
       frecuenciaPago: null,
     });
     this.tabla.set([]);
+    this.valorPrestamo.set(0);
     this.capitalConstante.set(0);
     this.totalInteres.set(0);
     this.totalPagado.set(0);
