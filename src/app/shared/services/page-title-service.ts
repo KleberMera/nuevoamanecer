@@ -1,4 +1,5 @@
-import { Injectable, signal } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
+import { Storage } from './storage';
 
 export interface PageTitle {
   label: string;
@@ -9,7 +10,8 @@ export interface PageTitle {
   providedIn: 'root'
 })
 export class PageTitleService {
-  private pageTitleSignal = signal<PageTitle>({ label: 'Nueva Pantalla' });
+    protected readonly _storage = inject(Storage);
+  private pageTitleSignal = signal<PageTitle>({ label: 'Hola,' , highlight: this._storage.getNombre() || 'Usuario' });
 
   setPageTitle(label: string, highlight?: string): void {
     this.pageTitleSignal.set({ label, highlight });
