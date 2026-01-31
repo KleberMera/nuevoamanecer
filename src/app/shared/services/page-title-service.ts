@@ -17,6 +17,10 @@ export class PageTitleService {
     this.pageTitleSignal.set({ label, highlight });
   }
 
+  resetPageTitle(): void {
+    this.pageTitleSignal.set({ label: 'Hola,', highlight: this._storage.getNombre() || 'Usuario' });
+  }
+
   getPageTitle() {
     return this.pageTitleSignal.asReadonly();
   }
