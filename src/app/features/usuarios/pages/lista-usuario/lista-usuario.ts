@@ -16,6 +16,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { ScreenService } from '@shared/services/screen-service';
 import { DialogUsuario } from '../components/dialog-usuario/dialog-usuario';
+import { ViewportService } from '@app/shared/services/viewport-service';
+import { PageTitleService } from '@app/shared/services/page-title-service';
 
 @Component({
   selector: 'app-lista-usuario',
@@ -39,6 +41,9 @@ export default class ListaUsuario {
   protected readonly usuarioService = inject(UsuarioService);
   protected readonly _screenService = inject(ScreenService);
   protected readonly dialogService = inject(DialogService);
+    protected readonly _viewPort = inject(ViewportService);
+  protected readonly pageTitleService = inject(PageTitleService);
+
   ref: DynamicDialogRef | undefined;
   // FormControl para estado
   protected estadoControl = new FormControl<string>('A');
@@ -63,6 +68,8 @@ export default class ListaUsuario {
     this.reloadVersion(); // Crear dependencia del signal de reload
     return this.usuarioService.listarUsuariosPorEstado(this.estadoSeleccionado());
   });
+
+
 
   // Usuarios filtrados para mostrar en tabla
   protected usuariosList = computed(() => {
@@ -200,6 +207,7 @@ export default class ListaUsuario {
   }
 
   constructor() {
+    this.pageTitleService.setPageTitle('Gestión de', 'Usuarios');
     // Escuchar cambios de estado
     this.estadoControl.valueChanges.subscribe((value) => {
       this.estadoSeleccionado.set(value || 'A');

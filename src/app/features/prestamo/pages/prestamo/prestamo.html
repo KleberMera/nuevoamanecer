@@ -1,9 +1,11 @@
 <div class="space-y-4 sm:space-y-6 w-full">
   <!-- Título -->
   <div class="flex items-center justify-between flex-wrap gap-3">
-    <h2 class="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-100">
+   @if (this._viewPort.isDesktop()) {
+     <h2 class="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-100">
       Registro de <span class="text-primary">Préstamos</span>
     </h2>
+   }
   </div>
 
   <!-- Formulario -->

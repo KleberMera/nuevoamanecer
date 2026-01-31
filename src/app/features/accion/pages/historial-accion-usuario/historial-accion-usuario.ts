@@ -17,6 +17,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { ScreenService } from '@shared/services/screen-service';
 import { PeriodoService } from '@shared/services/periodo-service';
+import { PageTitleService } from '@app/shared/services/page-title-service';
+import { ViewportService } from '@app/shared/services/viewport-service';
 
 @Component({
   selector: 'app-historial-accion-usuario',
@@ -42,7 +44,8 @@ export default class HistorialAccionUsuario {
   protected readonly regAccion = inject(RegistroAccionService);
   protected readonly periodoService = inject(PeriodoService);
   protected readonly _screenService = inject(ScreenService);
-
+  protected readonly _viewPort = inject(ViewportService);
+  protected readonly pageTitleService = inject(PageTitleService);
   usuarioId = signal<number>(this.storage.getUsuarioId());
 
   // Signal para forzar recarga de acciones
@@ -105,6 +108,7 @@ export default class HistorialAccionUsuario {
   }
 
   constructor() {
+      this.pageTitleService.setPageTitle('Mis', 'Acciones');
     // Escuchar cambios del período
     this.periodoControl.valueChanges.subscribe((value) => {
       this.periodoSeleccionado.set(value || '');

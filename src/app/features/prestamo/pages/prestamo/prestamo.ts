@@ -19,6 +19,8 @@ import { Usuario } from '@app/core/models/usuario';
 import { PeriodoService } from '@app/shared/services/periodo-service';
 import { PrestamoInterface } from '@app/core/models/prestamo';
 import { toast } from 'ngx-sonner';
+import { ViewportService } from '@app/shared/services/viewport-service';
+import { PageTitleService } from '@app/shared/services/page-title-service';
 
 interface CuotaAmortizacion {
   numero: number;
@@ -51,6 +53,8 @@ export default class Prestamo {
   protected readonly _dettPrestamoService = inject(DettPrestamoService);
   protected readonly _validator = inject(FormValidation);
   protected readonly periodoService = inject(PeriodoService);
+  protected readonly _viewPort = inject(ViewportService);
+  protected readonly pageTitleService = inject(PageTitleService);
 
   // Signals para la tabla de amortización
   protected capitalConstante = signal<number>(0);
@@ -87,6 +91,7 @@ export default class Prestamo {
   }
 
   constructor() {
+    this.pageTitleService.setPageTitle('Registro de', 'Préstamo');
     // Inicializar el formulario con valores por defecto
     const currentPeriodo = this.periodoService.getPeriodoActual();
     this.formPrestamo().patchValue({

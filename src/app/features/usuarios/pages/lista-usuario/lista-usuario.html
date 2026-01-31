@@ -1,9 +1,11 @@
 <div class="space-y-4 sm:space-y-6 w-full">
     <!-- Encabezado con título -->
     <div class="flex items-center justify-between flex-wrap gap-3">
-        <h2 class="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-100">
-            Listado de <span class="text-primary">Usuarios</span>
+        @if (this._viewPort.isDesktop()) {
+            <h2 class="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-100">
+            Gestión de <span class="text-primary">Usuarios</span>
         </h2>
+        }
         <!-- Badge con total de registros -->
         <div class="flex items-center gap-2 flex-wrap">
             <p-tag [value]="usuariosList().length + ' registros'" severity="secondary"></p-tag>

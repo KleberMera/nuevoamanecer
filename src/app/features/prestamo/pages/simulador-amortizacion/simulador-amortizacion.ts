@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { CommonModule, CurrencyPipe } from '@angular/common';
 import { TableModule } from 'primeng/table';
@@ -9,6 +9,8 @@ import { CardModule } from 'primeng/card';
 import { toast } from 'ngx-sonner';
 import { IconField } from "primeng/iconfield";
 import { InputIcon } from "primeng/inputicon";
+import { ViewportService } from '@app/shared/services/viewport-service';
+import { PageTitleService } from '@app/shared/services/page-title-service';
 
 interface CuotaAmortizacion {
   numero: number;
@@ -42,8 +44,12 @@ export default class SimuladorAmortizacion {
   totalPagado = signal<number>(0);
   valorPrestamo = signal<number>(0);
   tabla = signal<CuotaAmortizacion[]>([]);
+  protected readonly _viewPort = inject(ViewportService);
+  protected readonly pageTitleService = inject(PageTitleService);
 
-
+ constructor() {
+    this.pageTitleService.setPageTitle('Simulador de', 'Amortización');
+  }
 
   form = signal<FormGroup>(
     new FormGroup({
