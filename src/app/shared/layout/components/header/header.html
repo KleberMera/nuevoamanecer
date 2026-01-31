@@ -19,8 +19,11 @@
       </h1>
       } @else {
 
-      <h2 class="text-xl  font-bold text-gray-100">
-        Nombre de <span class="text-primary">Pantalla</span>
+      <h2 class="text-xl font-bold text-gray-100">
+        {{ pageTitleService.getPageTitle()().label }}
+        @if (pageTitleService.getPageTitle()().highlight) {
+        <span class="text-primary">{{ pageTitleService.getPageTitle()().highlight }}</span>
+        }
       </h2>
       }
     </div>

@@ -1,5 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
 import { SiderbarService } from '@shared/services/siderbar-service';
+import { PageTitleService } from '@shared/services/page-title-service';
 import { ButtonModule } from 'primeng/button';
 import { MenuModule } from 'primeng/menu';
 import { AvatarModule } from 'primeng/avatar';
@@ -18,6 +19,7 @@ import { ViewportService } from '@app/shared/services/viewport-service';
 export class Header {
   public readonly _sidebarService = inject(SiderbarService);
   public readonly _storage = inject(Storage);
+  public readonly pageTitleService = inject(PageTitleService);
   protected readonly _viewPort = inject(ViewportService);
   unreadNotifications = signal<number>(2);
   userNameProfile = signal<string>(this._storage.getNombreUsuario() || 'Usuario');

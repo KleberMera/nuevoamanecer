@@ -2,9 +2,11 @@
   <!-- Encabezado con título -->
   <!-- Encabezado con título -->
   <div class="flex items-center justify-between flex-wrap gap-3">
-    <h2 class="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-100">
+    @if (this._viewPort.isDesktop()) {
+      <h2 class="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-100">
       Historial de <span class="text-primary">Acciones</span>
     </h2>
+    }
     <!-- Badge con total de registros y valor total -->
     <div class="flex items-center gap-2 flex-wrap">
       <p-tag [value]="acciones().length + ' registros'" severity="secondary"></p-tag>

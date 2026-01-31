@@ -1,5 +1,6 @@
 import { Component, inject, computed, signal } from '@angular/core';
 import { RegistroAccionService } from '../../services/registro-accion-service';
+import { PageTitleService } from '@shared/services/page-title-service';
 import { CommonModule, CurrencyPipe, DatePipe } from '@angular/common';
 import { ReactiveFormsModule, FormControl } from '@angular/forms';
 import { apiResponse } from '@core/models/apiResponse';
@@ -19,6 +20,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { ScreenService } from '@shared/services/screen-service';
 import { PeriodoService } from '@shared/services/periodo-service';
 import { DialogAccion } from '../../components/dialog-accion/dialog-accion';
+import { ViewportService } from '@app/shared/services/viewport-service';
 
 @Component({
   selector: 'app-historial-accion',
@@ -34,19 +36,20 @@ import { DialogAccion } from '../../components/dialog-accion/dialog-accion';
     InputTextModule,
     ProgressSpinnerModule,
     CurrencyPipe,
-    DatePipe
-
+    DatePipe,
   ],
   templateUrl: './historial-accion.html',
   styleUrl: './historial-accion.css',
-  providers: [DialogService]
+  providers: [DialogService],
 })
 export default class HistorialAccion {
   protected readonly regAccion = inject(RegistroAccionService);
   protected readonly periodoService = inject(PeriodoService);
   protected readonly _screenService = inject(ScreenService);
+  protected readonly _viewPort = inject(ViewportService);
   protected readonly dialogService = inject(DialogService);
-  
+  protected readonly pageTitleService = inject(PageTitleService);
+
   ref: DynamicDialogRef | undefined;
 
   // Signal para acción seleccionada
@@ -132,6 +135,8 @@ export default class HistorialAccion {
   }
 
   constructor() {
+    this.pageTitleService.setPageTitle('Historial de', 'Acciones');
+
     // Escuchar cambios del período
     this.periodoControl.valueChanges.subscribe((value) => {
       this.periodoSeleccionado.set(value || '');
@@ -175,7 +180,7 @@ export default class HistorialAccion {
     const accion = event.data;
     this.selectedAccion.set(accion);
     console.log('Acción seleccionada:', accion);
-    
+
     // Abrir el dialog con la información de la acción
     const dialogRef = this.dialogService.open(DialogAccion, {
       header: 'Editar Acción',
@@ -210,16 +215,14 @@ export default class HistorialAccion {
     return this.acciones().reduce((total, accion) => total + accion.valor, 0);
   }
 
-
   calcularValorTotal(): number {
-  return this.acciones().reduce((total, accion) => total + (accion.valor || 0), 0);
-}
+    return this.acciones().reduce((total, accion) => total + (accion.valor || 0), 0);
+  }
 
-
-  abriDialagMobiel(accion : accionInterface) {
-      this.selectedAccion.set(accion);
+  abriDialagMobiel(accion: accionInterface) {
+    this.selectedAccion.set(accion);
     console.log('Usuario seleccionado:', accion);
-    
+
     // Abrir el dialog con la información del usuario
     const dialogRef = this.dialogService.open(DialogAccion, {
       header: 'Editar Usuario',
@@ -242,5 +245,4 @@ export default class HistorialAccion {
       }
     });
   }
-
 }
