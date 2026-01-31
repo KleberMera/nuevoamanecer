@@ -4,30 +4,30 @@
     <!-- Logo y título -->
     <div class="flex items-center gap-3 sm:gap-4">
       <!-- Botón hamburguesa -->
+
+      @if (this._viewPort.isDesktop()) {
       <p-button [icon]="_sidebarService.isOpen() ? 'pi pi-times' : 'pi pi-bars'" (click)="_sidebarService.toggle()"
         [text]="true" [rounded]="true" severity="secondary"
-        class="hidden sm:block text-primary-500! hover:text-primary-400!"></p-button>
+        class="text-primary-500! hover:text-primary-400!"></p-button>
 
-      <img src="logo_main.svg" alt="Logo" class="hidden sm:block h-8 w-auto hover:opacity-80 transition-opacity" />
-      <h1 class="hidden sm:block text-lg sm:text-2xl font-bold text-white tracking-wide">
+      <img src="logo_main.svg" alt="Logo" class="h-8 w-auto hover:opacity-80 transition-opacity" />
+      <h1 class="text-2xl font-bold text-white tracking-wide">
         Nuevo
         <span class="text-primary-500 font-black">
           Amanecer
         </span>
       </h1>
+      } @else {
 
-      <!-- Saludo mobile -->
-      <!-- <h1 class="sm:hidden text-lg font-bold text-white tracking-wide">
-        Hola,
-        <span class="text-primary-500 font-black">
-          {{ userName() }}
-        </span>
-      </h1> -->
+      <h2 class="text-xl  font-bold text-gray-100">
+        Nombre de <span class="text-primary">Pantalla</span>
+      </h2>
+      }
     </div>
 
     <!-- Menú derecho -->
     <div class="flex items-center justify-end gap-3 sm:gap-4">
-      
+
       <!-- Botón de notificaciones -->
       <div class="relative">
         <p-button [icon]="'pi pi-bell'" [text]="true" [rounded]="true" severity="secondary"
@@ -46,7 +46,8 @@
 
       <!-- Perfil de usuario -->
       <div class="flex items-center gap-2 sm:gap-3">
-        <p-avatar label="{{userLabelAvatar()}}" [style]="{ 'background-color': '#dee9fc', color: '#1a2551' }" shape="circle" />
+        <p-avatar label="{{userLabelAvatar()}}" [style]="{ 'background-color': '#dee9fc', color: '#1a2551' }"
+          shape="circle" />
 
         <div class="hidden md:flex flex-col justify-center">
           <p class="text-sm font-semibold text-white leading-none">{{ userNameProfile() }}</p>
