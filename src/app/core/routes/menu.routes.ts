@@ -19,7 +19,7 @@ export const MENU_ITEMS: MenuItem[] = [
     id: 2,
     label: 'Usuarios',
     icon: 'pi pi-users',
-    route: buildUsuariosRoute(PAGES_ROUTES.USUARIOS.LISTA),
+    route: buildUsuariosRoute(PAGES_ROUTES.USUARIOS.GESTIOM),
     // subitems: [
     //   {
     //     id: 21,
@@ -65,7 +65,20 @@ export const MENU_ITEMS: MenuItem[] = [
     id: 5,
     label: 'Prestamos',
     icon: 'pi pi-wallet',
-    route: buildPrestamoRoute(PAGES_ROUTES.PRESTAMO.LISTA),
+    subitems: [
+      {
+        id: 51,
+        label: 'Registro',
+        icon: 'pi pi-briefcase',
+        route: buildPrestamoRoute(PAGES_ROUTES.PRESTAMO.GESTIOM),
+      },
+      {
+        id: 52,
+        label: 'Control',
+        icon: 'pi pi-check-square',
+        route: buildPrestamoRoute(PAGES_ROUTES.PRESTAMO.CONTROL),
+      }
+    ]
   },
   {
     id: 6,
@@ -93,7 +106,7 @@ export const TAB_ITEMS: MenuItem[] = [
     id: 21,
     label: 'Usuarios',
     icon: 'pi pi-list',
-    route: buildUsuariosRoute(PAGES_ROUTES.USUARIOS.LISTA),
+    route: buildUsuariosRoute(PAGES_ROUTES.USUARIOS.GESTIOM),
   },
   {
     id: 31,

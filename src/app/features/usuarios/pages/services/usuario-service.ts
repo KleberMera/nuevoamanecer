@@ -14,10 +14,10 @@ export class UsuarioService {
   private readonly apiUrl = API_ROUTES;
   protected readonly http = inject(HttpClient);
 
-  //Listar usuarios por estado
-  listarUsuariosPorEstado(estado: string) {
+  listarUsuariosPorEstado(estado: string): Observable<apiResponse<Usuario[]>> {
+    console.log('Llamando a listarUsuariosPorEstado2 con estado:', estado);
     const url = `${this.apiUrl.USUARIO.LISTAR_USUARIOS}/${estado}`;
-    return url;
+    return this.http.get<apiResponse<Usuario[]>>(url);
   }
 
   listaRoles() {

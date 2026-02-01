@@ -18,7 +18,7 @@ import { ScreenService } from '@shared/services/screen-service';
 import { DialogUsuario } from '../components/dialog-usuario/dialog-usuario';
 import { ViewportService } from '@app/shared/services/viewport-service';
 import { PageTitleService } from '@app/shared/services/page-title-service';
-
+import { rxResource } from '@angular/core/rxjs-interop';
 @Component({
   selector: 'app-lista-usuario',
   imports: [
@@ -63,12 +63,12 @@ export default class ListaUsuario {
   // Signal para forzar recarga de usuarios
   private reloadVersion = signal<number>(0);
 
-  // Usuarios con httpResource
-  usuarios = httpResource<apiResponse<Usuario[]>>(() => {
-    this.reloadVersion(); // Crear dependencia del signal de reload
-    return this.usuarioService.listarUsuariosPorEstado(this.estadoSeleccionado());
-  });
-
+  usuarios = rxResource({
+    params: () => ({ estado: this.estadoSeleccionado()}),
+    stream: ({params, previous,  abortSignal}) => {
+      return this.usuarioService.listarUsuariosPorEstado(params.estado);
+    },
+  })
 
 
   // Usuarios filtrados para mostrar en tabla

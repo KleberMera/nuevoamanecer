@@ -19,6 +19,8 @@ export const authInterceptor: HttpInterceptorFn = (
       catchError((error) => {
         if (error instanceof HttpErrorResponse && error.status === 401) {
           authState.signOut();
+          console.log('Ir al incio');
+          
           router.navigateByUrl(PAGES_ROUTES.AUTH.LOGIN);
             // this._router.navigate([PAGES_ROUTES.DASHBOARD.DASHBOARD]);
         }
@@ -46,7 +48,10 @@ export const authInterceptor: HttpInterceptorFn = (
     catchError((error) => {
       if (error instanceof HttpErrorResponse && error.status === 401) {
         authState.signOut();
-        router.navigateByUrl('/auth');
+        console.log('Prueba');
+        
+        //router.navigateByUrl('/auth');
+          router.navigateByUrl(PAGES_ROUTES.AUTH.LOGIN);
       }
 
       return throwError(() => error);

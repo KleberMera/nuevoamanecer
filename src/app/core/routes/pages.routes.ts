@@ -26,7 +26,7 @@ export const PAGES_ROUTES = {
   },
   USUARIOS: {
     DEFAULT: 'usuarios',
-    LISTA: 'lista-usuarios',
+    GESTIOM: 'gestion-usuarios',
     //GRUPOS: 'grupos',
     //  PERMISOS: 'permisos',
   },
@@ -38,7 +38,8 @@ export const PAGES_ROUTES = {
   },
   PRESTAMO: {
     DEFAULT: 'prestamos',
-    LISTA: 'lista-prestamos',
+    GESTIOM: 'registro',
+    CONTROL: 'control',
     SIMULADOR: 'simulador',
   }
 };

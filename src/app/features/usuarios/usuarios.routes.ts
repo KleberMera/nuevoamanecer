@@ -7,7 +7,7 @@ export const usuariosRoutes: Routes = [
     path: PAGES_ROUTES.USUARIOS.DEFAULT,
     children: [
       {
-        path: PAGES_ROUTES.USUARIOS.LISTA,
+        path: PAGES_ROUTES.USUARIOS.GESTIOM,
         loadComponent: () => import('./pages/lista-usuario/lista-usuario')
       },
     ],

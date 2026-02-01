@@ -6,12 +6,16 @@ export const prestamoRoutes: Routes = [
     path: PAGES_ROUTES.PRESTAMO.DEFAULT,
     children: [
       {
-        path: PAGES_ROUTES.PRESTAMO.LISTA,
+        path: PAGES_ROUTES.PRESTAMO.GESTIOM,
         loadComponent: () => import('./pages/prestamo/prestamo'),
       },
       {
         path: PAGES_ROUTES.PRESTAMO.SIMULADOR,
         loadComponent: () => import('./pages/simulador-amortizacion/simulador-amortizacion'),
+      },
+      {
+        path: PAGES_ROUTES.PRESTAMO.CONTROL,
+        loadComponent: () => import('./pages/control-prestamo/control-prestamo'),
       }
     ],
   },
