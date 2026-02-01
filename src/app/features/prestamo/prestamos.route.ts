@@ -16,6 +16,10 @@ export const prestamoRoutes: Routes = [
       {
         path: PAGES_ROUTES.PRESTAMO.CONTROL,
         loadComponent: () => import('./pages/control-prestamo/control-prestamo'),
+      },
+      {
+        path: PAGES_ROUTES.PRESTAMO.USUARIO,
+        loadComponent: () => import('./pages/lista-prestamo/lista-prestamo'),
       }
     ],
   },

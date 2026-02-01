@@ -40,6 +40,7 @@ export const PAGES_ROUTES = {
     DEFAULT: 'prestamos',
     GESTIOM: 'registro',
     CONTROL: 'control',
+    USUARIO: 'usuario',
     SIMULADOR: 'simulador',
   }
 };

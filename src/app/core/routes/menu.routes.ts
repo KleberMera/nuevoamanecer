@@ -77,8 +77,14 @@ export const MENU_ITEMS: MenuItem[] = [
         label: 'Control',
         icon: 'pi pi-check-square',
         route: buildPrestamoRoute(PAGES_ROUTES.PRESTAMO.CONTROL),
-      }
-    ]
+      },
+      {
+        id: 53,
+        label: 'Prestamos',
+        icon: 'pi pi-wallet',
+        route: buildPrestamoRoute(PAGES_ROUTES.PRESTAMO.USUARIO),
+      },
+    ],
   },
   {
     id: 6,
@@ -98,15 +104,15 @@ export const TAB_ITEMS: MenuItem[] = [
   },
   {
     id: 33,
-    label: 'Historial',
-    icon: 'pi pi-clock',
+     label: 'Acciones',
+    icon: 'pi pi-bolt',
     route: buildAccionRoute(PAGES_ROUTES.ACCION.HISTORIAL_USUARIO),
   },
   {
     id: 21,
-    label: 'Usuarios',
-    icon: 'pi pi-list',
-    route: buildUsuariosRoute(PAGES_ROUTES.USUARIOS.GESTIOM),
+    label: 'Prestamos',
+    icon: 'pi pi-wallet',
+    route: buildPrestamoRoute(PAGES_ROUTES.PRESTAMO.USUARIO),
   },
   {
     id: 31,
