@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { apiResponse } from '@app/core/models/apiResponse';
-import { DettPrestamoInterface } from '@app/core/models/dett-prestamo';
+import { DettPrestamoInterface, UsuarioConPrestamos } from '@app/core/models/dett-prestamo';
 import API_ROUTES from '@core/routes/api.routes';
 import { Observable } from 'rxjs';
 
@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class DettPrestamoService {
-  apiUrl = API_ROUTES.DETTALLE_PRESTAMO;
+  apiUrl = API_ROUTES;
   protected readonly _http = inject(HttpClient);
 
   formDettPrestamo(data: Partial<DettPrestamoInterface> = {}) {
@@ -33,7 +33,13 @@ export class DettPrestamoService {
     prestamoId: number,
     dettPrestamo: DettPrestamoInterface,
   ): Observable<apiResponse<DettPrestamoInterface>> {
-    const url = `${this.apiUrl.CREAR}${prestamoId}`;
+    const url = `${this.apiUrl.DETTALLE_PRESTAMO.CREAR}${prestamoId}`;
     return this._http.post<apiResponse<DettPrestamoInterface>>(url, dettPrestamo);
+  }
+
+  // Listar usuarios activos (para el dialog)
+  listarPrestamso(estado: string): Observable<apiResponse<UsuarioConPrestamos[]>> {
+    const url = `${this.apiUrl.PRESTAMO.DETALLE_PRESTAMOS_USUARIOS}/${estado}`;
+    return this._http.get<apiResponse<UsuarioConPrestamos[]>>(url);
   }
 }

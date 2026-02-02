@@ -1,1 +1,180 @@
-<p>control-prestamo works!</p>
+<div class="space-y-4 sm:space-y-6 w-full">
+  <!-- Encabezado con título -->
+  <div class="flex items-center justify-between flex-wrap gap-3">
+    @if (this._viewPort.isDesktop()) {
+      <h2 class="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-100">
+        Control de <span class="text-primary">Préstamos</span>
+      </h2>
+    }
+    <!-- Badge con total de registros -->
+    <div class="flex items-center gap-2 flex-wrap">
+      <p-tag [value]="usuariosList().length + ' usuarios'" severity="secondary"></p-tag>
+    </div>
+  </div>
+
+  <!-- Filtros -->
+  <div class="grid grid-cols-1 sm:grid-cols-12 gap-3 sm:gap-4">
+    <!-- Selector de Estado -->
+    <div class="sm:col-span-3 space-y-2">
+      <label for="estado" class="block text-sm font-semibold text-gray-100">
+        Estado
+      </label>
+      <p-select 
+        id="estado" 
+        [formControl]="estadoControl" 
+        [options]="estadosList" 
+        optionLabel="label"
+        optionValue="value" 
+        class="w-full">
+      </p-select>
+    </div>
+
+    <!-- Selector de Usuario -->
+    <div class="sm:col-span-9 space-y-2">
+      <label for="usuario" class="block text-sm font-semibold text-gray-100">
+        Seleccionar Usuario
+      </label>
+      @if (isLoading()) {
+        <p-progressSpinner [style]="{ width: '50px', height: '50px' }" strokeWidth="4"></p-progressSpinner>
+      } @else if (hasError()) {
+        <div class="flex items-center gap-2 p-3 bg-red-500/10 border border-red-500/30 rounded-lg">
+          <i class="pi pi-exclamation-triangle text-red-400"></i>
+          <span class="text-red-400 text-sm">Error al cargar usuarios</span>
+        </div>
+      } @else {
+        <p-select
+          id="usuario"
+          [formControl]="usuarioControl"
+          [options]="usuariosList()"
+          [showClear]="true"
+          [filter]="true"
+          placeholder="Selecciona un usuario"
+          class="w-full">
+          <ng-template #selectedItem let-usuario>
+            {{ getNombreCompleto(usuario) }}
+          </ng-template>
+          <ng-template #item let-usuario>
+            {{ getNombreCompleto(usuario) }}
+          </ng-template>
+        </p-select>
+      }
+    </div>
+  </div>
+
+  <!-- Contenido principal -->
+  @if (isLoading()) {
+    <div class="flex justify-center items-center py-16">
+      <p-progressSpinner class="w-12 h-12" strokeWidth="4" animationDuration="1s">
+      </p-progressSpinner>
+    </div>
+  } @else if (hasError()) {
+    <div class="flex items-center gap-3 p-4 bg-red-500/10 border border-red-500/30 rounded-lg">
+      <i class="pi pi-exclamation-triangle text-red-400 text-xl"></i>
+      <div class="flex-1">
+        <p class="text-red-400 font-semibold text-sm sm:text-base">Error al cargar</p>
+        <p class="text-red-300 text-xs sm:text-sm">{{ errorMessage() }}</p>
+      </div>
+    </div>
+  } @else if (!usuarioSeleccionado()) {
+    <div class="flex flex-col items-center justify-center py-16 gap-4 bg-surface-900/50 rounded-lg border border-surface-700 border-dashed">
+      <i class="pi pi-inbox text-5xl text-gray-500"></i>
+      <div class="text-center">
+        <p class="text-gray-300 font-medium text-base mb-1">Selecciona un usuario</p>
+        <p class="text-gray-500 text-sm">Verás sus préstamos y detalles aquí</p>
+      </div>
+    </div>
+  } @else if (prestamosList().length === 0) {
+    <div class="flex flex-col items-center justify-center py-16 gap-4 bg-surface-900/50 rounded-lg border border-surface-700 border-dashed">
+      <i class="pi pi-inbox text-5xl text-gray-500"></i>
+      <div class="text-center">
+        <p class="text-gray-300 font-medium text-base mb-1">Este usuario no tiene préstamos</p>
+        <p class="text-gray-500 text-sm">Selecciona otro usuario</p>
+      </div>
+    </div>
+  } @else {
+    <!-- Información del usuario y préstamo -->
+    <div class="bg-surface-900 border border-surface-700 rounded-lg p-6 space-y-4">
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <!-- Usuario Info -->
+        <div class="space-y-2">
+          <p class="text-sm font-semibold text-gray-400 uppercase">Usuario</p>
+          <p class="text-lg font-bold text-gray-100">{{ getNombreCompleto(usuarioSeleccionado()!) }}</p>
+          <p class="text-sm text-gray-400">@{{ usuarioSeleccionado()!.nombreUsuario }}</p>
+        </div>
+
+        <!-- Préstamo Info (mostrar el primero) -->
+        @if (prestamosList()[0]; as prestamo) {
+          <div class="space-y-2">
+            <p class="text-sm font-semibold text-gray-400 uppercase">Monto</p>
+            <p class="text-lg font-bold text-blue-400">{{ prestamo.monto | currency }}</p>
+          </div>
+
+          <div class="space-y-2">
+            <p class="text-sm font-semibold text-gray-400 uppercase">Período</p>
+            <p class="text-lg font-bold text-primary">{{ formatPeriodo(prestamo.periodo!) }}</p>
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- Tabla de detalles del préstamo -->
+    @if (detallesPrestamo().length > 0) {
+      <div class="bg-surface-900 border border-surface-700 rounded-lg overflow-hidden">
+        <p-table 
+          [value]="detallesPrestamo()" 
+          [tableStyle]="{ 'min-width': '50rem' }" 
+          [rowHover]="true" 
+          [scrollable]="true" 
+          scrollHeight="500px"
+          [paginator]="detallesPrestamo().length > 12" 
+          [rows]="12"
+          [rowsPerPageOptions]="[12, 24, 48]" 
+          class="w-full" 
+          showGridlines 
+          stripedRows>
+          <ng-template pTemplate="header">
+            <tr>
+              <th pSortableColumn="cuotaNum" class="bg-surface-800 text-center">
+                Cuota <p-sortIcon field="cuotaNum"></p-sortIcon>
+              </th>
+              <th pSortableColumn="monto" class="bg-surface-800 text-right">
+                Pago Mensual <p-sortIcon field="monto"></p-sortIcon>
+              </th>
+              <th pSortableColumn="interes" class="bg-surface-800 text-right">
+                Intereses <p-sortIcon field="interes"></p-sortIcon>
+              </th>
+              <th pSortableColumn="capital" class="bg-surface-800 text-right">
+                Capital <p-sortIcon field="capital"></p-sortIcon>
+              </th>
+              <th pSortableColumn="saldo" class="bg-surface-800 text-right">
+                Saldo Restante <p-sortIcon field="saldo"></p-sortIcon>
+              </th>
+              <th pSortableColumn="periodoPago" class="bg-surface-800 text-center">
+                Período <p-sortIcon field="periodoPago"></p-sortIcon>
+              </th>
+              <th pSortableColumn="estadoPago" class="bg-surface-800 text-center">
+                Estado <p-sortIcon field="estadoPago"></p-sortIcon>
+              </th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-fila>
+            <tr class="hover:bg-surface-800/50 transition-colors">
+              <td class="text-center font-semibold text-primary">{{ fila.cuotaNum }}</td>
+              <td class="text-right">{{ fila.monto | currency }}</td>
+              <td class="text-right text-orange-400">{{ fila.interes | currency }}</td>
+              <td class="text-right text-green-400">{{ fila.capital | currency }}</td>
+              <td class="text-right font-medium">{{ fila.saldo | currency }}</td>
+              <td class="text-center text-gray-300">{{ formatPeriodo(fila.periodoPago) }}</td>
+              <td class="text-center">
+                <p-tag 
+                  [value]="fila.estadoPago" 
+                  [severity]="fila.estadoPago === 'PAGADO' ? 'success' : 'warn'">
+                </p-tag>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    }
+  }
+</div>
