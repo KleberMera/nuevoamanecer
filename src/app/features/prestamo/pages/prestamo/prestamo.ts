@@ -90,6 +90,14 @@ export default class Prestamo {
     return `${periodo.substring(0, 4)}-${periodo.substring(4, 6)}`;
   }
 
+  /**
+   * Obtiene el usuario seleccionado
+   */
+  protected getUsuarioSeleccionado(): Usuario | undefined {
+    const usuarioId = this.formPrestamo().get('usuarioId')?.value;
+    return this.usuariosList().find(u => u.id === usuarioId);
+  }
+
   constructor() {
     this.pageTitleService.setPageTitle('Registro de', 'Préstamo');
     // Inicializar el formulario con valores por defecto

@@ -108,6 +108,78 @@ export default class ControlPrestamo {
     return `${periodo.substring(0, 4)}-${periodo.substring(4, 6)}`;
   }
 
+  // Calcular total de intereses desde los detalles
+  protected calcularTotalIntereses(): number {
+    const detalles = this.detallesPrestamo();
+    return detalles.reduce((total, detalle) => total + detalle.interes, 0);
+  }
+
+  // Calcular total a pagar desde los detalles
+  protected calcularTotalPagado(): number {
+    const detalles = this.detallesPrestamo();
+    return detalles.reduce((total, detalle) => total + detalle.monto, 0);
+  }
+
+  // Contar cuotas pagadas (X/N)
+  protected obtenerCuotasPagadas(): { pagadas: number; total: number } {
+    const detalles = this.detallesPrestamo();
+    const pagadas = detalles.filter(d => d.estadoPago === 'PAGADO').length;
+    return {
+      pagadas,
+      total: detalles.length
+    };
+  }
+
+  // Calcular total pagado (suma de detalles con estadoPago = PAGADO)
+  protected calcularTotalPagadoDetalles(): number {
+    const detalles = this.detallesPrestamo();
+    return detalles
+      .filter(d => d.estadoPago === 'PAGADO')
+      .reduce((total, detalle) => total + detalle.monto, 0);
+  }
+
+  // Contar cuotas vencidas según el período del préstamo
+  protected obtenerCuotasVencidas(): number {
+    const prestamos = this.prestamosList();
+    if (prestamos.length === 0) return 0;
+
+    const prestamo = prestamos[0];
+    const periodoPrestamo = parseInt(prestamo.periodo || '0');
+    
+    // Período actual: YYYYMM
+    const now = new Date();
+    const currentMonth = (now.getMonth() + 1).toString().padStart(2, '0');
+    const currentYear = now.getFullYear();
+    const periodoActual = parseInt(`${currentYear}${currentMonth}`);
+
+    // La primera cuota vence en el siguiente período después del período del préstamo
+    const periodoVencimiento = this.getSiguientePeriodo(prestamo.periodo || '');
+    const periodoVencimientoNum = parseInt(periodoVencimiento);
+
+    // Contar cuotas con periodoPago anterior al período actual
+    const detalles = this.detallesPrestamo();
+    return detalles.filter(d => {
+      const periodoPago = parseInt(d.periodoPago || '0');
+      return periodoPago < periodoActual;
+    }).length;
+  }
+
+  // Obtener el siguiente período
+  private getSiguientePeriodo(periodo: string): string {
+    const year = parseInt(periodo.substring(0, 4));
+    const month = parseInt(periodo.substring(4, 6));
+    
+    let newMonth = month + 1;
+    let newYear = year;
+    
+    if (newMonth > 12) {
+      newMonth = 1;
+      newYear += 1;
+    }
+    
+    return `${newYear}${newMonth.toString().padStart(2, '0')}`;
+  }
+
   constructor() {
     this.pageTitleService.setPageTitle('Control de', 'Préstamos');
 

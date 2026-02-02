@@ -198,6 +198,43 @@
 
   <!-- Resultados -->
   @if (tabla().length > 0) {
+    <!-- Información del usuario y préstamo -->
+    <div class="bg-surface-900 border border-surface-700 rounded-lg p-6 space-y-4">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <!-- Usuario -->
+        <div class="space-y-2">
+          <p class="text-sm font-semibold text-gray-400 uppercase">Usuario</p>
+          <p class="text-lg font-bold text-gray-100">
+            {{ getUsuarioSeleccionado()?.nombre1 }} {{ getUsuarioSeleccionado()?.apellido1 }}
+          </p>
+        </div>
+
+        <!-- Fecha -->
+        <div class="space-y-2">
+          <p class="text-sm font-semibold text-gray-400 uppercase">Fecha</p>
+          <p class="text-lg font-bold text-primary">
+            {{ formPrestamo().get('fecha')?.value | date: 'dd/MM/yyyy' }}
+          </p>
+        </div>
+
+        <!-- Frecuencia -->
+        <div class="space-y-2">
+          <p class="text-sm font-semibold text-gray-400 uppercase">Frecuencia</p>
+          <p class="text-lg font-bold text-primary">
+            {{ formPrestamo().get('frecuencia')?.value || 'MENSUAL' }}
+          </p>
+        </div>
+
+        <!-- Período -->
+        <div class="space-y-2">
+          <p class="text-sm font-semibold text-gray-400 uppercase">Período</p>
+          <p class="text-lg font-bold text-primary">
+            {{ formatPeriodo(formPrestamo().get('periodo')?.value) }}
+          </p>
+        </div>
+      </div>
+    </div>
+
     <!-- Resumen -->
     <div class="grid grid-cols-1 sm:grid-cols-4 gap-4">
       <div class="bg-surface-900 border border-surface-700 rounded-lg p-4 space-y-3">
