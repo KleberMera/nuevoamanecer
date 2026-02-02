@@ -188,6 +188,15 @@ export default class ControlPrestamo {
     return `${newYear}${newMonth.toString().padStart(2, '0')}`;
   }
 
+  // Cambiar estado de la cuota entre PAGADO y PENDIENTE
+  protected toggleEstadoPago(detalle: DettPrestamoCompleto): void {
+    if (detalle.estadoPago === 'PAGADO') {
+      detalle.estadoPago = 'PENDIENTE';
+    } else {
+      detalle.estadoPago = 'PAGADO';
+    }
+  }
+
   constructor() {
     this.pageTitleService.setPageTitle('Control de', 'Préstamos');
 
