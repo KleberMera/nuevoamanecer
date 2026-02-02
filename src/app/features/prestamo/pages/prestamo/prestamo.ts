@@ -220,7 +220,7 @@ export default class Prestamo {
       },
       error: (error) => {
         console.error('Error al crear préstamo:', error);
-        toast.error(error?.error?.message || 'Error al registrar el préstamo');
+        toast.info(error?.error?.message || 'Error al registrar el préstamo');
         this.isSubmitting.set(false);
       },
     });

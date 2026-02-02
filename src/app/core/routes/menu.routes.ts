@@ -80,8 +80,8 @@ export const MENU_ITEMS: MenuItem[] = [
       },
       {
         id: 53,
-        label: 'Prestamos',
-        icon: 'pi pi-wallet',
+        label: 'Prestamos Usuario',
+        icon: 'pi pi-user',
         route: buildPrestamoRoute(PAGES_ROUTES.PRESTAMO.USUARIO),
       },
     ],

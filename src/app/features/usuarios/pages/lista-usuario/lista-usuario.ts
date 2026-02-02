@@ -64,7 +64,7 @@ export default class ListaUsuario {
   private reloadVersion = signal<number>(0);
 
   usuarios = rxResource({
-    params: () => ({ estado: this.estadoSeleccionado()}),
+    params: () => ({ estado: this.estadoSeleccionado(), reload: this.reloadVersion() }),
     stream: ({params, previous,  abortSignal}) => {
       return this.usuarioService.listarUsuariosPorEstado(params.estado);
     },
@@ -133,7 +133,6 @@ export default class ListaUsuario {
         '640px': '90vw',
       },
     });
-
     // Escuchar cuando se cierre el dialog
     dialogRef!.onClose.subscribe((result) => {
       if (result) {
@@ -141,6 +140,7 @@ export default class ListaUsuario {
         this.reloadVersion.update((v) => v + 1);
       }
     });
+    
   }
 
   // Método para manejar la selección de fila

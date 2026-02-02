@@ -1,7 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
-import { FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
-import { DialogService, DynamicDialogRef, DynamicDialogConfig } from 'primeng/dynamicdialog';
+import { ReactiveFormsModule } from '@angular/forms';
+import { DynamicDialogRef, DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { UsuarioService } from '../../services/usuario-service';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
@@ -20,15 +19,8 @@ import { Usuario } from '@core/models/usuario';
 @Component({
   selector: 'app-dialog-usuario',
   imports: [
-    ReactiveFormsModule,
-    ButtonModule,
-    InputTextModule,
-    InputNumberModule,
-    SelectModule,
-    TooltipModule,
-    PasswordModule,
-    IconFieldModule,
-    InputIconModule,
+    ReactiveFormsModule, ButtonModule, InputTextModule, InputNumberModule,
+    SelectModule, TooltipModule, PasswordModule, IconFieldModule, InputIconModule,
   ],
   templateUrl: './dialog-usuario.html',
   styleUrl: './dialog-usuario.css',
@@ -116,10 +108,20 @@ export class DialogUsuario {
 
     this.isSubmitting.set(true);
 
+    // Capitalizar nombres y apellidos
+    const datosFormulario = this.formGroup().getRawValue();
+    const datosCapitalizados = {
+      ...datosFormulario,
+      nombre1: this.capitalizarPalabras(datosFormulario.nombre1),
+      nombre2: this.capitalizarPalabras(datosFormulario.nombre2),
+      apellido1: this.capitalizarPalabras(datosFormulario.apellido1),
+      apellido2: this.capitalizarPalabras(datosFormulario.apellido2),
+    };
+
     if (this.isEditMode() && this.usuarioId) {
       // Modo edición: actualizar usuario
       const dataActualizar = {
-        ...this.formGroup().getRawValue(),
+        ...datosCapitalizados,
         id: this.usuarioId,
       };
       this.usuarioService.actualizarUsuario(this.usuarioId, dataActualizar).subscribe({
@@ -136,7 +138,7 @@ export class DialogUsuario {
       });
     } else {
       // Modo creación: crear nuevo usuario
-      this.usuarioService.crearUsuario(this.formGroup().value).subscribe({
+      this.usuarioService.crearUsuario(datosCapitalizados).subscribe({
         next: (response) => {
           this.isSubmitting.set(false);
           toast.success('Usuario creado correctamente');
@@ -153,6 +155,15 @@ export class DialogUsuario {
 
   protected cancelar() {
     this.dialogRef.close();
+  }
+
+  private capitalizarPalabras(texto: string): string {
+    if (!texto) return '';
+    return texto
+      .toLowerCase()
+      .split(' ')
+      .map((palabra) => palabra.charAt(0).toUpperCase() + palabra.slice(1))
+      .join(' ');
   }
 
   roles = httpResource<apiResponse<Rol[]>>(() => this.usuarioService.listaRoles());
