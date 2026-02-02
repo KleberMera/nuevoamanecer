@@ -138,6 +138,14 @@ export default class ControlPrestamo {
       .reduce((total, detalle) => total + detalle.monto, 0);
   }
 
+  // Calcular total pendiente (suma de detalles con estadoPago != PAGADO)
+  protected calcularTotalPendiente(): number {
+    const detalles = this.detallesPrestamo();
+    return detalles
+      .filter(d => d.estadoPago !== 'PAGADO')
+      .reduce((total, detalle) => total + detalle.monto, 0);
+  }
+
   // Contar cuotas vencidas según el período del préstamo
   protected obtenerCuotasVencidas(): number {
     const prestamos = this.prestamosList();

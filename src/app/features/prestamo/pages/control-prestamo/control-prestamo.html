@@ -203,7 +203,7 @@
       </div>
 
       <!-- Tarjetas adicionales: Cuotas pagadas, Total pagado, Cuotas vencidas -->
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <div class="grid grid-cols-1 sm:grid-cols-4 gap-4">
         <!-- Cuotas Pagadas -->
         <div class="bg-surface-900 border border-surface-700 rounded-lg p-4 space-y-3">
           <p class="text-sm font-semibold text-gray-300">Cuotas Pagadas</p>
@@ -216,6 +216,12 @@
         <div class="bg-surface-900 border border-surface-700 rounded-lg p-4 space-y-3">
           <p class="text-sm font-semibold text-gray-300">Total Pagado</p>
           <p class="text-3xl font-bold text-green-500">{{ calcularTotalPagadoDetalles() | currency }}</p>
+        </div>
+
+        <!-- Total Pendiente -->
+        <div class="bg-surface-900 border border-surface-700 rounded-lg p-4 space-y-3">
+          <p class="text-sm font-semibold text-gray-300">Total Pendiente</p>
+          <p class="text-3xl font-bold text-yellow-400">{{ calcularTotalPendiente() | currency }}</p>
         </div>
 
         <!-- Cuotas Vencidas -->
