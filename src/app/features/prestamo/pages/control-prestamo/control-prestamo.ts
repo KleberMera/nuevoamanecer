@@ -14,6 +14,7 @@ import { CommonModule, CurrencyPipe } from '@angular/common';
 import { UsuarioConPrestamos, PrestamoConDetalles, DettPrestamoCompleto } from '@core/models/dett-prestamo';
 import { ViewportService } from '@app/shared/services/viewport-service';
 import { PageTitleService } from '@app/shared/services/page-title-service';
+import { toast } from 'ngx-sonner';
 
 @Component({
   selector: 'app-control-prestamo',
@@ -148,27 +149,20 @@ export default class ControlPrestamo {
 
   // Contar cuotas vencidas según el período del préstamo
   protected obtenerCuotasVencidas(): number {
-    const prestamos = this.prestamosList();
-    if (prestamos.length === 0) return 0;
+    const detalles = this.detallesPrestamo();
+    if (detalles.length === 0) return 0;
 
-    const prestamo = prestamos[0];
-    const periodoPrestamo = parseInt(prestamo.periodo || '0');
-    
     // Período actual: YYYYMM
     const now = new Date();
     const currentMonth = (now.getMonth() + 1).toString().padStart(2, '0');
     const currentYear = now.getFullYear();
     const periodoActual = parseInt(`${currentYear}${currentMonth}`);
 
-    // La primera cuota vence en el siguiente período después del período del préstamo
-    const periodoVencimiento = this.getSiguientePeriodo(prestamo.periodo || '');
-    const periodoVencimientoNum = parseInt(periodoVencimiento);
-
-    // Contar cuotas con periodoPago anterior al período actual
-    const detalles = this.detallesPrestamo();
+    // Contar cuotas PENDIENTES con periodoPago menor o igual al período actual
     return detalles.filter(d => {
       const periodoPago = parseInt(d.periodoPago || '0');
-      return periodoPago < periodoActual;
+      // Una cuota está vencida si su período de pago ya pasó Y sigue pendiente
+      return periodoPago <= periodoActual && d.estadoPago === 'PENDIENTE';
     }).length;
   }
 
@@ -190,11 +184,25 @@ export default class ControlPrestamo {
 
   // Cambiar estado de la cuota entre PAGADO y PENDIENTE
   protected toggleEstadoPago(detalle: DettPrestamoCompleto): void {
-    if (detalle.estadoPago === 'PAGADO') {
-      detalle.estadoPago = 'PENDIENTE';
-    } else {
-      detalle.estadoPago = 'PAGADO';
-    }
+    const nuevoEstado = detalle.estadoPago === 'PAGADO' ? 'PENDIENTE' : 'PAGADO';
+    
+    // Optimistic update - mostrar cambio de inmediato
+    detalle.estadoPago = nuevoEstado;
+    console.log(`ID: ${detalle.id}, Nuevo estado: ${nuevoEstado}`);
+    
+    // Actualizar en el servidor
+    this._dettService.actualizarEstadoDettPrestamo(detalle.id, nuevoEstado).subscribe({
+      next: (res) => {
+        // Recargar los datos del usuario seleccionado
+        this.reloadVersion.set(this.reloadVersion() + 1);
+        toast.success(res.message || 'Estado actualizado correctamente');
+      },
+      error: (err) => {
+        console.error('Error al actualizar el estado:', err);
+        // Revertir el cambio local si falla
+        detalle.estadoPago = nuevoEstado === 'PAGADO' ? 'PENDIENTE' : 'PAGADO';
+      }
+    });
   }
 
   constructor() {

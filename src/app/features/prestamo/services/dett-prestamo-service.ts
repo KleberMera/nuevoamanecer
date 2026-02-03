@@ -42,4 +42,14 @@ export class DettPrestamoService {
     const url = `${this.apiUrl.PRESTAMO.DETALLE_PRESTAMOS_USUARIOS}/${estado}`;
     return this._http.get<apiResponse<UsuarioConPrestamos[]>>(url);
   }
+
+
+  // Actualizar estado de un detalle de préstamo
+  actualizarEstadoDettPrestamo(
+    dettPrestamoId: number,
+    estadoPago: 'PENDIENTE' | 'PAGADO',
+  ): Observable<apiResponse<DettPrestamoInterface>> {
+    const url = `${this.apiUrl.DETTALLE_PRESTAMO.ACTUALIZAR_ESTADO}${dettPrestamoId}/status`;
+    return this._http.patch<apiResponse<DettPrestamoInterface>>(url, { estadoPago });
+  }
 }
