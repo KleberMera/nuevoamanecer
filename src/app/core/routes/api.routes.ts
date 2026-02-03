@@ -36,7 +36,8 @@ export const API_ROUTES = {
   }),
   PRESTAMO: createRoutes('prestamo', {
     CREAR: '',
-    DETALLE_PRESTAMOS_USUARIOS: 'estado'
+    DETALLE_PRESTAMOS_USUARIOS: 'estado',
+    USUARIO_PRESTAMOS: 'usuario',
   }),
   DETTALLE_PRESTAMO: createRoutes('dett-prestamo', {
     CREAR: '',

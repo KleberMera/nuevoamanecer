@@ -1,1 +1,240 @@
-<p>lista-prestamo works!</p>
+<div class="space-y-4 sm:space-y-6 w-full">
+  <!-- Encabezado con título -->
+  <div class="flex items-center justify-between flex-wrap gap-3">
+    @if (this._viewPort.isDesktop()) {
+      <h2 class="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-100">
+        Mis <span class="text-primary">Préstamos</span>
+      </h2>
+    }
+    <!-- Badge con total de registros -->
+    <div class="flex items-center gap-2 flex-wrap">
+      <p-tag [value]="prestamosList().length + ' préstamo(s)'" severity="secondary"></p-tag>
+    </div>
+  </div>
+
+  <!-- Contenido principal -->
+  @if (isLoading()) {
+    <div class="flex justify-center items-center py-16">
+      <p-progressSpinner class="w-12 h-12" strokeWidth="4" animationDuration="1s">
+      </p-progressSpinner>
+    </div>
+  } @else if (hasError()) {
+    <div class="flex items-center gap-3 p-4 bg-red-500/10 border border-red-500/30 rounded-lg">
+      <i class="pi pi-exclamation-triangle text-red-400 text-xl"></i>
+      <div class="flex-1">
+        <p class="text-red-400 font-semibold text-sm sm:text-base">Error al cargar</p>
+        <p class="text-red-300 text-xs sm:text-sm">{{ errorMessage() }}</p>
+      </div>
+    </div>
+  } @else if (prestamosList().length === 0) {
+    <div class="flex flex-col items-center justify-center py-16 gap-4 bg-surface-900/50 rounded-lg border border-surface-700 border-dashed">
+      <i class="pi pi-inbox text-5xl text-gray-500"></i>
+      <div class="text-center">
+        <p class="text-gray-300 font-medium text-base mb-1">No tienes préstamos registrados</p>
+        <p class="text-gray-500 text-sm">Los préstamos solicitados aparecerán aquí</p>
+      </div>
+    </div>
+  } @else {
+    <!-- Préstamos -->
+    @for (prestamo of prestamosList(); track prestamo.id) {
+      <div class="space-y-4">
+        <!-- Información del préstamo - Card 1 -->
+        <div class="bg-surface-900 border border-surface-700 rounded-lg overflow-hidden">
+          <!-- Header con info del préstamo -->
+          <div class="bg-linear-to-r from-primary/10 to-primary/5 border-b border-surface-700 px-6 py-4">
+            <div class="flex items-center justify-between gap-3 flex-wrap">
+              <div class="flex items-center gap-3">
+                <div class="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center">
+                  <i class="pi pi-file-pdf text-primary text-xl"></i>
+                </div>
+                <div>
+                  <p class="text-xs font-medium text-gray-400 uppercase tracking-wide">Préstamo</p>
+                  <p class="text-xl font-bold text-gray-100 mt-0.5">
+                    {{ prestamo.monto | currency }}
+                  </p>
+                </div>
+              </div>
+              <p-tag 
+                [value]="prestamo.estado === 'A' ? 'Activo' : 'Inactivo'" 
+                [severity]="prestamo.estado === 'A' ? 'success' : 'warn'">
+              </p-tag>
+            </div>
+          </div>
+
+          <!-- Detalles del préstamo -->
+          <div class="p-6">
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6">
+              
+              <!-- Fecha -->
+              <div class="group">
+                <div class="flex items-center gap-2 mb-2">
+                  <i class="pi pi-calendar text-gray-500 text-sm"></i>
+                  <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide">Fecha</p>
+                </div>
+                <p class="text-base font-bold text-gray-100">
+                  {{ prestamo.fecha | date: 'dd/MM/yyyy' }}
+                </p>
+              </div>
+
+              <!-- Frecuencia -->
+              <div class="group">
+                <div class="flex items-center gap-2 mb-2">
+                  <i class="pi pi-replay text-gray-500 text-sm"></i>
+                  <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide">Frecuencia</p>
+                </div>
+                <p class="text-base font-bold text-primary">
+                  {{ prestamo.frecuencia }}
+                </p>
+              </div>
+
+              <!-- Número de Cuotas -->
+              <div class="group">
+                <div class="flex items-center gap-2 mb-2">
+                  <i class="pi pi-list text-gray-500 text-sm"></i>
+                  <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide">Cuotas</p>
+                </div>
+                <p class="text-base font-bold text-primary">
+                  {{ prestamo.cuotas }}
+                </p>
+              </div>
+
+              <!-- Tasa de Interés -->
+              <div class="group">
+                <div class="flex items-center gap-2 mb-2">
+                  <i class="pi pi-percentage text-gray-500 text-sm"></i>
+                  <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide">Tasa Interés</p>
+                </div>
+                <p class="text-base font-bold text-orange-400">
+                  {{ prestamo.interes }}%
+                </p>
+              </div>
+
+              <!-- Período -->
+              <div class="group">
+                <div class="flex items-center gap-2 mb-2">
+                  <i class="pi pi-clock text-gray-500 text-sm"></i>
+                  <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide">Período</p>
+                </div>
+                <p class="text-base font-bold text-primary">
+                  {{ formatPeriodo(prestamo.periodo!) }}
+                </p>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Resumen del Préstamo - Cards de información -->
+        <div class="grid grid-cols-1 sm:grid-cols-4 gap-4">
+          <div class="bg-surface-900 border border-surface-700 rounded-lg p-4 space-y-3">
+            <p class="text-sm font-semibold text-gray-300">Valor del Préstamo</p>
+            <p class="text-3xl font-bold text-blue-400">{{ prestamo.monto | currency }}</p>
+          </div>
+          <div class="bg-surface-900 border border-surface-700 rounded-lg p-4 space-y-3">
+            <p class="text-sm font-semibold text-gray-300">Capital Mensual (Constante)</p>
+            <p class="text-3xl font-bold text-primary">{{ (prestamo.monto / prestamo.cuotas) | currency }}</p>
+          </div>
+          <div class="bg-surface-900 border border-surface-700 rounded-lg p-4 space-y-3">
+            <p class="text-sm font-semibold text-gray-300">Total de Intereses</p>
+            <p class="text-3xl font-bold text-orange-400">{{ calcularTotalIntereses(prestamo) | currency }}</p>
+          </div>
+          <div class="bg-surface-900 border border-surface-700 rounded-lg p-4 space-y-3">
+            <p class="text-sm font-semibold text-gray-300">Total a Pagar</p>
+            <p class="text-3xl font-bold text-green-400">{{ calcularTotalPagado(prestamo) | currency }}</p>
+          </div>
+        </div>
+
+        <!-- Tarjetas adicionales: Cuotas pagadas, Total pagado, Cuotas vencidas -->
+        <div class="grid grid-cols-1 sm:grid-cols-4 gap-4">
+          <!-- Cuotas Pagadas -->
+          <div class="bg-surface-900 border border-surface-700 rounded-lg p-4 space-y-3">
+            <p class="text-sm font-semibold text-gray-300">Cuotas Pagadas</p>
+            @if (obtenerCuotasPagadas(prestamo); as cuotas) {
+              <p class="text-3xl font-bold text-green-400">{{ cuotas.pagadas }}/{{ cuotas.total }}</p>
+            }
+          </div>
+
+          <!-- Total Pagado de Cuotas -->
+          <div class="bg-surface-900 border border-surface-700 rounded-lg p-4 space-y-3">
+            <p class="text-sm font-semibold text-gray-300">Total Pagado</p>
+            <p class="text-3xl font-bold text-green-500">{{ calcularTotalPagadoDetalles(prestamo) | currency }}</p>
+          </div>
+
+          <!-- Total Pendiente -->
+          <div class="bg-surface-900 border border-surface-700 rounded-lg p-4 space-y-3">
+            <p class="text-sm font-semibold text-gray-300">Total Pendiente</p>
+            <p class="text-3xl font-bold text-yellow-400">{{ calcularTotalPendiente(prestamo) | currency }}</p>
+          </div>
+
+          <!-- Cuotas Vencidas -->
+          <div class="bg-surface-900 border border-surface-700 rounded-lg p-4 space-y-3">
+            <p class="text-sm font-semibold text-gray-300">Cuotas Vencidas</p>
+            <p class="text-3xl font-bold text-red-400">{{ obtenerCuotasVencidas(prestamo) }}</p>
+          </div>
+        </div>
+
+        <!-- Tabla de detalles del préstamo -->
+        @if (prestamo.detalles.length > 0) {
+          <div class="bg-surface-900 border border-surface-700 rounded-lg overflow-hidden">
+            <p-table 
+              [value]="prestamo.detalles" 
+              [tableStyle]="{ 'min-width': '50rem' }" 
+              [rowHover]="true" 
+              [scrollable]="true" 
+              scrollHeight="500px"
+              [paginator]="prestamo.detalles.length > 12" 
+              [rows]="12"
+              [rowsPerPageOptions]="[12, 24, 48]" 
+              sortField="cuotaNum"
+              [sortOrder]="1"
+              class="w-full" 
+              showGridlines 
+              stripedRows>
+              <ng-template pTemplate="header">
+                <tr>
+                  <th pSortableColumn="cuotaNum" class="bg-surface-800 text-center">
+                    Cuota <p-sortIcon field="cuotaNum"></p-sortIcon>
+                  </th>
+                  <th pSortableColumn="monto" class="bg-surface-800 text-right">
+                    Pago Mensual <p-sortIcon field="monto"></p-sortIcon>
+                  </th>
+                  <th pSortableColumn="interes" class="bg-surface-800 text-right">
+                    Intereses <p-sortIcon field="interes"></p-sortIcon>
+                  </th>
+                  <th pSortableColumn="capital" class="bg-surface-800 text-right">
+                    Capital <p-sortIcon field="capital"></p-sortIcon>
+                  </th>
+                  <th pSortableColumn="saldo" class="bg-surface-800 text-right">
+                    Saldo Restante <p-sortIcon field="saldo"></p-sortIcon>
+                  </th>
+                  <th pSortableColumn="periodoPago" class="bg-surface-800 text-center">
+                    Período <p-sortIcon field="periodoPago"></p-sortIcon>
+                  </th>
+                  <th pSortableColumn="estadoPago" class="bg-surface-800 text-center">
+                    Estado <p-sortIcon field="estadoPago"></p-sortIcon>
+                  </th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-fila>
+                <tr class="hover:bg-surface-800/50 transition-colors">
+                  <td class="text-center font-semibold text-primary">{{ fila.cuotaNum }}</td>
+                  <td class="text-right">{{ fila.monto | currency }}</td>
+                  <td class="text-right text-orange-400">{{ fila.interes | currency }}</td>
+                  <td class="text-right text-green-400">{{ fila.capital | currency }}</td>
+                  <td class="text-right font-medium">{{ fila.saldo | currency }}</td>
+                  <td class="text-center text-gray-300">{{ formatPeriodo(fila.periodoPago) }}</td>
+                  <td class="text-center">
+                    <p-tag 
+                      [value]="fila.estadoPago" 
+                      [severity]="fila.estadoPago === 'PAGADO' ? 'success' : 'warn'">
+                    </p-tag>
+                  </td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </div>
+        }
+      </div>
+    }
+  }
+</div>

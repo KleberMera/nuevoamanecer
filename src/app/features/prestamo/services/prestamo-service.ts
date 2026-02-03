@@ -3,6 +3,7 @@ import { inject, Injectable, signal } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { apiResponse } from '@app/core/models/apiResponse';
 import { PrestamoInterface } from '@app/core/models/prestamo';
+import { PrestamoConDetalles } from '@app/core/models/dett-prestamo';
 import API_ROUTES from '@app/core/routes/api.routes';
 import { Observable } from 'rxjs';
 
@@ -40,5 +41,11 @@ export class PrestamoService {
   listarUsuarios() {
     const url = `${this.apiUrl.USUARIO.LISTAR_USUARIOS}/A`;
     return url;
+  }
+
+  //LISTAR PRESTAMOS POR USUARIO
+  listarPrestamosPorUsuario(usuarioId: number): Observable<apiResponse<PrestamoConDetalles[]>> {
+    const url = `${this.apiUrl.PRESTAMO.USUARIO_PRESTAMOS}/${usuarioId}`;
+    return this._http.get<apiResponse<PrestamoConDetalles[]>>(url);
   }
 }
