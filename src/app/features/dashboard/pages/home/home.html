@@ -25,7 +25,7 @@
   } @else if (isLoading()) {
     <div class="flex justify-center items-center py-16">
       <p-progressSpinner 
-        styleClass="w-12 h-12" 
+        class="w-12 h-12" 
         strokeWidth="4" 
         animationDuration="1s">
       </p-progressSpinner>
@@ -74,6 +74,18 @@
             </div>
             <p class="text-xs sm:text-sm text-gray-400 font-medium mb-1">Valor Total</p>
             <p class="text-2xl sm:text-3xl font-bold text-green-500">{{ totales()!.totalValor | currency }}</p>
+          </div>
+
+          <!-- Separador -->
+          <div class="w-px h-20 sm:h-24 bg-surface-700"></div>
+
+          <!-- Utilidad Total -->
+          <div class="flex flex-col items-center text-center flex-1">
+            <div class="w-12 h-12 sm:w-14 sm:h-14 bg-blue-500/10 rounded-lg flex items-center justify-center mb-2">
+              <i class="pi pi-arrow-up-right text-xl sm:text-2xl text-blue-500"></i>
+            </div>
+            <p class="text-xs sm:text-sm text-gray-400 font-medium mb-1">Utilidad</p>
+            <p class="text-2xl sm:text-3xl font-bold text-blue-500">{{ totales()!.utilidadTotal | currency }}</p>
           </div>
         </div>
       </div>

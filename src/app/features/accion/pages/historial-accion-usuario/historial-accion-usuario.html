@@ -10,6 +10,7 @@
     <div class="flex items-center gap-2 flex-wrap">
       <p-tag [value]="acciones().length + ' registros'" severity="secondary"></p-tag>
       <p-tag [value]="'Total: ' + (calcularValorTotal() | currency)" severity="success"></p-tag>
+      <p-tag [value]="'Utilidades: ' + (calcularUtilidadTotal() | currency)" severity="info"></p-tag>
     </div>
   </div>
 
@@ -83,11 +84,17 @@
       </div>
 
       <!-- Grid de datos principales -->
-      <div class="grid grid-cols-3 gap-3">
+      <div class="grid grid-cols-2 gap-3">
         <!-- Fecha -->
         <div>
           <p class="text-xs text-gray-400 uppercase font-semibold mb-1">Fecha</p>
           <p class="text-sm text-gray-100">{{ accion.fecha | date: 'dd/MM/yyyy' }}</p>
+        </div>
+
+        <!-- Valor -->
+        <div class="text-right">
+          <p class="text-xs text-gray-400 uppercase font-semibold mb-1">Valor</p>
+          <p class="text-base font-bold text-primary">{{ accion.valor | currency }}</p>
         </div>
 
         <!-- Cantidad -->
@@ -96,10 +103,16 @@
           <p class="text-sm text-gray-100 font-medium">{{ accion.numero }}</p>
         </div>
 
-        <!-- Valor -->
+        <!-- Utilidad Acción -->
         <div class="text-right">
-          <p class="text-xs text-gray-400 uppercase font-semibold mb-1">Valor</p>
-          <p class="text-base font-bold text-primary">{{ accion.valor | currency }}</p>
+          <p class="text-xs text-gray-400 uppercase font-semibold mb-1">Utilidad</p>
+          <p class="text-base font-bold text-green-400">{{ accion.utilidadAccion | currency }}</p>
+        </div>
+
+        <!-- Utilidad Total -->
+        <div class="col-span-2">
+          <p class="text-xs text-gray-400 uppercase font-semibold mb-1">Total Utilidad</p>
+          <p class="text-base font-bold text-green-500">{{ accion.utilidadTotal | currency }}</p>
         </div>
       </div>
 
@@ -129,22 +142,34 @@
               <p-sortIcon field="periodo"></p-sortIcon>
             </div>
           </th>
-          <th pSortableColumn="numero" class="bg-surface-800">
-            <div class="flex items-center gap-2">
-              Cantidad
-              <p-sortIcon field="numero"></p-sortIcon>
-            </div>
-          </th>
-          <th pSortableColumn="valor" class="bg-surface-800">
-            <div class="flex items-center gap-2">
-              Valor
-              <p-sortIcon field="valor"></p-sortIcon>
-            </div>
-          </th>
           <th pSortableColumn="fecha" class="bg-surface-800">
             <div class="flex items-center gap-2">
               Fecha
               <p-sortIcon field="fecha"></p-sortIcon>
+            </div>
+          </th>
+          <th pSortableColumn="valor" class="bg-surface-800 text-right">
+            <div class="flex items-center justify-end gap-2">
+              Valor
+              <p-sortIcon field="valor"></p-sortIcon>
+            </div>
+          </th>
+          <th pSortableColumn="numero" class="bg-surface-800 text-right">
+            <div class="flex items-center justify-end gap-2">
+              Cantidad
+              <p-sortIcon field="numero"></p-sortIcon>
+            </div>
+          </th>
+          <th pSortableColumn="utilidadAccion" class="bg-surface-800 text-right">
+            <div class="flex items-center justify-end gap-2">
+              Utilidad
+              <p-sortIcon field="utilidadAccion"></p-sortIcon>
+            </div>
+          </th>
+          <th pSortableColumn="utilidadTotal" class="bg-surface-800 text-right">
+            <div class="flex items-center justify-end gap-2">
+              Total
+              <p-sortIcon field="utilidadTotal"></p-sortIcon>
             </div>
           </th>
           <th pSortableColumn="estado" class="bg-surface-800">
@@ -163,13 +188,19 @@
             <span class="text-gray-200">{{ accion.periodo }}</span>
           </td>
           <td>
-            <span class="text-gray-200 font-medium">{{ accion.numero }}</span>
+            <span class="text-gray-200">{{ accion.fecha | date: 'dd/MM/yyyy' }}</span>
           </td>
-          <td>
+          <td class="text-right">
             <span class="text-primary font-semibold">{{ accion.valor | currency }}</span>
           </td>
-          <td>
-            <span class="text-gray-200">{{ accion.fecha | date: 'dd/MM/yyyy' }}</span>
+          <td class="text-right">
+            <span class="text-gray-200 font-medium">{{ accion.numero }}</span>
+          </td>
+          <td class="text-right">
+            <span class="text-green-400 font-semibold">{{ accion.utilidadAccion | currency }}</span>
+          </td>
+          <td class="text-right">
+            <span class="text-green-500 font-semibold">{{ accion.utilidadTotal | currency }}</span>
           </td>
           <td>
             <p-tag [value]="getEstadoTexto(accion.estado)" [severity]="accion.estado === 'A' ? 'success' : 'secondary'">
@@ -180,7 +211,7 @@
 
       <ng-template pTemplate="emptymessage">
         <tr>
-          <td colspan="6" class="text-center py-8">
+          <td colspan="8" class="text-center py-8">
             <div class="flex flex-col items-center gap-3">
               <i class="pi pi-filter-slash text-3xl text-gray-500"></i>
               <p class="text-gray-400">No se encontraron resultados</p>

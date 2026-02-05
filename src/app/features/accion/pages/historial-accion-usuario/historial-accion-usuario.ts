@@ -124,4 +124,8 @@ export default class HistorialAccionUsuario {
   calcularValorTotal(): number {
     return this.acciones().reduce((total, accion) => total + (accion.valor || 0), 0);
   }
+
+  calcularUtilidadTotal(): number {
+    return this.acciones().reduce((total, accion) => total + (accion.utilidadTotal || 0), 0);
+  }
 }

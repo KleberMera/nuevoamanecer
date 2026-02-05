@@ -219,6 +219,10 @@ export default class HistorialAccion {
     return this.acciones().reduce((total, accion) => total + (accion.valor || 0), 0);
   }
 
+  calcularUtilidadTotal(): number {
+    return this.acciones().reduce((total, accion) => total + (accion.utilidadTotal || 0), 0);
+  }
+
   abriDialagMobiel(accion: accionInterface) {
     this.selectedAccion.set(accion);
     console.log('Usuario seleccionado:', accion);

@@ -7,6 +7,8 @@ export interface accionInterface {
   numero: number;
   valor: number;
   acumulado?: number;
+  utilidadAccion?: number;
+  utilidadTotal?: number;
   fecha: Date;
   estado: string;
   usuario?: Usuario;
