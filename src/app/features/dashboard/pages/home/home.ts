@@ -34,6 +34,30 @@ export default class Home {
   protected isLoading = computed(() => this.totalAccion.isLoading());
   protected hasError = computed(() => this.totalAccion.error());
   
+  // Calcular días restantes para la reunión (30 de cada mes)
+  protected diasRestantesReunion = computed(() => {
+    const hoy = new Date();
+    const diaActual = hoy.getDate();
+    const mesActual = hoy.getMonth();
+    const anioActual = hoy.getFullYear();
+    
+    // Si ya pasó el 30 del mes actual, la próxima reunión es el 30 del siguiente mes
+    let proximaReunion: Date;
+    if (diaActual >= 30) {
+      // Próxima reunión es el 30 del mes siguiente
+      proximaReunion = new Date(anioActual, mesActual + 1, 30);
+    } else {
+      // La reunión es el 30 de este mes
+      proximaReunion = new Date(anioActual, mesActual, 30);
+    }
+    
+    // Calcular diferencia en días
+    const diferencia = proximaReunion.getTime() - hoy.getTime();
+    const diasRestantes = Math.ceil(diferencia / (1000 * 60 * 60 * 24));
+    
+    return diasRestantes;
+  });
+  
   // Períodos disponibles
   protected periodosList = computed(() => [
     { label: 'Total', value: '' },
