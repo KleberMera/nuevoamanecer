@@ -20,6 +20,7 @@
         <p-select id="usuario" formControlName="usuarioId" [options]="usuariosList()" optionValue="id"
           placeholder="Selecciona un usuario" [showClear]="true" [filter]="true"
           filterBy="nombre1,nombre2,apellido1,apellido2" filterPlaceholder="Buscar usuario..." 
+          appendTo="body"
           class="w-full h-11!">
           <ng-template #selectedItem let-usuario>
             {{ usuario.nombre1 }} {{ usuario.nombre2 || '' }} {{ usuario.apellido1 }} {{ usuario.apellido2 || '' }}
@@ -43,7 +44,7 @@
         Período *
       </label>
       <p-select id="periodo" formControlName="periodo" [options]="periodosList()" optionLabel="label"
-        optionValue="value" placeholder="Selecciona un período" class="w-full h-11!">
+        optionValue="value" placeholder="Selecciona un período" appendTo="body" class="w-full h-11!">
       </p-select>
       @if (isFieldInvalid('periodo')) {
         <small class="text-red-400 block text-sm">
@@ -99,7 +100,7 @@
         Fecha *
       </label>
       <p-datepicker id="fecha" formControlName="fecha" placeholder="Selecciona una fecha" 
-        dateFormat="yy-mm-dd" [showIcon]="true" class="w-full h-11!" fluid>
+        dateFormat="yy-mm-dd" [showIcon]="true" appendTo="body" class="w-full h-11!" fluid>
       </p-datepicker>
       @if (isFieldInvalid('fecha')) {
         <small class="text-red-400 block text-sm">
@@ -114,7 +115,7 @@
         Estado
       </label>
       <p-select id="estado" formControlName="estado" [options]="estadosList()" optionLabel="label"
-        optionValue="value" placeholder="ACTIVO" class="w-full h-11!">
+        optionValue="value" placeholder="ACTIVO" appendTo="body" class="w-full h-11!">
       </p-select>
     </div>
   </div>
