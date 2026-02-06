@@ -42,7 +42,9 @@ export const API_ROUTES = {
   DETTALLE_PRESTAMO: createRoutes('dett-prestamo', {
     CREAR: '',
     ACTUALIZAR_ESTADO: '',
-    
+  }),
+  NOMINA: createRoutes('nomina', {
+    REPORTE_PAGOS: '',
   }),
 };
 
