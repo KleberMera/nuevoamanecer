@@ -42,6 +42,10 @@ export const PAGES_ROUTES = {
     CONTROL: 'control',
     USUARIO: 'usuario',
     SIMULADOR: 'simulador',
+  },
+  NOMINA: {
+    DEFAULT: 'nomina',
+    REPORTE_PAGOSS: 'reporte-pagos',
   }
 };
 export default PAGES_ROUTES;

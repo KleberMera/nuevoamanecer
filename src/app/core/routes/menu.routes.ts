@@ -87,6 +87,12 @@ export const MENU_ITEMS: MenuItem[] = [
     ],
   },
   {
+    id: 7,
+    label: 'Nomina',
+    icon: 'pi pi-money-bill',
+    route: buildRoute(PAGES_ROUTES.NOMINA.DEFAULT, PAGES_ROUTES.NOMINA.REPORTE_PAGOSS),
+  },
+  {
     id: 6,
     label: 'Simulador',
     icon: 'pi pi-calculator',

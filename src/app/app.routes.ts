@@ -30,17 +30,20 @@ export const routes: Routes = [
           },
           {
             path: PAGES_ROUTES.DASHBOARD.DEFAULT,
-            loadChildren: () => import('./features/usuarios/usuarios.routes')
+            loadChildren: () => import('./features/usuarios/usuarios.routes'),
           },
           {
             path: PAGES_ROUTES.DASHBOARD.DEFAULT,
-            loadChildren: () => import('./features/accion/accion.routes')
+            loadChildren: () => import('./features/accion/accion.routes'),
           },
           {
             path: PAGES_ROUTES.DASHBOARD.DEFAULT,
-            loadChildren: () => import('./features/prestamo/prestamos.route')
-          }
-                   
+            loadChildren: () => import('./features/prestamo/prestamos.route'),
+          },
+          {
+            path: PAGES_ROUTES.DASHBOARD.DEFAULT,
+            loadChildren: () => import('./features/nomina/nomina.routes'),
+          },
         ],
       },
     ],
