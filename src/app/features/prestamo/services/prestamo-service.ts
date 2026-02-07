@@ -25,7 +25,7 @@ export class PrestamoService {
         fecha: new FormControl(data.fecha , [Validators.required]),
         periodo: new FormControl(data.periodo || ''),
         frecuencia: new FormControl(data.frecuencia || 'MENSUAL', [Validators.required]),
-        estado: new FormControl(data.estado || 'A'),
+        estado: new FormControl('A'),
       }),
     );
     return form;
