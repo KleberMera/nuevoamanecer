@@ -23,17 +23,17 @@ export class PdfPagos {
     const pageWidth = doc.internal.pageSize.getWidth();
     let y = 8;
 
-    const logoDataUrl = await this.loadSvgAsPng('/logo_main.svg', 120, 100);
+    const logoDataUrl = await this.loadSvgAsPng('/logo_main.svg', 100, 100);
     if (logoDataUrl) {
-      doc.addImage(logoDataUrl, 'PNG', margin, y, 24, 20);
+      doc.addImage(logoDataUrl, 'PNG', margin, y, 20, 20);
     }
 
     doc.setFont('helvetica', 'bold');
     doc.setFontSize(20);
     doc.setTextColor(0, 0, 0);
-    doc.text('Nuevo', margin + 26, y + 9);
+    doc.text('Nuevo', margin + 21, y + 9);
     doc.setTextColor(243, 156, 18);
-    doc.text('Amanecer', margin + 26, y + 17);
+    doc.text('Amanecer', margin + 21, y + 17);
     doc.setTextColor(0, 0, 0);
 
     doc.setFont('helvetica', 'bold');
@@ -113,8 +113,47 @@ export class PdfPagos {
   }
 
   private getSubtitle(filters: { periodo?: string }): string {
-    const periodo = filters.periodo ? filters.periodo : 'Todos';
-    return `Pagos Pendientes del Periodo ${periodo}`;
+    const periodo = filters.periodo ? filters.periodo : '';
+    const periodoEndDate = this.getPeriodoEndDate(periodo);
+    if (!periodoEndDate) {
+      return 'Pagos Pendientes del Periodo';
+    }
+    return `Pagos Pendientes del ${periodoEndDate}`;
+  }
+
+  private getPeriodoEndDate(periodo: string): string | null {
+    if (!/^[0-9]{6}$/.test(periodo)) {
+      return null;
+    }
+
+    const year = Number(periodo.slice(0, 4));
+    const month = Number(periodo.slice(4, 6));
+    if (!year || month < 1 || month > 12) {
+      return null;
+    }
+
+    const endDate = new Date(year, month, 0);
+    const day = endDate.getDate();
+    const monthName = this.getMonthName(month);
+    return `${day} de ${monthName} del ${year}`;
+  }
+
+  private getMonthName(month: number): string {
+    const months = [
+      'Enero',
+      'Febrero',
+      'Marzo',
+      'Abril',
+      'Mayo',
+      'Junio',
+      'Julio',
+      'Agosto',
+      'Septiembre',
+      'Octubre',
+      'Noviembre',
+      'Diciembre',
+    ];
+    return months[month - 1] || '';
   }
 
   private async loadSvgAsPng(svgUrl: string, width: number, height: number): Promise<string | null> {
