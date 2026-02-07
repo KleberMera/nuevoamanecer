@@ -14,6 +14,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { PageTitleService } from '@app/shared/services/page-title-service';
 import { ViewportService } from '@app/shared/services/viewport-service';
+import { PdfPagos } from '../../services/pdf-pagos';
 
 @Component({
   selector: 'app-pagos',
@@ -35,6 +36,7 @@ export default class Pagos {
   protected readonly periodoService = inject(PeriodoService);
   protected readonly _viewPort = inject(ViewportService);
   protected readonly pageTitleService = inject(PageTitleService);
+  protected readonly pdfPagos = inject(PdfPagos);
 
   protected periodoControl = new FormControl<string | null>(this.periodoService.getPeriodoActual());
   protected estadoControl = new FormControl<string>('PENDIENTE');
@@ -98,6 +100,22 @@ export default class Pagos {
     });
     this.nombreControl.valueChanges.subscribe((value) => {
       this.nombreSeleccionado.set(value || '');
+    });
+  }
+
+  protected exportPdf(): void {
+    void this.pdfPagos.generatePagosPdf({
+      items: this.detNominaFiltrada(),
+      totals: {
+        cuota: this.totalCuota(),
+        capital: this.totalCapital(),
+        interes: this.totalInteres(),
+      },
+      filters: {
+        periodo: this.periodoSeleccionado(),
+        estado: this.estadoSeleccionado(),
+        nombre: this.nombreSeleccionado().trim(),
+      },
     });
   }
 }
