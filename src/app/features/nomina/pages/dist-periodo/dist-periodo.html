@@ -1,14 +1,17 @@
 <div class="space-y-4 sm:space-y-6 w-full">
+	<!-- Header -->
 	<div class="flex items-center justify-between flex-wrap gap-3">
-		<h2 class="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-100">
-			Distribucion por <span class="text-primary">periodo</span>
-		</h2>
+		<div>
+			<h2 class="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-100">
+				Distribución por <span class="text-primary">período</span>
+			</h2>
+		</div>
 	</div>
 
-	<div class="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
 		<div class="sm:col-span-1 space-y-2">
 			<label for="year" class="block text-sm font-semibold text-gray-100">
-				Año
+				Filtrar por Año
 			</label>
 			<p-select
 				id="year"
@@ -23,7 +26,8 @@
 		</div>
 	</div>
 
-	@if (hasError()) {
+	<!-- Estados -->
+	@if (distribucion.error()) {
 	<div class="flex items-center gap-3 p-4 bg-red-500/10 border border-red-500/30 rounded-lg">
 		<i class="pi pi-exclamation-triangle text-red-400 text-xl"></i>
 		<div class="flex-1">
@@ -31,82 +35,139 @@
 			<p class="text-red-300 text-xs sm:text-sm">{{ errorMessage() }}</p>
 		</div>
 	</div>
-	} @else if (isLoading()) {
+	} @else if (distribucion.isLoading()) {
 	<div class="flex justify-center items-center py-16">
 		<p-progressSpinner class="w-12 h-12" strokeWidth="4" animationDuration="1s">
 		</p-progressSpinner>
 	</div>
 	} @else {
-	<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+	
+	<!-- Grid de períodos -->
+	<div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
 		@if (!distribucionList().length) {
 		<div class="col-span-full">
-			<div class="flex flex-col items-center gap-3 p-6 bg-surface-900 border border-surface-700 rounded-lg">
-				<i class="pi pi-filter-slash text-3xl text-gray-500"></i>
-				<p class="text-gray-400">No se encontraron registros</p>
+			<div class="flex flex-col items-center gap-4 p-12 bg-surface-900 border border-surface-700 rounded-lg">
+				<div class="w-16 h-16 rounded-full bg-surface-800 flex items-center justify-center">
+					<i class="pi pi-filter-slash text-3xl text-gray-500"></i>
+				</div>
+				<div class="text-center">
+					<p class="text-gray-400 font-semibold">No se encontraron registros</p>
+					<p class="text-gray-500 text-sm mt-1">Intenta con otro año</p>
+				</div>
 			</div>
 		</div>
 		} @else {
 		@for (item of distribucionList(); track item.periodo) {
-		<div class="bg-surface-900 border border-surface-700 rounded-lg p-4 space-y-3">
-			<div class="flex items-center justify-between">
-				<div>
-					<p class="text-xs text-gray-400">Periodo</p>
-					<p class="text-lg font-semibold text-gray-100">{{ item.periodo }}</p>
-				</div>
-				<div class="text-right">
-					<p class="text-xs text-gray-400">Mes</p>
-					<p class="text-base font-semibold text-primary">{{ item.mes }}</p>
+		
+		<!-- Card de período -->
+		<div class="bg-surface-900 border border-surface-700 rounded-lg overflow-hidden hover:border-primary/50 transition-all duration-300">
+			
+			<!-- Header del card -->
+            <div class="bg-linear-to-r from-primary/10 to-primary/5 border-b border-surface-700 px-4 py-3">
+				<div class="flex items-center justify-between">
+					<div class="flex items-center gap-3">
+						<div class="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center">
+							<i class="pi pi-calendar-plus text-primary"></i>
+						</div>
+						<div>
+							<p class="text-xs text-gray-400 uppercase tracking-wide">Período</p>
+							<p class="text-lg font-bold text-gray-100">{{ item.periodo }}</p>
+						</div>
+					</div>
+					<div class="text-right">
+						<p class="text-xs text-gray-400 uppercase tracking-wide">Mes</p>
+						<p class="text-base font-bold text-primary">{{ item.mes }}</p>
+					</div>
 				</div>
 			</div>
-			<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+
+			<!-- Contenido del card -->
+			<div class="p-4 space-y-4">
+				
+				<!-- Sección: Ingresos -->
 				<div class="space-y-2">
-					<div class="flex items-center justify-between gap-3">
-						<p class="text-xs text-gray-400">Cobrado</p>
-						<p class="text-sm font-semibold text-green-400">
-							{{ item.totalcobrado | currency }}
-						</p>
-					</div>
-					<div class="flex items-center justify-between gap-3">
-						<p class="text-xs text-gray-400">Capital</p>
-						<p class="text-sm font-semibold text-blue-400">
-							{{ item.totalcapital | currency }}
-						</p>
-					</div>
-					<div class="flex items-center justify-between gap-3">
-						<p class="text-xs text-gray-400">Acciones</p>
-						<p class="text-sm font-semibold text-gray-100">
-							{{ item.totalaccionesanterior }}
-						</p>
+					<p class="text-xs font-semibold text-gray-400 uppercase tracking-wide flex items-center gap-2">
+						<i class="pi pi-dollar text-green-400"></i>
+						Ingresos
+					</p>
+					<div class="bg-surface-800/50 rounded-lg p-3 space-y-2">
+						<div class="flex items-center justify-between">
+							<span class="text-xs text-gray-400">Total Cobrado</span>
+							<span class="text-sm font-bold text-green-400">
+								{{ item.totalcobrado | currency }}
+							</span>
+						</div>
+						<div class="flex items-center justify-between">
+							<span class="text-xs text-gray-400">Capital</span>
+							<span class="text-sm font-semibold text-blue-400">
+								{{ item.totalcapital | currency }}
+							</span>
+						</div>
+						<div class="flex items-center justify-between">
+							<span class="text-xs text-gray-400">Interés</span>
+							<span class="text-sm font-semibold text-orange-400">
+								{{ item.totalinteres | currency }}
+							</span>
+						</div>
+						<div class="flex items-center justify-between">
+							<span class="text-xs text-gray-400 font-semibold">Acciones Actuales</span>
+							<span class="text-sm font-bold text-gray-100">
+								{{ item.totalacciones }}
+							</span>
+						</div>
 					</div>
 				</div>
+
+				<!-- Separador -->
+				<div class="border-t border-surface-700"></div>
+
+				<!-- Sección: Distribución -->
 				<div class="space-y-2">
-					<div class="flex items-center justify-between gap-3">
-						<p class="text-xs text-gray-400">Interes</p>
-						<p class="text-sm font-semibold text-orange-400">
-							{{ item.totalinteres | currency }}
-						</p>
+					<p class="text-xs font-semibold text-gray-400 uppercase tracking-wide flex items-center gap-2">
+						<i class="pi pi-percentage text-primary"></i>
+						Distribución
+					</p>
+					<div class="bg-surface-800/50 rounded-lg p-3 space-y-2">
+						<div class="flex items-center justify-between">
+							<span class="text-xs text-gray-400">20% Interés</span>
+							<span class="text-sm font-semibold text-gray-100">
+								{{ item.interesporciento | currency }}
+							</span>
+						</div>
+						<div class="flex items-center justify-between">
+							<span class="text-xs text-gray-400">Interés Neto</span>
+							<span class="text-sm font-semibold text-gray-100">
+								{{ item.interesmenosporciento | currency }}
+							</span>
+						</div>
+						<div class="h-px bg-surface-700 my-2"></div>
+						<div class="flex items-center justify-between">
+							<span class="text-xs text-gray-400 font-semibold">Acciones Anteriores</span>
+							<span class="text-sm font-bold text-gray-100">
+								{{ item.totalaccionesanterior }}
+							</span>
+						</div>
 					</div>
-					<div class="flex items-center justify-between gap-3">
-						<p class="text-xs text-gray-400">20% Interes</p>
-						<p class="text-sm font-semibold text-gray-100">
-							{{ item.interesporciento | currency }}
-						</p>
-					</div>
-					<div class="flex items-center justify-between gap-3">
-						<p class="text-xs text-gray-400">=</p>
-						<p class="text-sm font-semibold text-gray-100">
-							{{ item.interesmenosporciento | currency }}
-						</p>
-					</div>
-					<div class="flex items-center justify-between gap-3">
-						<p class="text-xs text-gray-400">A Repartir</p>
-						<p class="text-sm font-semibold text-primary">
+				</div>
+
+				<!-- Resultado final -->
+                <div class="bg-linear-to-r from-primary/10 to-primary/5 rounded-lg p-3 border border-primary/30">
+					<div class="flex items-center justify-between">
+						<div class="flex items-center gap-2">
+							<i class="pi pi-chart-line text-primary"></i>
+							<span class="text-xs font-semibold text-gray-300 uppercase tracking-wide">
+								A Repartir
+							</span>
+						</div>
+						<span class="text-base font-bold text-primary">
 							{{ item.utilidadporaccion | currency }}
-						</p>
+						</span>
 					</div>
 				</div>
+
 			</div>
 		</div>
+		
 		}
 		}
 	</div>

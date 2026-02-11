@@ -38,9 +38,30 @@ export default class DistPeriodo {
     },
   ]);
 
+
+  //Ahora con signals
   protected distribucion = httpResource<apiResponse<DistribucionPeriodo[]>>(() =>
     this.nominaService.getDistribucionPagos(this.yearSeleccionado())
   );
+
+
+  // //Antes con suscripciones
+  // getDistribucion() {
+  //   this.nominaService.getDistribucionPagos2(this.yearSeleccionado()).subscribe({
+  //     next: (response) => {
+  //       this.distribucionList = response.data;
+  //       //this.isLoading = false;
+  //       //this.hasError = false;
+  //     },
+  //     error: (error) => {
+  //       console.error('Error al cargar la distribución:', error);
+  //       //this.isLoading = false;
+  //       //this.hasError = true;
+  //     }
+  //   });
+  // }
+
+
 
   protected distribucionList = computed(() =>
     this.distribucion.value()?.data ?? []
@@ -56,4 +77,6 @@ export default class DistPeriodo {
       this.yearSeleccionado.set(value || this.currentYear.toString());
     });
   }
+
+  
 }
