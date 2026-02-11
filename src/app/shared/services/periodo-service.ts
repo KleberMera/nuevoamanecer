@@ -11,7 +11,7 @@ export interface Periodo {
 export class PeriodoService {
   /**
    * Genera una lista de períodos disponibles
-   * Incluye todos los meses del año anterior y el año actual
+   * Incluye los últimos 3 meses del año anterior y todos los meses del año actual
    * @returns Array de períodos con formato { label: 'YYYY-MM', value: 'YYYYMM' }
    */
   generarPeriodos(): Periodo[] {
@@ -20,8 +20,8 @@ export class PeriodoService {
     const currentYear = now.getFullYear();
     const previousYear = currentYear - 1;
 
-    // Añadir todos los meses del año anterior
-    for (let i = 1; i <= 12; i++) {
+    // Añadir los últimos 3 meses del año anterior
+    for (let i = 10; i <= 12; i++) {
       const month = i.toString().padStart(2, '0');
       periodos.push({
         label: `${previousYear}-${month}`,
@@ -40,24 +40,6 @@ export class PeriodoService {
 
     return periodos;
   }
-
-
-  //   generarPeriodos(): Periodo[] {
-  //   const periodos: Periodo[] = [];
-  //   const now = new Date();
-  //   const currentYear = now.getFullYear();
-  //   const year = currentYear;
-
-
-  //   for (let i = 1; i <= 12; i++) {
-  //     const month = i.toString().padStart(2, '0');
-  //     periodos.push({
-  //       label: `${year}-${month}`,
-  //       value: `${year}${month}`,
-  //     });
-  //   }
-  //   return periodos;
-  // }
 
   /**
    * Obtiene el período actual en formato YYYYMM
