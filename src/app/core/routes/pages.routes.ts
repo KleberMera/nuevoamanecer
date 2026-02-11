@@ -46,6 +46,7 @@ export const PAGES_ROUTES = {
   NOMINA: {
     DEFAULT: 'nomina',
     REPORTE_PAGOSS: 'reporte-pagos',
+      DISTRIBUCION_PAGOSS: 'distribucion-pagos',
   }
 };
 export default PAGES_ROUTES;

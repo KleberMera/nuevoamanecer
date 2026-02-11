@@ -45,6 +45,7 @@ export const API_ROUTES = {
   }),
   NOMINA: createRoutes('nomina', {
     REPORTE_PAGOS: '',
+    DISTRIBUCION_PAGOS: 'distribucion',
   }),
 };
 

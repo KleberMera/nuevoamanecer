@@ -12,4 +12,11 @@ export class NominaService {
     const url = `${baseUrl}?periodo=${periodo}`;
     return url;
   }
+
+
+  getDistribucionPagos(periodo: string) {
+    const baseUrl = this.apiUrl.DISTRIBUCION_PAGOS.replace(/\/$/, '');
+    const url = `${baseUrl}?periodo=${periodo}`;
+    return url;
+  }
 }

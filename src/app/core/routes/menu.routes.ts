@@ -90,7 +90,21 @@ export const MENU_ITEMS: MenuItem[] = [
     id: 7,
     label: 'Nomina',
     icon: 'pi pi-money-bill',
-    route: buildRoute(PAGES_ROUTES.NOMINA.DEFAULT, PAGES_ROUTES.NOMINA.REPORTE_PAGOSS),
+    subitems: [
+      {
+        id: 71,
+        label: 'Reporte de Pagos',
+        icon: 'pi pi-file',
+        route: buildRoute(PAGES_ROUTES.NOMINA.DEFAULT, PAGES_ROUTES.NOMINA.REPORTE_PAGOSS),
+      },
+      {
+        id: 72,
+        label: 'Distribución de Pagos',
+        icon: 'pi pi-chart-bar',
+        route: buildRoute(PAGES_ROUTES.NOMINA.DEFAULT, PAGES_ROUTES.NOMINA.DISTRIBUCION_PAGOSS),
+      },
+    ],
+   
   },
   {
     id: 6,

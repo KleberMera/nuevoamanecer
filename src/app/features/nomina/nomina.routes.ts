@@ -13,6 +13,11 @@ export const nominaRoutes: Routes = [
         path: PAGES_ROUTES.NOMINA.REPORTE_PAGOSS,
         loadComponent: () => import('./pages/pagos/pagos'),
       },
+      {
+        path: PAGES_ROUTES.NOMINA.DISTRIBUCION_PAGOSS,
+        loadComponent: () =>
+          import('./pages/dist-periodo/dist-periodo'),
+      },
     ],
   },
 ];
