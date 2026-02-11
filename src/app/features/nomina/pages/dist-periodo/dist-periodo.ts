@@ -15,7 +15,7 @@ import { DistribucionPeriodo } from '@app/core/models/distribucion';
     SelectModule,
     ProgressSpinnerModule,
     CurrencyPipe,
-    DecimalPipe,
+  
   ],
   templateUrl: './dist-periodo.html',
   styleUrl: './dist-periodo.css',

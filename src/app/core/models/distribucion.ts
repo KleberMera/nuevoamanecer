@@ -8,4 +8,5 @@ export interface DistribucionPeriodo {
   interesmenosporciento: number;
   totalacciones: number;
   utilidadporaccion: number;
+  totalaccionesanterior: number;
 }
