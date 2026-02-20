@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import PAGES_ROUTES from '@core/routes/pages.routes';
 import { Layout } from '@shared/layout/layout';
+import { authGuard, noAuthGuard } from '@core/guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -9,14 +10,16 @@ export const routes: Routes = [
       {
         path: '',
         pathMatch: 'full',
-        redirectTo: PAGES_ROUTES.AUTH.DEFAULT,
+        redirectTo: PAGES_ROUTES.DASHBOARD.DEFAULT,
       },
       {
         path: PAGES_ROUTES.AUTH.DEFAULT,
+        canActivate: [noAuthGuard],
         loadChildren: () => import('./features/auth/auth.routes'),
       },
       {
         path: PAGES_ROUTES.DASHBOARD.DEFAULT,
+        canActivate: [authGuard],
         component: Layout,
         children: [
           {
