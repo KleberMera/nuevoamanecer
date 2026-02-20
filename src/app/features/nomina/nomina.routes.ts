@@ -3,7 +3,7 @@ import PAGES_ROUTES from '@core/routes/pages.routes';
 
 export const nominaRoutes: Routes = [
   {
-    path: PAGES_ROUTES.NOMINA.DEFAULT,
+    path: '',
     children: [
       // {
       //   path: PAGES_ROUTES.ACCION.REGISTRO,

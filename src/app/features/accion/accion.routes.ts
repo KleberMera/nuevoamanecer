@@ -3,7 +3,7 @@ import PAGES_ROUTES from '@core/routes/pages.routes';
 
 export const accionesRoutes: Routes = [
   {
-    path: PAGES_ROUTES.ACCION.DEFAULT,
+    path: '',
     children: [
       // {
       //   path: PAGES_ROUTES.ACCION.REGISTRO,

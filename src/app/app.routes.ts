@@ -24,26 +24,26 @@ export const routes: Routes = [
             pathMatch: 'full',
             redirectTo: PAGES_ROUTES.DASHBOARD.DASHBOARD,
           },
-          {
-            path: PAGES_ROUTES.DASHBOARD.DASHBOARD,
-            loadComponent: () => import('./features/dashboard/pages/home/home'),
-          },
-          {
-            path: PAGES_ROUTES.DASHBOARD.DEFAULT,
-            loadChildren: () => import('./features/usuarios/usuarios.routes'),
-          },
-          {
-            path: PAGES_ROUTES.DASHBOARD.DEFAULT,
-            loadChildren: () => import('./features/accion/accion.routes'),
-          },
-          {
-            path: PAGES_ROUTES.DASHBOARD.DEFAULT,
-            loadChildren: () => import('./features/prestamo/prestamos.route'),
-          },
-          {
-            path: PAGES_ROUTES.DASHBOARD.DEFAULT,
-            loadChildren: () => import('./features/nomina/nomina.routes'),
-          },
+      {
+        path: PAGES_ROUTES.DASHBOARD.DASHBOARD,
+        loadComponent: () => import('./features/dashboard/pages/home/home'),
+      },
+      {
+        path: PAGES_ROUTES.USUARIOS.DEFAULT,
+        loadChildren: () => import('./features/usuarios/usuarios.routes'),
+      },
+      {
+        path: PAGES_ROUTES.ACCION.DEFAULT,
+        loadChildren: () => import('./features/accion/accion.routes'),
+      },
+      {
+        path: PAGES_ROUTES.PRESTAMO.DEFAULT,
+        loadChildren: () => import('./features/prestamo/prestamos.route'),
+      },
+      {
+        path: PAGES_ROUTES.NOMINA.DEFAULT,
+        loadChildren: () => import('./features/nomina/nomina.routes'),
+      },
         ],
       },
     ],

@@ -4,11 +4,11 @@ import PAGES_ROUTES from '@core/routes/pages.routes';
 
 export const usuariosRoutes: Routes = [
   {
-    path: PAGES_ROUTES.USUARIOS.DEFAULT,
+    path: '',
     children: [
       {
         path: PAGES_ROUTES.USUARIOS.GESTIOM,
-        loadComponent: () => import('./pages/lista-usuario/lista-usuario')
+        loadComponent: () => import('./pages/lista-usuario/lista-usuario'),
       },
     ],
   },

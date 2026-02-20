@@ -3,7 +3,7 @@ import PAGES_ROUTES from '@core/routes/pages.routes';
 
 export const prestamoRoutes: Routes = [
   {
-    path: PAGES_ROUTES.PRESTAMO.DEFAULT,
+    path: '',
     children: [
       {
         path: PAGES_ROUTES.PRESTAMO.GESTIOM,
