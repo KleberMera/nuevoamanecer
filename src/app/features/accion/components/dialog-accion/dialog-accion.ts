@@ -1,7 +1,7 @@
-import { Component, inject, signal, computed, linkedSignal } from '@angular/core';
-import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { Component, ChangeDetectionStrategy, inject, signal, computed, linkedSignal } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { DialogService, DynamicDialogRef, DynamicDialogConfig } from 'primeng/dynamicdialog';
+import { DynamicDialogRef, DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { RegistroAccionService } from '../../services/registro-accion-service';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
@@ -36,6 +36,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
   ],
   templateUrl: './dialog-accion.html',
   styleUrl: './dialog-accion.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
 

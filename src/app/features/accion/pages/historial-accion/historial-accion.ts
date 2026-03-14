@@ -153,61 +153,57 @@ export default class HistorialAccion {
     });
   }
 
-  // Método para abrir el dialog de crear acción
-  protected abrirDialogAccion() {
+  // Método genérico para abrir el dialog de acciones
+  private abrirDialogAccion(header: string, accion?: accionInterface) {
     const dialogRef = this.dialogService.open(DialogAccion, {
-      header: 'Registrar Nueva Acción',
+      header,
       modal: true,
       width: '50vw',
       closable: true,
+      contentStyle: { overflow: 'auto' },
       breakpoints: {
         '960px': '75vw',
         '640px': '90vw',
       },
+      ...(accion && { data: { accion } }), // Pasar datos solo si se proporciona acción
     });
 
     // Escuchar cuando se cierre el dialog
     dialogRef!.onClose.subscribe((result) => {
       if (result) {
-        // Si se creó exitosamente, recargar la tabla
-        this.reloadVersion.update((v) => v + 1);
-      }
-    });
-  }
-
-  // Método para manejar la selección de fila
-  protected onRowSelect(event: any) {
-    const accion = event.data;
-    this.selectedAccion.set(accion);
-    console.log('Acción seleccionada:', accion);
-
-    // Abrir el dialog con la información de la acción
-    const dialogRef = this.dialogService.open(DialogAccion, {
-      header: 'Editar Acción',
-      modal: true,
-      width: '50vw',
-      closable: true,
-      breakpoints: {
-        '960px': '75vw',
-        '640px': '90vw',
-      },
-      data: { accion }, // Pasar los datos de la acción al dialog
-    });
-
-    // Escuchar cuando se cierre el dialog
-    dialogRef!.onClose.subscribe((result) => {
-      if (result) {
-        // Si se actualizó exitosamente, recargar la tabla
+        // Recargar tabla y limpiar selección
         this.reloadVersion.update((v) => v + 1);
         this.selectedAccion.set(undefined);
       }
     });
   }
 
+  // Abrir dialog para crear nueva acción
+  protected abrirDialogNuevaAccion() {
+    this.abrirDialogAccion('Registrar Nueva Acción');
+  }
+
+  // Abrir dialog para editar una acción (desktop y mobile)
+  protected editarAccion(accion: accionInterface) {
+    this.selectedAccion.set(accion);
+    this.abrirDialogAccion('Editar Acción', accion);
+  }
+
+  // Manejar la selección de fila en desktop
+  protected onRowSelect(event: any) {
+    const accion = event.data;
+    this.editarAccion(accion);
+  }
+
   // Método para manejar la deselección de fila
   protected onRowUnselect() {
     this.selectedAccion.set(undefined);
     console.log('Selección eliminada');
+  }
+
+  // Abrir dialog desde vista mobile
+  protected abrirDialogDesdesMobile(accion: accionInterface) {
+    this.editarAccion(accion);
   }
 
   // Calcular el total del valor de las acciones mostradas
@@ -221,32 +217,5 @@ export default class HistorialAccion {
 
   calcularUtilidadTotal(): number {
     return this.acciones().reduce((total, accion) => total + (accion.utilidadTotal || 0), 0);
-  }
-
-  abriDialagMobiel(accion: accionInterface) {
-    this.selectedAccion.set(accion);
-    console.log('Usuario seleccionado:', accion);
-
-    // Abrir el dialog con la información del usuario
-    const dialogRef = this.dialogService.open(DialogAccion, {
-      header: 'Editar Usuario',
-      modal: true,
-      width: '50vw',
-      closable: true,
-      breakpoints: {
-        '960px': '75vw',
-        '640px': '90vw',
-      },
-      data: { accion }, // Pasar los datos del usuario al dialog
-    });
-
-    // Escuchar cuando se cierre el dialog
-    dialogRef!.onClose.subscribe((result) => {
-      if (result) {
-        // Si se actualizó exitosamente, recargar la lista
-        this.reloadVersion.update((v) => v + 1);
-        this.selectedAccion.set(undefined);
-      }
-    });
   }
 }

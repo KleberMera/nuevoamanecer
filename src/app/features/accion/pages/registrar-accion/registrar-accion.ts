@@ -1,4 +1,4 @@
-import { Component, inject, signal, computed, linkedSignal } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject, signal, computed, linkedSignal } from '@angular/core';
 import { ReactiveFormsModule} from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RegistroAccionService } from '../../services/registro-accion-service';
@@ -41,6 +41,7 @@ import { PeriodoService } from '@shared/services/periodo-service';
   ],
   templateUrl: './registrar-accion.html',
   styleUrl: './registrar-accion.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class RegistrarAccion {
   private readonly regAccion = inject(RegistroAccionService);

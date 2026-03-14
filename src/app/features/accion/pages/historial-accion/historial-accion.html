@@ -57,7 +57,7 @@
 
     <!-- Botón Nueva Acción -->
     <div class="sm:col-span-4 flex items-end">
-      <p-button label="Nuevo" icon="pi pi-plus" severity="success" class="w-full" (onClick)="abrirDialogAccion()"></p-button>
+      <p-button label="Nuevo" icon="pi pi-plus" severity="success" class="w-full" (onClick)="abrirDialogNuevaAccion()"></p-button>
     </div>
   </div>
 
@@ -138,7 +138,7 @@
 
       <!-- Footer: Botón de acción -->
       <div class="flex justify-end pt-2 border-t border-surface-700">
-        <p-button icon="pi pi-eye" label="Ver detalles" [text]="true" severity="info" size="small" (onClick)="abriDialagMobiel(accion)">
+        <p-button icon="pi pi-eye" label="Ver detalles" [text]="true" severity="info" size="small" (onClick)="abrirDialogDesdesMobile(accion)">
         </p-button>
       </div>
     </div>
