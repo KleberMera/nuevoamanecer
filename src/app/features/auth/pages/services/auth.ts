@@ -31,7 +31,7 @@ export class Auth {
     const url = this.apiUrl.LOGIN;
     return this._http.post<apiResponse<Usuario>>(url, usuario).pipe(
       tap((res) => {
-        console.log(res);
+        //console.log(res);
         this._storage.set(this.keyUser(), res.data);
         this._storage.set(this.keyToken(), res.access_token);
       }),

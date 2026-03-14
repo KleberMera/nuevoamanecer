@@ -15,6 +15,7 @@ import PAGES_ROUTES from '@core/routes/pages.routes';
 import { HttpErrorResponse } from '@angular/common/http';
 import { toast } from 'ngx-sonner';
 import { firstValueFrom } from 'rxjs';
+import { Usuario } from '@app/core/models/usuario';
 
 @Component({
   selector: 'app-login',
@@ -50,26 +51,15 @@ export default class Login {
     return invalid;
   }
 
-  // onSubmit() {
-  //   if (this.form().invalid) return;
-  //   this._authService.login(this.form().value).subscribe({
-  //     next: (res) => {
-  //       console.log(res);
-  //       this._router.navigate([PAGES_ROUTES.DASHBOARD.DASHBOARD]);
-  //       toast.success(res.message);
-  //     },
-  //     error: (err: HttpErrorResponse) => {
-  //       console.log(err);
-  //       toast.error(err.error.message);
-  //     },
-  //   });
-  // }
-
   onSubmit() {
     if (this.form().invalid) return;
-    const formValue = this.form().value;
-    formValue.nombreUsuario = formValue.nombreUsuario.toLowerCase();
+    const formValue: Usuario = {
+      ...this.form().value,
+      nombreUsuario: this.form().value.nombreUsuario.toLowerCase(),
+    };
+
     const loginPromise = firstValueFrom(this._authService.login(formValue));
+
     toast.promise(loginPromise, {
       loading: 'Iniciando sesión...',
       success: (res) => {
@@ -78,7 +68,7 @@ export default class Login {
       },
       error: (err: unknown) => {
         const httpError = err as HttpErrorResponse;
-        return httpError.error.message;
+        return httpError?.error?.message ?? 'Error al iniciar sesión';
       },
     });
   }
