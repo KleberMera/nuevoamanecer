@@ -62,15 +62,15 @@
   </div>
 
   <!-- Estados de carga y error -->
-  @if (hasError()) {
+  @if (this.historial.error()) {
   <div class="flex items-center gap-3 p-4 bg-red-500/10 border border-red-500/30 rounded-lg">
     <i class="pi pi-exclamation-triangle text-red-400 text-xl"></i>
     <div class="flex-1">
       <p class="text-red-400 font-semibold text-sm sm:text-base">Error al cargar</p>
-      <p class="text-red-300 text-xs sm:text-sm">{{ errorMessage() }}</p>
+      <p class="text-red-300 text-xs sm:text-sm">No se pudo cargar el historial</p>
     </div>
   </div>
-  } @else if (isLoading()) {
+  } @else if (this.historial.isLoading()) {
   <div class="flex justify-center items-center py-16">
     <p-progressSpinner class="w-12 h-12" strokeWidth="4" animationDuration="1s">
     </p-progressSpinner>

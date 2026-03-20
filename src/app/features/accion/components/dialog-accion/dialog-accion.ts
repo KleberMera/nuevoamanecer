@@ -1,4 +1,11 @@
-import { Component, ChangeDetectionStrategy, inject, signal, computed, linkedSignal } from '@angular/core';
+import {
+  Component,
+  ChangeDetectionStrategy,
+  inject,
+  signal,
+  computed,
+  linkedSignal,
+} from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { DynamicDialogRef, DynamicDialogConfig } from 'primeng/dynamicdialog';
@@ -38,10 +45,6 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
   styleUrl: './dialog-accion.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-
-
-
-
 export class DialogAccion {
   protected readonly regAccionService = inject(RegistroAccionService);
   protected readonly periodoService = inject(PeriodoService);
@@ -65,8 +68,7 @@ export class DialogAccion {
 
   // Usuarios desde httpResource
   usuarios = httpResource<apiResponse<Usuario[]>>(() => ({
-    method: 'GET',
-    url: `${this.regAccionService['apiUrl'].USUARIO.LISTAR_USUARIOS}/A`
+    url: this.regAccionService.getUsuarios('A'), // Obtener solo usuarios activos
   }));
 
   // Lista de usuarios con fallback
@@ -193,4 +195,3 @@ export class DialogAccion {
     return !!(field && field.invalid && (field.dirty || field.touched));
   }
 }
-

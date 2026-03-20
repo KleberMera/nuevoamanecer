@@ -14,11 +14,10 @@ export class RegistroAccionService {
   private readonly _http = inject(HttpClient);
   private readonly apiUrl = API_ROUTES;
 
-
   formAccion(data: Partial<accionInterface> = {}) {
     const form = signal<FormGroup>(
       new FormGroup({
-        usuarioId: new FormControl(data.usuarioId, [Validators.required]), 
+        usuarioId: new FormControl(data.usuarioId, [Validators.required]),
         periodo: new FormControl(data.periodo, [Validators.required]),
         numero: new FormControl(data.numero, [Validators.required]),
         valor: new FormControl(data.valor, [Validators.required, Validators.min(1)]),
@@ -32,13 +31,7 @@ export class RegistroAccionService {
   // Listar Usuarios por estado
   getUsuarios(estado: string) {
     const url = `${this.apiUrl.USUARIO.LISTAR_USUARIOS}/${estado}`;
-    return url
-  }
-
-  // Listar usuarios activos (para el dialog)
-  listarUsuariosActivos(): Observable<apiResponse<Usuario[]>> {
-    const url = `${this.apiUrl.USUARIO.LISTAR_USUARIOS}/A`;
-    return this._http.get<apiResponse<Usuario[]>>(url);
+    return url;
   }
 
   // Crear nueva acción
@@ -47,7 +40,10 @@ export class RegistroAccionService {
   }
 
   // Actualizar acción
-  actualizarAccion(accionId: number, accion: accionInterface): Observable<apiResponse<accionInterface>> {
+  actualizarAccion(
+    accionId: number,
+    accion: accionInterface,
+  ): Observable<apiResponse<accionInterface>> {
     const url = `${this.apiUrl.ACCION.CREAR_ACCION}${accionId}`;
     return this._http.patch<apiResponse<accionInterface>>(url, accion);
   }
@@ -58,9 +54,8 @@ export class RegistroAccionService {
     if (periodo) {
       url += `?periodo=${periodo}`;
     }
-    return url
+    return url;
   }
-
 
   // Listar acciones por periodo
   listarAccionesPeriodo(periodo: string) {
@@ -68,6 +63,6 @@ export class RegistroAccionService {
     if (periodo) {
       url += `?periodo=${periodo}`;
     }
-    return url
+    return url;
   }
 }

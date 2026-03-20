@@ -1,7 +1,7 @@
 import { Component, inject, computed, signal } from '@angular/core';
 import { RegistroAccionService } from '../../services/registro-accion-service';
 import { PageTitleService } from '@shared/services/page-title-service';
-import { CommonModule, CurrencyPipe, DatePipe } from '@angular/common';
+import { CurrencyPipe, DatePipe } from '@angular/common';
 import { ReactiveFormsModule, FormControl } from '@angular/forms';
 import { apiResponse } from '@core/models/apiResponse';
 import { accionInterface } from '@core/models/accion';
@@ -55,8 +55,6 @@ export default class HistorialAccion {
   // Signal para acción seleccionada
   protected selectedAccion = signal<accionInterface | undefined>(undefined);
 
-  // Signal para forzar recarga de acciones
-  private reloadVersion = signal<number>(0);
 
   // FormControl para el período
   protected periodoControl = new FormControl<string>(this.periodoService.getPeriodoActual());
@@ -78,7 +76,6 @@ export default class HistorialAccion {
 
   // Historial con httpResource
   historial = httpResource<apiResponse<accionInterface[]>>(() => {
-    this.reloadVersion(); // Crear dependencia del signal de reload
     return this.regAccion.listarAccionesPeriodo(this.periodoSeleccionado());
   });
 
@@ -101,14 +98,6 @@ export default class HistorialAccion {
       const nombreCompleto = this.getNombreCompleto(accion).toLowerCase();
       return nombreCompleto.includes(busca);
     });
-  });
-
-  // Estados de carga y error
-  protected isLoading = computed(() => this.historial.isLoading());
-  protected hasError = computed(() => !!this.historial.error());
-  protected errorMessage = computed(() => {
-    const error = this.historial.error();
-    return error ? 'No se pudo cargar el historial' : '';
   });
 
   // Períodos disponibles
@@ -171,8 +160,7 @@ export default class HistorialAccion {
     // Escuchar cuando se cierre el dialog
     dialogRef!.onClose.subscribe((result) => {
       if (result) {
-        // Recargar tabla y limpiar selección
-        this.reloadVersion.update((v) => v + 1);
+        this.historial.reload(); // Recargar datos del historial
         this.selectedAccion.set(undefined);
       }
     });
